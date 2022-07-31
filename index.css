@@ -8,13 +8,57 @@ body {
 		background-position: right top;
 		background-attachment: fixed;*/
 }
-	
-/*slide down */
+
+.bg-img {
+	/* The image used */
+	background-image: url("project3.jpg");
+  
+	min-height: 380px;
+  
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+  
+	/* Needed to position the navbar */
+	position: relative;
+  }
+  
+  /* Position the navbar container inside the image */
+  .container {
+	position: absolute;
+	margin: 20px;
+	width: auto;
+  }
+  
+  /* The navbar */
+  .topnav {
+	overflow: hidden;
+	background-color: #333;
+  }
+  
+  /* Navbar links */
+  .topnav a {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+  }
+  
+  .topnav a:hover {
+	background-color: #ddd;
+	color: black;
+  }
+
+
+/*The following CSS is required for the Navigation bar, so that it will slide down as you scroll */
 
  /* Style the navbar */
  #navbar {
 	overflow: hidden;
-	background-color: #333;
+	background-color: transparent;
   }
   
   /* Navbar links */
@@ -44,7 +88,16 @@ body {
 	padding-top: 60px;
   } 
   
+/* --- End of Navigation bar --- */
 
+
+div.maincontent { 
+
+	word-wrap: break-word;
+	text-align: justify;
+	margin-left:0px;
+	margin-top:0pt;
+}
 
 /*Below is the old stuff */
 .demo-2 {
@@ -157,13 +210,7 @@ h2.zero,p.zero {
 
 	}
 	
-	div.maincontent { 
 
-		word-wrap: break-word;
-		text-align: justify;
-		margin-left:0px;
-		margin-top:0pt;
-	}
 	
 	div.creditline { 
 
