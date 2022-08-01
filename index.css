@@ -1,30 +1,26 @@
-	
 body {
 	margin: 0px;
 	padding-top: 0px;
 	font-family: Calibri Light;
-		/*background-image: url("mars.jpg");
-		background-repeat: no-repeat;
-		background-position: right top;
-		background-attachment: fixed;*/
 }
 
-.bg-img {
-	/* The image used */
+.header {
 	background-image: url("project3.jpg");
-  
-	min-height: 380px;
-  
+	background-color: #F1F1F1;
+	text-align: center;
+	padding: 20px;
+	
 	/* Center and scale the image nicely */
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-  
+	  
 	/* Needed to position the navbar */
 	position: relative;
   }
+  	
   
-  /* Position the navbar container inside the image */
+  /* Position the navbar */
   .container {
 	position: absolute;
 	margin: 20px;
@@ -34,7 +30,7 @@ body {
   /* The navbar */
   .topnav {
 	overflow: hidden;
-	background-color: #333;
+	background-color: transparent;
   }
   
   /* Navbar links */
@@ -58,7 +54,7 @@ body {
  /* Style the navbar */
  #navbar {
 	overflow: hidden;
-	background-color: transparent;
+	background-color: black;
   }
   
   /* Navbar links */
@@ -91,13 +87,130 @@ body {
 /* --- End of Navigation bar --- */
 
 
-div.maincontent { 
+.maincontent { 
 
 	word-wrap: break-word;
 	text-align: justify;
-	margin-left:0px;
-	margin-top:0pt;
+	margin-left:10%;
+	margin-right:10%;
 }
+
+
+
+/* The following is for making profile images */
+.container_img {
+	position: relative;
+	width: 200px;
+	z-index: -5;
+  }
+  
+  .image_img {
+	display: block;
+	width: 150px;
+	height: 200px;
+	/* border-radius: 50%; */
+	opacity: 5;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+  }
+  
+  .overlay_img {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	font-size: 18px;
+	font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif;
+	border-radius: 50%;
+	height: 100%;
+	width: 100%;
+	margin-left: 0px;
+	opacity: 0;
+	overflow: hidden;
+	transition: .5s ease;
+	background-color: #99cc33;
+  }
+  
+  .container_img:hover .overlay_img {
+	opacity: 1;
+  }
+  
+/* Define the information boxes next to each photo */
+  .infobox { 
+
+	font-size: 14pt;
+  	/* font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif; */
+	margin-top: 0em;
+	margin-bottom: 0em;
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 20px;
+	vertical-align: middle;
+	background-color: #ffffff;
+	text-align: justify;
+	width: 100%;
+
+	padding: 20px 0px 20px 0px;
+
+}
+
+
+
+
+/* 
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 20px;
+	vertical-align: middle;
+	background-color: #99cc33;
+	padding: 50px 75px 30px;
+  
+  }
+  
+  .grid-container > div {
+	background-color: #99cc33;
+	font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif;
+	border: 0px solid black;
+	text-align: justify;
+	  vertical-align: middle;
+	color:white;
+	font-size: 16pt;
+  }
+  
+  .grid-containerwhite {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 10px;
+	background-color: white;
+	padding: 0px 75px 0px;
+  
+  }
+  
+  .grid-containerwhite > div {
+	background-color: white;
+	font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif;
+	border: 0px solid black;
+	text-align: justify;
+	color:black;
+	opacity: 5;
+	vertical-align: middle;
+  
+	font-size: 16pt;
+  }
+   */
+
+
+
+
+
+
+
+
+
+
+
 
 /*Below is the old stuff */
 .demo-2 {
