@@ -40,11 +40,11 @@ body {
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
-	font-size: 17px;
+	font-size: 22px;
   }
   
   .topnav a:hover {
-	background-color: #ddd;
+	background-color: orange;
 	color: black;
   }
 
@@ -53,7 +53,7 @@ body {
 
  /* Style the navbar */
  #navbar {
-	overflow: hidden;
+	/* overflow: hidden; */
 	background-color: black;
   }
   
@@ -95,18 +95,126 @@ body {
 	margin-right:10%;
 }
 
+.maincontent_blue { 
+
+	word-wrap: break-word;
+	text-align: justify;
+	margin-left:0%;
+	margin-right:0%;
+	background-color: rgb(217, 223, 223);
+	height: 100%;
+}
+
+.maincontent_grey { 
+
+	word-wrap: break-word;
+	text-align: justify;
+	margin-left:0%;
+	margin-right:0%;
+	/* background-color: rgb(217, 223, 223); */
+	height: 100%;
+}
+
+/* for floating boxes */
+.card {
+    position: absolute;
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%,-50%); */
+    width: 400px;
+    height: 400px;
+    background: #262626;
+    overflow: hidden;
+}
+.card .imgBx,
+.card .details {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    transition: .5s;
+}
+.card .imgBx {
+    top: 0;
+    left: 0;
+}
+.card:hover .imgBx {
+    top: 0;
+    left: -100%;
+}
+.card .imgBx img {
+    width: 100%;
+}
+.card .details {
+    background: #262626;
+    top: 0;
+    left: 100%;
+    padding: 60px 30px;
+}
+.card:hover .details {
+    top: 0;
+    left: 0%;
+}
+.card .details h2 {
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    /* padding: 0 0 10px; */
+    border-bottom: 2px solid #fff;
+
+}
+.card .details p {
+    margin: 20px 0 0;
+    color: #fff;
+}
 
 
 /* The following is for making profile images */
+
+.researchimage {
+    position: relative;
+}
+    
+.researchimage:hover:after {
+    position: absolute;
+    content: attr(title);
+    display: inline-block;
+    left: 0px;
+    top: 0px;
+    padding: 5px;
+    background-color: black;
+    color: white;
+	/* width: 100%;
+	max-width: 400px;
+	height: auto; */
+	height: auto;
+	
+}
+
+
+
 .container_img {
 	position: relative;
 	width: 200px;
 	z-index: -5;
   }
-  
-  .image_img {
+  .profile_img {
 	display: block;
-	width: 400px;
+	width: 250px;
+	/* height: 200px; */
+	/* border-radius: 50%; */
+	opacity: 5;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+  }
+  .image_img {
+	object-fit: cover;
+	/* width: 400px;
+	height: 400px; */
+	width:100%;
+	height: 100%;
+	display: block;
+	/* width: 400px; */
 	/* height: 200px; */
 	/* border-radius: 50%; */
 	opacity: 5;
@@ -139,15 +247,15 @@ body {
 /* Define the information boxes next to each photo */
   .infobox { 
 
-	font-size: 14pt;
-  	/* font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif; */
+	font-size: 22px;
+/* font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif; */
 	margin-top: 0em;
 	margin-bottom: 0em;
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-gap: 20px;
 	vertical-align: middle;
-	background-color: #ffffff;
+	/* background-color: #ffffff; */
 	text-align: justify;
 	width: 100%;
 
@@ -155,7 +263,36 @@ body {
 
 }
 
-
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	/* grid-template-rows: repeat(4, 1fr); */
+	/* grid-template-columns: auto auto auto; */
+	background-color: transparent;
+	/* opacity: 0.5; */
+	padding: 20px 20px 20px 20px;
+  }
+  .grid-title {
+	background-color: transparent;
+	border: 0px solid rgba(0, 0, 0, 0.8);
+	padding: 20px 20px 20px 20px;
+	font-size: 22px;
+	/* height: 100px; */
+	/* overflow-wrap: break-word; */
+	/* width: 100px; */
+	text-align: center;
+  }
+  
+  .grid-item {
+	background-color: transparent;
+	border: 0px solid rgba(0, 0, 0, 0.8);
+	padding: 20px 20px 20px 20px;
+	font-size: 22px;
+	/* height: 400px; */
+	/* width: 100px; */
+	text-align: center;
+  }
+  
 
 
 /* 
@@ -300,21 +437,39 @@ h2.zero,p.zero {
 	
 	h1 { 
 		display: block;
-		font-size: 24pt;
-		font-family: Calibri Light;
+		font-size: 8vw;
+		font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif; 
 		margin-top: 0.4em;
 		margin-bottom: 0.20em;
 		margin-left: 0;
 		margin-right: 0;
 		font-weight: bold;
+		color:white;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		/* position: absolute; */
+		/* bottom: 20px;
+		left: 20px; */
 	}
-	
 	
 	
 	h2 { 
 		display: block;
-		font-size: 16pt;
-		font-family: Calibri Light;
+		font-size: 24pt;
+		font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif; 
+		/* font-family: Calibri Light; */
+		padding: 20px 20px 20px 20px;
+		margin-top: 50px;
+		margin-bottom: 20px;
+		margin-left: 0;
+		margin-right: 0;
+		font-weight: bold;
+
+	}
+	
+	h3 { 
+		display: block;
+		font-size: 18pt;
+		font-family: "Arial Narrow", Arial, "Helvetica Condensed", Helvetica, sans-serif; 
 		margin-top: 50px;
 		margin-bottom: 20px;
 		margin-left: 0;
@@ -324,7 +479,6 @@ h2.zero,p.zero {
 	}
 	
 
-	
 	div.creditline { 
 
 		font-size: 10pt;
@@ -461,7 +615,7 @@ h2.zero,p.zero {
 		padding: 3px 21px;
 		text-align: center; 
 		text-decoration: none;
-		font-size: 12pt;
+		font-size: 22pt;
 		display: inline-block;
 	}
 
@@ -490,7 +644,7 @@ h2.zero,p.zero {
 		padding: 14px 14px;
 		text-align: center; 
 		text-decoration: none;
-		font-size: 12pt;
+		font-size: 18pt;
 		display: inline-block;
 	}
 
