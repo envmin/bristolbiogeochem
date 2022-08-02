@@ -5,7 +5,7 @@ body {
 }
 
 .header {
-	background-image: url("project3.jpg");
+	background-image: url("01.jpg");
 	background-color: #F1F1F1;
 	text-align: center;
 	padding: 20px;
@@ -302,8 +302,8 @@ h2.zero,p.zero {
 		display: block;
 		font-size: 24pt;
 		font-family: Calibri Light;
-		margin-top: 0.67em;
-		margin-bottom: 0.67em;
+		margin-top: 0.4em;
+		margin-bottom: 0.20em;
 		margin-left: 0;
 		margin-right: 0;
 		font-weight: bold;
