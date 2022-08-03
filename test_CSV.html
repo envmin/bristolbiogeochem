@@ -27,7 +27,7 @@
 $(document).ready(function(){
  $('#load_data').click(function(){
   $.ajax({
-   url:"PublicationList_vCSV.csv",
+   url:"PublicationList_vCSV.txt",
    dataType:"text",
    success:function(data)
    {
@@ -35,7 +35,7 @@ $(document).ready(function(){
     var table_data = '<table class="table table-bordered table-striped">';
     for(var count = 0; count<employee_data.length; count++)
     {
-     var cell_data = employee_data[count].split(",");
+     var cell_data = employee_data[count].split("\t");
      table_data += '<tr>';
      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
      {
