@@ -12,7 +12,7 @@ $(document).ready(function(){
     var table_data = '<table id="myTable" class="datatable">';
     for(var count = 0; count<employee_data.length; count++)
     {
-     var cell_data = employee_data[count].split("\t")-13;
+     var cell_data = employee_data[count].split("\t");
      table_data += '<tr>';
      for(var cell_count=0; cell_count<cell_data.length; cell_count++)
      {
