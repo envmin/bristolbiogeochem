@@ -86,4 +86,509 @@ $(document).ready(function(){
  });
  
 });
+
+
+//Search all parameters in the main database table
+function bigsearch() {
+  // Declare variables 
+  
+  var table, tr, td, i;
+  
+  var checkBoxS = document.getElementById("tickS");
+  var checkBoxE = document.getElementById("tickE");
+  var checkBoxB = document.getElementById("tickB");
+  //var checkBoxP = document.getElementById("tickP");
+  var checkBoxU = document.getElementById("tickU");
+  //var checkBoxA = document.getElementById("tickA");
+
+  var T, rangeT, filterminT, filtermaxT, td2;
+  T = document.getElementById("min_3").value;
+  rangeT = +document.getElementById("min_3_range").value;
+
+  if (T==null || T==""){
+    filterminT = 0;
+    filtermaxT = 600;    
+  }
+   else {
+    filterminT = +T-rangeT;
+    filtermaxT = +T+rangeT;
+  }
+
+
+  var CS, rangeCS, filterminCS, filtermaxCS, td3;
+  CS = document.getElementById("min_4").value;
+  rangeCS = +document.getElementById("min_4_range").value;
+  if (CS==null || CS==""){
+    filterminCS = 0;
+    filtermaxCS = 5;    
+  }
+   else {
+    filterminCS = +CS-rangeCS;
+    filtermaxCS = +CS+rangeCS;
+  }
+
+
+  var QS, rangeQS, filterminQS, filtermaxQS, td4;
+  QS = +document.getElementById("min_5").value;
+  rangeQS = +document.getElementById("min_5_range").value;
+  filterminQS = +QS-rangeQS;
+  filtermaxQS = +QS+rangeQS;
+  
+  if (QS<0){
+    //range=-1*range
+    filterminQS = +QS-rangeQS;
+    filtermaxQS = +QS+rangeQS;
+  }
+   else if(QS>0){
+    filterminQS = +QS-rangeQS;
+    filtermaxQS = +QS+rangeQS;
+  }
+
+
+
+  var Bhf, rangeBhf, filterminBhf, filtermaxBhf, td5;
+  Bhf = document.getElementById("min_6").value;
+  rangeBhf = +document.getElementById("min_6_range").value;
+  if (Bhf==null || Bhf==""){
+    filterminBhf = 0;
+    filtermaxBhf = 0;    
+  }
+   else {
+    filterminBhf = +Bhf-rangeBhf;
+    filtermaxBhf = +Bhf+rangeBhf;
+  }
+
+
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    //td1 = tr[i].getElementsByTagName("td")[2];  //type
+    //td2 = tr[i].getElementsByTagName("td")[4];  //Temp
+    //td3 = tr[i].getElementsByTagName("td")[5];  //CS
+    //td4 = tr[i].getElementsByTagName("td")[6];  //QS
+    //td5 = tr[i].getElementsByTagName("td")[7];  //Bhf
+    td1 = tr[i].getElementsByTagName("td")[2];  //type
+    td2 = tr[i].getElementsByTagName("td")[4];  //Temp
+    td3 = tr[i].getElementsByTagName("td")[5];  //CS
+    td4 = tr[i].getElementsByTagName("td")[7];  //QS
+    td5 = tr[i].getElementsByTagName("td")[9];  //Bhf
+    if ((checkBoxS.checked == true 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == false
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        && td1.innerHTML !== "E"
+        && td1.innerHTML !== "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == false
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML == "E"
+        && td1.innerHTML !== "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+
+    else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == true
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML !== "E"
+        && td1.innerHTML == "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+        else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == false
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML !== "E"
+        && td1.innerHTML !== "B"
+        && td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    //Multiple checkboxes (2)
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == false
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        || td1.innerHTML == "E"
+        && td1.innerHTML !== "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == true
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        && td1.innerHTML !== "E"
+        || td1.innerHTML == "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == false
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        && td1.innerHTML !== "E"
+        && td1.innerHTML !== "B"
+        || td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }    
+
+
+    else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == true
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML == "E"
+        || td1.innerHTML == "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == false
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML == "E"
+        && td1.innerHTML !== "B"
+        || td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == true
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML !== "E"
+        && td1.innerHTML == "B"
+        || td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    //Multiple checkboxes (3)
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == true
+      && checkBoxU.checked == false)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        || td1.innerHTML == "E"
+        || td1.innerHTML == "B"
+        && td1.innerHTML !== "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }    
+
+
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == false
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        || td1.innerHTML == "E"
+        || td1.innerHTML !== "B"
+        && td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == false
+      && checkBoxB.checked == true
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        && td1.innerHTML !== "E"
+        || td1.innerHTML == "B"
+        || td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+    else if ((checkBoxS.checked == false 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == true
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML !== "S"
+        && td1.innerHTML == "E"
+        || td1.innerHTML == "B"
+        || td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+
+    else if ((checkBoxS.checked == true 
+      && checkBoxE.checked == true
+      && checkBoxB.checked == true
+      && checkBoxU.checked == true)
+      ) {
+    if (td1 && td2 && td3 && td5) {
+      if ((td1.innerHTML == "S"
+        || td1.innerHTML == "E"
+        || td1.innerHTML == "B"
+        || td1.innerHTML == "U")
+        && td2.innerHTML >= filterminT 
+        && td2.innerHTML <= filtermaxT
+        && td3.innerHTML >= filterminCS 
+        && td3.innerHTML <= filtermaxCS
+        && td4.innerHTML >= filterminQS 
+        && td4.innerHTML <= filtermaxQS
+        && td5.innerHTML >= filterminBhf 
+        && td5.innerHTML <= filtermaxBhf
+        ) {
+        
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+    }
+
+  }
+
+
+
+}
+
 </script>
