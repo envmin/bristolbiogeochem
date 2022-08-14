@@ -300,16 +300,28 @@
         <!-- <div class="container"> -->
 
             <div class="table-responsive">
-                <div style="margin-left: auto;margin-right: auto;">
-                    <!-- <p hidden> -->
-                  
-                            <button type="button" name="load_data" id="load_data" class="btn btn-info">Show all</button>
+
+                <button onclick="myFunction()">Click Me</button>
+
+                <div id="myDIV">
+
+                    <div style="margin-left: auto;margin-right: auto;">
+                        <!-- <p hidden> -->
+                      
+                                <button type="button" name="load_data" id="load_data" class="btn btn-info">Show all</button>
+                        
+                    <!-- </p> -->
+                    </div>
+
                     
-                <!-- </p> -->
-                </div>
+                    <div id="publication_table">
+                    </div>                
+                </div> 
+
+
+
                 
-                <div id="publication_table">
-                </div>
+
             </div>
 
         <!-- </div> -->
@@ -400,6 +412,16 @@
                 navbar.classList.remove("sticky");
             }
         }
+
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+              x.style.display = "block";
+            } else {
+              x.style.display = "none";
+            }
+          } 
+
     </script>
 
 </body>
