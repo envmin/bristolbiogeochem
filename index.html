@@ -313,7 +313,7 @@
                     <!-- </p> -->
                     </div>
 
-                    
+
                     <div id="publication_table">
                     </div>                
                 </div> 
@@ -432,7 +432,7 @@
 <script>
 
     $(document).ready(function(){
-        $('#load_data').click(function(){
+        $('#load_data').ready(function(){
          $.ajax({
           url:"PublicationList_vCSV.txt",
           dataType:"text",
