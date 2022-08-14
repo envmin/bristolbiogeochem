@@ -5,12 +5,14 @@
 <head>
 
     <title>Bristol Environmental Mineralogy</title>
+
+
     <link rel="icon" href="images/logo_icon.png">
     <link rel="stylesheet" type="text/css" href="index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
@@ -290,9 +292,11 @@
         <div class="container">
 
             <div class="table-responsive">
-                <div align="center">
+                <div style="margin-left: auto;margin-right: auto;">
                     <!-- <p hidden> -->
-                    <button type="button" name="load_data" id="load_data" class="btn btn-info">Show all</button>
+                  
+                            <button type="button" name="load_data" id="load_data" class="btn btn-info">Show all</button>
+                        
                 <!-- </p> -->
                 </div>
                 
@@ -305,9 +309,28 @@
 
     </div>
 
-
-
     <div class="maincontent_grey">
+
+        <div class="maincontent">
+            <a id="outreach"></a>
+            <h2>Outreach</h2>
+
+            <div class="infobox">
+
+
+                <div>
+                    <iframe width="420" height="315"
+                    src="https://www.youtube.com/embed/wGVOghFVpLE">
+                    </iframe> 
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="maincontent_blue">
 
         <div class="maincontent">
             <a id="jobs"></a>
@@ -330,7 +353,7 @@
         </div>
     </div>
 
-    <div class="maincontent_blue">
+    <div class="maincontent_grey">
 
         <div class="maincontent">
             <a id="funding"></a>
@@ -369,7 +392,11 @@
                 navbar.classList.remove("sticky");
             }
         }
+    </script>
 
+
+
+    <script>
 
         $(document).ready(function(){
             $('#load_data').ready(function(){
@@ -408,8 +435,8 @@
            
     </script>
 
-
 </body>
 
 </html>
+
 
