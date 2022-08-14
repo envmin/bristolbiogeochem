@@ -10,51 +10,28 @@
 
  <!-- <body onload="loadtable()"> -->
 <body>
+
+
   <div class="container">
-
-    <!-- <table>
-
-    <tr>
-        <td colspan="7">
-             <p>Select year:
-
-             <input type="checkbox" id="tick2022" name="tick" onclick="bigsearch()" checked="checked">2022
-             <input type="checkbox" id="tick2021" name="tick" onclick="bigsearch()" checked="checked">2021
-             <input type="checkbox" id="tick2020" name="tick" onclick="bigsearch()" checked="checked">2020
-             <input type="checkbox" id="tick2019" name="tick" onclick="bigsearch()" checked="checked">2019
-             <input type="checkbox" id="tick2018" name="tick" onclick="bigsearch()" checked="checked">2018
-             <input type="checkbox" id="tick2017" name="tick" onclick="bigsearch()" checked="checked">2017
-             <input type="checkbox" id="tick2016" name="tick" onclick="bigsearch()" checked="checked">2016
-             <input type="checkbox" id="tick2015" name="tick" onclick="bigsearch()" checked="checked">2015
-             <input type="checkbox" id="tick2014" name="tick" onclick="bigsearch()" checked="checked">2014
-             <input type="checkbox" id="tick2013" name="tick" onclick="bigsearch()" checked="checked">2013
-             <input type="checkbox" id="tick2012" name="tick" onclick="bigsearch()" checked="checked">2012
-             <input type="checkbox" id="tick2011" name="tick" onclick="bigsearch()" checked="checked">2011
-            
-            </p>
-    
-         </td>
-    </tr>
-    
-    
-    </table> -->
-
-   <div class="table-responsive">
-    <div align="center">
-        <!-- <p hidden> -->
-     <button type="button" name="load_data" id="load_data" class="btn btn-info">Show all</button>
-    <!-- </p> -->
+    <div class="table-responsive">
+     <h1 align="center">CSV File to HTML Table Using AJAX jQuery</h1>
+     <br />
+     <div align="center">
+      <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
+     </div>
+     <br />
+     <div id="publication_table">
     </div>
-    <div id="publication_table">
     </div>
    </div>
-  </div>
+
+
  </body>
 </html>
 
 <script>
 $(document).ready(function(){
- $('#load_data').ready(function(){
+ $('#load_data').click(function(){
   $.ajax({
    url:"PublicationList_vCSV.txt",
    dataType:"text",
