@@ -654,3 +654,13 @@ h2.zero,p.zero {
 		background-color: orange;
 	}
 
+button {
+	background-color: orange;
+	color: black;
+		padding: 14px 14px;
+		text-align: center; 
+		text-decoration: none;
+		font-size: 18pt;
+		display: inline-block;
+		border: 0em;
+}
