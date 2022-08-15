@@ -661,12 +661,13 @@ h2.zero,p.zero {
 button {
 	background-color: orange;
 	color: black;
-		padding: 14px 14px;
-		text-align: center; 
-		text-decoration: none;
-		font-size: 18pt;
-		display: inline-block;
-		border: 0em;
+	padding: 14px 14px;
+	text-align: center; 
+	text-decoration: none;
+	font-size: 18pt;
+	display: inline-block;
+	border-width: 1px;
+	border-color: #262626;
 }
 
 .center {
