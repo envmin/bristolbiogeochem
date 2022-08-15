@@ -307,7 +307,7 @@
 
         <!-- <div class="container"> -->
 
-            <button  class="title" onclick="myFunction()">Show/Hide Full Publication List</button>
+            <button name="load_data" id="load_data"  class="title" onclick="myFunction()">Show/Hide Full Publication List</button>
 
             <div class="table-responsive">
 
@@ -443,7 +443,7 @@
 <script>
 
     $(document).ready(function(){
-        $('#load_data').ready(function(){
+        $('#load_data').click(function(){
          $.ajax({
           url:"PublicationList_vCSV.txt",
           dataType:"text",
