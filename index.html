@@ -219,10 +219,13 @@
 
                 <div>
                     <h3>Harry Forrester - TA</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna.
-                        Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula,
-                        risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent
-                        scelerisque tortor sed accumsan convallis.</p>
+                    <p>Harry is a technical specialist of biogeochemical research for the environmental mineralogy and geomicrobiology 
+                        group at the university of Bristol. He is currently facilitating projects involving nutrient and mineral cycling 
+                        of environmental anaerobes and manages a capable and collaborative biogeochemistry research laboratory. Harry 
+                        employs a comprehensive arsenal of analytical techniques including chromatography, spectroscopy and isotopic 
+                        spectrometry to describe geochemical processes. Recent research contributions included investigation of the 
+                        influence of glacial rock flour soil amendments on nitrogen cycling in cropland, and  redox manipulations of 
+                        environmental iron minerals for waste water remediation.</p>
                 </div>
             </div>
 
@@ -276,27 +279,54 @@
 
             <h2>Selected Publications</h2>
            
-            <p>
+            
+
+                <div>
+                    <h3>- A revised analysis of ferrihydrite at liquid helium temperature using Moessbauer spectroscopy</h3>
+                    <p style = "font-style:italic">Byrne J.M., Kappler A., 2022, American Mineralogist, <a href="https://doi.org/10.2138/am-2021-7802" target="_blank">https://doi.org/10.2138/am-2021-7802</a></p>
+                </div>
+
+                <div>
+                    <h3>- Chromium (VI) removal kinetics by magnetite-coated sand: Small-scale flow-through column experiments</h3>
+                    <p style = "font-style:italic">Sorwat J., Mellage A., Maisch M., Kappler A., Cirpka O. A., Byrne J. M.,	2021, Journal of Hazardous Materials, 415, 125648, <a href="https://doi.org/10.1016/j.jhazmat.2021.125648" target="_blank">https://doi.org/10.1016/j.jhazmat.2021.125648</a></p>
+                </div>
+
+                <div>
+                    <h3>- Effect of Microbial Biomass and Humic Acids on Abiotic and Biotic Magnetite Formation</h3>
+                    <p style = "font-style:italic">Han, X., Tomaszewski, E., Sorwat, J., Pan, Y., Kappler, A., Byrne, J.M., 2021, Environmental Science and Technology, 
+                        <a href="https://doi.org/10.1021/acs.est.9b07095" target="_blank">https://doi.org/10.1021/acs.est.9b07095</a></p>
+                </div>
+
+                <div>
+                    <h3>- Imaging organic-mineral aggregates formed by Fe(II)-oxidizing bacteria using He-Ion Microscopy</h3>
+                    <p style = "font-style:italic">Byrne, J. M., Schmidt, M., Gauger, T., Bryce, C., Kappler, A., 2018, Environmental Science and Technology Letters, 5, 209-213, 
+                        <a href="https://doi.org/10.1021/acs.estlett.8b00077" target="_blank">https://doi.org/10.1021/acs.estlett.8b00077</a></p>
+                </div>			
+
+                <div>
+                    <h3>- Redox cycling of Fe(II) and Fe(III) in magnetite by Fe-metabolizing bacteria</h3>
+                    <p style = "font-style:italic">Byrne J. M., Klueglein, N., Pearce, C., Rosso K. M., Appel, E., Kappler, A.	Science	347, 1473-1476, 
+                        <a href="https://doi.org/10.1126/science.aaa4834" target="_blank">https://doi.org/10.1126/science.aaa4834</a></p>
+                </div>	
+
+
+                	
+
+                		
+
+
+            <p class="center">
+                <a href="publications.html" class="title"
+                    target="_blank">Full publication list</a>
+
                 <a href="https://scholar.google.de/citations?user=NtGe7XEAAAAJ&hl=en" class="title"
                     target="_blank">Google
                     Scholar</a>
 
+
+
             </p>
             
-            <div class="infobox">
-
-                <div>
-                    <h3>A revised analysis of ferrihydrite at liquid helium temperature using Moessbauer spectroscopy</h3>
-                    <p style = "font-style:italic">Byrne J.M., Kappler A., 2022, American Mineralogist, <a href="https://doi.org/10.2138/am-2021-7802" target="_blank">https://doi.org/10.2138/am-2021-7802</a></p>
-
-                    <p>xxxxxx.</p>
-                </div>
-
-                <!-- <div>
-                    <img src="images/people/tanner.jpg" alt="Data Fitting" class="profile_img">
-                </div> -->
-
-            </div>
 
         </div>
 
@@ -305,9 +335,7 @@
     <div class="maincontent_blue">
         <div class="maincontent">
 
-        <!-- <div class="container"> -->
-
-            <button name="load_data" id="load_data"  class="title" onclick="myFunction()">Show/Hide Full Publication List</button>
+            <button name="load_data" id="load_data"  class="title" onclick="myFunction_divopen()">Show/Hide Full Publication List</button>
 
             <div class="table-responsive">
 
@@ -319,19 +347,10 @@
   
                         </p>
                     </div>
-
-
                     <div id="publication_table">
                     </div>                
-                </div> 
-
-
-
-                
-
+                </div>                 
             </div>
-
-        <!-- </div> -->
         </div> 
 
     </div>
@@ -424,7 +443,7 @@
             }
         }
 
-        function myFunction() {
+        function myFunction_divopen() {
             var x = document.getElementById("myDIV");
             if (x.style.display === "none") {
               x.style.display = "block";
