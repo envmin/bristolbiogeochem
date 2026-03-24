@@ -1,106 +1,30 @@
-#!/usr/bin/env python3
-import requests
-import csv
-from pathlib import Path
+name: Update Publications from ORCID
 
-# === EDIT THIS ===
-ORCID_ID = "0000-0002-4399-7336"   # your real ORCID
-CSV_FILE = Path("PublicationList_vCSV.csv")
+on:
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
 
-ORCID_API = f"https://pub.orcid.org/v3.0/{ORCID_ID}/works"
-HEADERS = {"Accept": "application/json"}
+jobs:
+  update:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
 
-def get_orcid_works():
-    r = requests.get(ORCID_API, headers=HEADERS)
-    r.raise_for_status()
-    data = r.json()
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
-    works = []
-    for group in data.get("group", []):
-        summary = group["work-summary"][0]
+      - name: Install deps
+        run: pip install requests
 
-        title = summary["title"]["title"]["value"]
-        year = summary.get("publication-date", {}).get("year", {}).get("value")
-        journal = summary.get("journal-title", {}).get("value")
+      - name: Update publication CSV
+        run: python update_publications_from_orcid.py
 
-        doi = None
-        for ext in summary.get("external-ids", {}).get("external-id", []):
-            if ext.get("external-id-type") == "doi":
-                doi = ext.get("external-id-value")
-                break
-
-        works.append({
-            "Year": year if year else "",
-            "Title": title,
-            "Authors": "",
-            "Journal": journal if journal else "",
-            "Journal data": "",
-            "DOI": f"https://doi.org/{doi}" if doi else ""
-        })
-
-    return works
-
-
-def read_existing_csv():
-    if not CSV_FILE.exists():
-        return []
-
-    with CSV_FILE.open("r", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        return list(reader)
-
-
-def works_equal(a, b):
-    """Compare publications by title + DOI."""
-    return (
-        a["Title"].strip().lower() == b["Title"].strip().lower()
-        and a["DOI"].strip().lower() == b["DOI"].strip().lower()
-    )
-
-
-def merge_publications(existing, new):
-    merged = existing.copy()
-    for w in new:
-        if not any(works_equal(w, e) for e in existing):
-            merged.append(w)
-    return merged
-
-
-def write_csv(rows):
-    fieldnames = ["#", "Year", "Title", "Authors", "Journal", "Journal data", "DOI"]
-
-    # sort newest → oldest
-    rows_sorted = sorted(rows, key=lambda r: r["Year"], reverse=True)
-
-    # reassign numbering from top
-    for i, row in enumerate(rows_sorted, start=1):
-        row["#"] = i
-
-    with CSV_FILE.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for r in rows_sorted:
-            writer.writerow(r)
-
-
-def main():
-    print("Fetching ORCID data…")
-    orcid_works = get_orcid_works()
-
-    print(f"Found {len(orcid_works)} ORCID publications")
-
-    print("Loading existing CSV…")
-    existing = read_existing_csv()
-
-    print("Merging…")
-    merged = merge_publications(existing, orcid_works)
-
-    print(f"Writing {len(merged)} records to CSV")
-    write_csv(merged)
-
-    print("✅ Done.")
-
-
-if __name__ == "__main__":
-    main()
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update publication CSV from ORCID"
