@@ -1,70 +1,156 @@
-
 <!DOCTYPE html>
-<html>
- <head>
-  <title>Publications</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- </head>
-
- <!-- <body onload="loadtable()"> -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Recent Publications</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 2rem auto;
+        max-width: 800px;
+        line-height: 1.6;
+        color: #222;
+    }
+    .pub-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1rem;
+        background: #fafafa;
+        transition: box-shadow 0.2s ease;
+    }
+    .pub-card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .pub-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: 0 0 .2rem 0;
+    }
+    .pub-authors {
+        margin: 0.2rem 0;
+        font-style: italic;
+        color: #444;
+    }
+    .pub-journal {
+        margin: 0.2rem 0;
+        font-weight: 600;
+        color: #555;
+    }
+    .pub-doi a {
+        color: #0066cc;
+        text-decoration: none;
+        font-weight: 600;
+    }
+    .pub-doi a:hover {
+        text-decoration: underline;
+    }
+    #toggle-btn {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        background: #005bbb;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 1rem;
+    }
+</style>
+</head>
 <body>
 
-
-  <div class="container">
-    <div class="table-responsive">
-     <h1 align="center">CSV File to HTML Table Using AJAX jQuery</h1>
-     <br />
-     <div align="center">
-      <button type="button" name="load_data" id="load_data" class="btn btn-info">Load Data</button>
-     </div>
-     <br />
-     <div id="publication_table">
-    </div>
-    </div>
-   </div>
-
-
- </body>
-</html>
+<h2>Latest Publications</h2>
+<div id="pub-container"></div>
+<button id="toggle-btn" style="display:none;">Show full list</button>
 
 <script>
-$(document).ready(function(){
- $('#load_data').click(function(){
-  $.ajax({
-   url:"PublicationList_vCSV.txt",
-   dataType:"text",
-   success:function(data)
-   {
-    var employee_data = data.split(/\r?\n|\r/);
-    var table_data = '<table class="table table-bordered table-striped">';
-    for(var count = 0; count<employee_data.length; count++)
-    {
-     var cell_data = employee_data[count].split("\t");
-     table_data += '<tr>';
-     for(var cell_count=0; cell_count<cell_data.length; cell_count++)
-     {
-      if(count === 0)
-      {
-       table_data += '<th>'+cell_data[cell_count]+'</th>';
-      }
-      else
-      {
-       table_data += '<td>'+cell_data[cell_count]+'</td>';
-      }
-     }
-     table_data += '</tr>';
-    }
-    table_data += '</table>';
-    $('#publication_table').html(table_data);
-   }
-  });
- });
- 
-});
+// --- CSV parser with BOM + whitespace cleanup ---
+function parseCSV(text) {
+    const lines = text.trim().split("\n");
 
+    let headers = lines[0]
+        .split(",")
+        .map(h => h.replace(/^\ufeff/, "").trim());
 
+    return lines.slice(1).map(line => {
+        const cols = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+        const obj = {};
+        headers.forEach((h, i) => {
+            obj[h] = (cols[i] || "").trim();
+        });
+        return obj;
+    });
+}
 
+// Render publication cards
+function renderPublications(entries, limit = 5) {
+    const container = document.getElementById("pub-container");
+    container.innerHTML = "";
 
+    const toShow = limit ? entries.slice(0, limit) : entries;
+
+    toShow.forEach(pub => {
+        const card = document.createElement("div");
+        card.className = "pub-card";
+
+        let doiHTML = "";
+        if (pub.DOI && pub.DOI !== "" && pub.DOI !== "undefined") {
+            doiHTML = `
+                <div class="pub-doi">
+                        <a href="${pub.DOI}" target="_blank" rel="noopener">
+                            ${pub.DOI}
+                        </a>
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            <div class="pub-title">${pub.Title}</div>
+            <div class="pub-authors">${pub.Authors}</div>
+            <div class="pub-journal">${pub.Journal} (${pub.Year})</div>
+            ${doiHTML}
+        `;
+        container.appendChild(card);
+    });
+}
+
+// --- Load CSV + build UI ---
+let allEntries = [];
+let showingFull = false;
+
+fetch("PublicationList_vCSV.csv")
+    .then(r => r.text())
+    .then(csv => {
+        allEntries = parseCSV(csv);
+
+        // Sort by year (desc)
+        allEntries.sort((a, b) => Number(b.Year) - Number(a.Year));
+
+        // Render top 5
+        renderPublications(allEntries, 5);
+
+        // Show toggle button
+        const btn = document.getElementById("toggle-btn");
+        btn.style.display = "inline-block";
+
+        btn.addEventListener("click", () => {
+            showingFull = !showingFull;
+
+            if (showingFull) {
+                renderPublications(allEntries, null);
+                btn.textContent = "Show top 5";
+            } else {
+                renderPublications(allEntries, 5);
+                btn.textContent = "Show full list";
+            }
+        });
+    })
+    .catch(err => {
+        document.getElementById("pub-container").innerHTML =
+            "<p>Error loading publications.</p>";
+        console.error(err);
+    });
 </script>
+
+</body>
+</html>

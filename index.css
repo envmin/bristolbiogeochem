@@ -676,3 +676,37 @@ button {
 	margin-right: auto;
 	width: 50%;
   }
+
+    .pub-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem 1.2rem;
+        margin-bottom: 1rem;
+        background: #fafafa;
+        transition: box-shadow 0.2s ease;
+    }
+    .pub-card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .pub-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: 0 0 .2rem 0;
+    }
+    .pub-authors {
+        margin: 0.2rem 0;
+        font-style: italic;
+        color: #444;
+    }
+    .pub-journal {
+        margin: 0.2rem 0;
+        font-weight: 600;
+        color: #555;
+    }
+    .pub-doi a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+
+
+	
