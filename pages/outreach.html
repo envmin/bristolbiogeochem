@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Outreach</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link rel="stylesheet" type="text/css" href="../nav.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+</head>
+<body>
+
+<!-- Shared navigation -->
+<div id="nav-placeholder"></div>
+<script>
+fetch("../navbar.html")
+  .then(r => r.text())
+  .then(html => document.getElementById("nav-placeholder").innerHTML = html);
+</script>
+
+<header>
+    <h1>Outreach Activities</h1>
+</header>
+
+<section>
+
+    <div class="infobox">
+        <p>
+            As a former committee member of the Environmental Mineralogy Group of the Mineralogical Society, 
+            James created a video highlighting the properties of his favourite mineral, magnetite.
+            You can view the full entry on the 
+            <a href="https://www.minersoc.org/emg-video.html" target="_blank">
+                EMG Competition page
+            </a>.
+        </p>
+    </div>
+
+    <div class="infobox center">
+        <iframe 
+            width="840" 
+            height="530"
+            src="https://www.youtube.com/embed/wGVOghFVpLE"
+            allowfullscreen>
+        </iframe>
+    </div>
+
+</section>
+
+</body>
+</html>

@@ -5,7 +5,7 @@ from pathlib import Path
 
 # === EDIT THIS ===
 ORCID_ID = "0000-0002-4399-7336"   # your real ORCID
-CSV_FILE = Path("PublicationList_vCSV.csv")
+CSV_FILE = Path("csv/PublicationList_vCSV.csv")
 
 ORCID_API = f"https://pub.orcid.org/v3.0/{ORCID_ID}/works"
 HEADERS = {"Accept": "application/json"}

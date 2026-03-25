@@ -1,0 +1,38 @@
+/* --- Top Navigation Bar (Left Aligned + Fixed on Scroll) --- */
+.topnav {
+    background-color: #003b52;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 0.8rem 2rem;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Remove browser default margin to remove the white strip */
+body {
+    margin: 10px;           /* ✅ removes the white bar */
+    padding-top: 70px;   /* ✅ keeps content below fixed navbar */
+}
+
+.topnav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.topnav a:hover {
+    background: #005c7c;
+}
+

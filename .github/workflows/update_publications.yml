@@ -25,7 +25,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Auto-update PublicationList_vCSV.csv"
-          file_pattern: PublicationList_vCSV.csv
+          file_pattern: csv/PublicationList_vCSV.csv
 
   redeploy-pages:
     needs: update-publications

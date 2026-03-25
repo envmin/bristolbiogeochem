@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Group Members</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- PapaParse for CSV reading -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../nav.css">
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+</head>
+<body>
+<div id="nav-placeholder"></div>
+
+
+<script>
+fetch("../navbar.html")
+  .then(r => r.text())
+  .then(html => document.getElementById("nav-placeholder").innerHTML = html);
+</script>
+<header>
+    <h1>Research Group Members</h1>
+</header>
+<section id="current-members">
+    <h2>👤 Current Members</h2>
+</section>
+
+<section id="former-members">
+    <h2>👋 Former Members</h2>
+    <div id="former-content"></div>
+</section>
+
+<script>
+// --- Date helpers ---
+function parseDate(d) {
+    const [day, month, year] = d.split('.').map(x => parseInt(x));
+    return new Date(year, month - 1, day);
+}
+
+// Format as Month YYYY
+function monthYear(d) {
+    const dt = parseDate(d);
+    //return dt.toLocaleString("en-GB", { month: "short", year: "numeric" });
+    return dt.toLocaleString("en-GB", { year: "numeric" });
+}
+
+// Entry is valid only if start date <= today
+function isFutureStart(start) {
+    const today = new Date();
+    return parseDate(start) > today;
+}
+
+function isCurrent(start, end) {
+    const today = new Date();
+    return parseDate(start) <= today && parseDate(end) >= today;
+}
+
+// --- Load CSV ---
+Papa.parse("../csv/people.csv", {
+    download: true,
+    header: true,
+    complete: function(results) {
+        const data = results.data;
+
+        const current = {};
+        const former = {};
+
+        data.forEach(p => {
+            if (!p.Role) return;
+
+            // Skip people whose *start* date is in the future
+            if (isFutureStart(p.Start)) return;
+
+            const group = isCurrent(p.Start, p.End) ? current : former;
+
+            if (!group[p.Role]) group[p.Role] = [];
+            group[p.Role].push(p);
+        });
+
+        buildCurrent("current-members", current);
+        buildFormer("former-content", former);
+    }
+});
+
+// --- Build Current Members (with images) ---
+function buildCurrent(containerId, data) {
+    const container = document.getElementById(containerId);
+
+    Object.keys(data).forEach(role => {
+        const roleBlock = document.createElement("div");
+        roleBlock.className = "role-block";
+
+        let html = `<h3>${role}</h3>`;
+
+        data[role].forEach(p => {
+
+            const photo = p.Photo && p.Photo.trim() !== "" 
+                ? p.Photo 
+                : "../images/people/blank.png"; // fallback image
+
+            html += `
+                <div class="person">
+                    <img src="../images/people/${photo}" alt="${p.Name}">
+                    <div>
+                        <h3>${p.Prefix ? p.Prefix + " " : ""}${p.Name}</h3>
+                        <p class="dates">${monthYear(p.Start)} - ${monthYear(p.End)}</p>
+                        ${p.email ? `<p><strong>Email:</strong> ${p.email}</p>` : ""}
+                        ${p.Description ? `<p>${p.Description}</p>` : ""}
+                    </div>
+                </div>
+            `;
+        });
+
+        roleBlock.innerHTML = html;
+        container.appendChild(roleBlock);
+    });
+}
+
+// --- Build Former Members (no images) ---
+function buildFormer(containerId, data) {
+    const container = document.getElementById(containerId);
+
+    Object.keys(data).forEach(role => {
+        let html = `<h3>${role}</h3><ul>`;
+
+        data[role].forEach(p => {
+            html += `
+                <li>
+                    ${p.Prefix ? p.Prefix + " " : ""}${p.Name}
+                    (${monthYear(p.Start)} - ${monthYear(p.End)})
+                </li>`;
+        });
+
+        html += "</ul>";
+        container.innerHTML += html;
+    });
+}
+</script>
+
+</body>
+</html>
