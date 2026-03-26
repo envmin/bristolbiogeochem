@@ -90,7 +90,7 @@
     }
 
     // --- Load CSV + build UI ---
-    fetch("/csv/PublicationList_vCSV.csv")
+    fetch("csv/PublicationList_vCSV.csv")
         .then(r => r.text())
         .then(csv => {
             const entries = parseCSV(csv);

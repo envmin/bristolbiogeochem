@@ -62,7 +62,7 @@ function isCurrent(start, end) {
 }
 
 // --- Load CSV ---
-Papa.parse("/csv/people.csv", {
+Papa.parse("csv/people.csv", {
     download: true,
     header: true,
     complete: function(results) {
@@ -102,11 +102,11 @@ function buildCurrent(containerId, data) {
 
             const photo = p.Photo && p.Photo.trim() !== "" 
                 ? p.Photo 
-                : "/images/people/blank.png"; // fallback image
+                : "images/people/blank.png"; // fallback image
 
             html += `
                 <div class="person">
-                    <img src="/images/people/${photo}" alt="${p.Name}">
+                    <img src="images/people/${photo}" alt="${p.Name}">
                     <div>
                         <h3>${p.Prefix ? p.Prefix + " " : ""}${p.Name}</h3>
                         <p class="dates">${monthYear(p.Start)} - ${monthYear(p.End)}</p>
