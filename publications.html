@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Publications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Shared nav styling -->
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+<div id="nav-placeholder"></div>
+ 
+
+    <!-- HERO -->
+    <header class="hero">
+        <h1>Publications</h1>
+    </header>
+
+        
+    <section>
+
+        <div id="pub-container"></div>
+
+    </section>
+
+
+<script src="js/site.js"></script>
+
+
+    <script>
+    // --- CSV parser with BOM + whitespace cleanup ---
+    function parseCSV(text) {
+        const lines = text.trim().split("\n");
+
+        const headers = lines[0]
+            .split(",")
+            .map(h => h.replace(/^\ufeff/, "").trim());
+
+        return lines.slice(1).map(line => {
+            const cols = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+            const obj = {};
+            headers.forEach((h, i) => {
+                obj[h] = (cols[i] || "").trim();
+            });
+            return obj;
+        });
+    }
+
+    // Render a year block with all publications inside it
+    function renderYearBlock(year, entries) {
+        const container = document.getElementById("pub-container");
+
+        const block = document.createElement("div");
+        block.className = "year-block";
+
+        let html = `<div class="year-title">${year}</div>`;
+
+        entries.forEach(pub => {
+            let doiHTML = "";
+            if (pub.DOI && pub.DOI !== "" && pub.DOI !== "undefined") {
+                doiHTML = `
+                    <div class="pub-doi">
+                        <a href="${pub.DOI}" target="_blank" rel="noopener">
+                            ${pub.DOI}
+                        </a>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="pub-card">
+                    <div class="pub-title">${pub.Title}</div>
+                    <div class="pub-authors">${pub.Authors}</div>
+                    <div class="pub-journal">${pub.Journal}</div>
+                    ${doiHTML}
+                </div>
+            `;
+        });
+
+        block.innerHTML = html;
+        container.appendChild(block);
+    }
+
+    // --- Load CSV + build UI ---
+    fetch("../csv/PublicationList_vCSV.csv")
+        .then(r => r.text())
+        .then(csv => {
+            const entries = parseCSV(csv);
+
+            // Sort by year DESC
+            entries.sort((a, b) => Number(b.Year) - Number(a.Year));
+
+            // Group by year
+            const grouped = {};
+            entries.forEach(pub => {
+                if (!grouped[pub.Year]) grouped[pub.Year] = [];
+                grouped[pub.Year].push(pub);
+            });
+
+            // Render year blocks
+            Object.keys(grouped)
+                .sort((a, b) => Number(b) - Number(a))
+                .forEach(year => {
+                    renderYearBlock(year, grouped[year]);
+                });
+        })
+        .catch(err => {
+            document.getElementById("pub-container").innerHTML =
+                "<p>Error loading publications.</p>";
+            console.error(err);
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+/* light mode */
+:root {
+  --bg: #f6f6f6;
+  --text: #222;
+  --card-bg: white;
+  --accent: #0077aa;
+}
+
+/* manual dark mode override */
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --text: #f1f1f1;
+  --card-bg: #2a2a2a;
+  --accent: #f8f8f8;
+}

@@ -1,141 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Environmental Mineralogy - University of Bristol</title>
+    <meta charset="UTF-8">
 
-<!-- Shared navbar and site styling -->
-<link rel="stylesheet" href="nav.css">
-<link rel="stylesheet" href="css/main.css">
+    <!-- Mobile scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-    /* Page-specific enhancements */
-    body {
-        margin: 0;
-        padding-top: 70px; /* space for fixed navbar */
-        background: #f6f6f6;
-        font-family: Arial, sans-serif;
-        color: #222;
-    }
-header.hero {
-    background: url("images/home/01.jpg") center/cover no-repeat;
-    color: white;
-    text-align: center;
-    padding: 4rem 1rem 3rem 1rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    <title>Environmental Mineralogy - University of Bristol</title>
 
-    /* Add an overlay for readability */
-    position: relative;
-}
-
-header.hero::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.45); /* darken for text contrast */
-    z-index: 1;
-}
-
-header.hero h1 {
-    position: relative;
-        font-size: 3.6rem;
-
-    z-index: 2; /* ensure text sits above overlay */
-
-}
-header.hero h3 { 
-    position: relative;
-    z-index: 2; /* ensure text sits above overlay */
-}
-
-    section {
-        max-width: 900px;
-        margin: 2rem auto;
-        padding: 1.5rem 2rem;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-
-    .section-title {
-        color: #003e57;
-        border-left: 5px solid #0077aa;
-        padding-left: 0.6rem;
-        margin-bottom: 1rem;
-        font-size: 1.6rem;
-    }
-
-    .infobox {
-        background: #f3fbff;
-        border-left: 5px solid #0077aa;
-        padding: 1rem 1.2rem;
-        border-radius: 6px;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-    }
-
-    .funding-logos {
-        text-align: center;
-        margin-top: 1rem;
-    }
-
-    .funding-logos img {
-        max-width: 280px;
-        margin: 0.5rem 1rem;
-    }
-
-</style>
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
 
-<!-- Shared navigation -->
-<div id="nav-placeholder"></div>
-<script>
-fetch("navbar.html")
-  .then(r => r.text())
-  .then(html => document.getElementById("nav-placeholder").innerHTML = html);
-</script>
+    <!-- NAVBAR -->
+    <div id="nav-placeholder"></div>
+ 
 
-<!-- Hero Header -->
-<header class="hero">
-    <h1>Environmental Mineralogy</h1>
-    <h3>Led by Dr James M. Byrne · University of Bristol</h3>
-</header>
+    <!-- HERO -->
+    <header class="hero">
+        <h1>Environmental Mineralogy</h1>
+        <h3>Led by Dr James M. Byrne · University of Bristol</h3>
+    </header>
 
-<!-- ABOUT US -->
-<section>
-    <h2 class="section-title">About Us</h2>
-
-    <div class="infobox">
-        <p>
-            The Environmental Mineralogy Group in the School of Earth Sciences at the University of Bristol 
-            investigates natural processes involving iron minerals, with a strong focus on 
-            microbe–mineral interactions and biomineralisation. Our research aims to advance understanding of 
-            environmentally and societally important processes.
-        </p>
-        <p>
-            By combining laboratory experiments with advanced spectroscopic and microscopic techniques, 
-            we reveal how bacteria produce minerals — and how these biogenic materials can be harnessed 
-            for metal recovery, water remediation, and low‑cost energy applications.
-        </p>
-    </div>
-</section>
-
-<!-- FUNDING -->
-<section>
-    <h2 class="section-title">Funding</h2>
-
-    <div class="infobox">
-        <p>
-            Our research is supported by funding from:
-        </p>
-
-        <div class="funding-logos">
-            <img src="images/funding/UKRIlogo.png" alt="UKRI">
+    <!-- ABOUT -->
+    <section>
+        <h2 class="section-title">About Us</h2>
+        <div class="infobox">
+            <p>
+                The Environmental Mineralogy Group in the School of Earth Sciences at the University of Bristol
+                investigates natural processes involving iron minerals, with a strong focus on
+                microbe–mineral interactions and biomineralisation.
+            </p>
+            <p>
+                By combining laboratory experiments with advanced spectroscopic and microscopic techniques,
+                we reveal how bacteria produce minerals — and how these biogenic materials can be harnessed
+                for metal recovery, water remediation, and low‑cost energy applications.
+            </p>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- FUNDING -->
+    <section>
+        <h2 class="section-title">Funding</h2>
+        <div class="infobox">
+            <p>Our research is supported by funding from:</p>
+            <div class="funding-logos">
+                <img src="images/funding/UKRIlogo.png" alt="UKRI">
+            </div>
+        </div>
+    </section>
+
+    <script src="js/site.js"></script>
 
 </body>
 </html>
