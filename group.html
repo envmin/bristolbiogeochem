@@ -62,7 +62,7 @@ function isCurrent(start, end) {
 }
 
 // --- Load CSV ---
-Papa.parse("../csv/people.csv", {
+Papa.parse("/csv/people.csv", {
     download: true,
     header: true,
     complete: function(results) {
