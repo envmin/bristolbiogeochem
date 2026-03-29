@@ -60,7 +60,53 @@ function isCurrent(start, end) {
     const today = new Date();
     return parseDate(start) <= today && parseDate(end) >= today;
 }
+function displayEndDate(end) {
+    const today = new Date();
+    const endDate = parseDate(end);
 
+    return endDate > today ? "Present" : monthYear(end);
+}
+function displayEndDate(end) {
+    const today = new Date();
+    const endDate = parseDate(end);
+
+    // If the end date hasn't happened yet → show "Present"
+    return endDate > today ? "Present" : monthYear(end);
+}
+
+// Format DD.MM.YYYY → Date
+function parseDate(d) {
+    const [day, month, year] = d.split('.').map(x => parseInt(x));
+    return new Date(year, month - 1, day);
+}
+
+// Format as just year
+function yearOnly(d) {
+    return parseDate(d).toLocaleString("en-GB", { year: "numeric" });
+}
+
+// Determine how to display the date range
+function displayDateRange(start, end) {
+    const today = new Date();
+    const startDate = parseDate(start);
+    const endDate = parseDate(end);
+
+    const startYear = startDate.getFullYear();
+    const endYear = endDate.getFullYear();
+
+    // If the end date hasn't happened yet → "Present"
+    if (endDate > today) {
+        return `${startYear} - Present`;
+    }
+
+    // If start and end are same year → print year once
+    if (startYear === endYear) {
+        return `${startYear}`;
+    }
+
+    // Otherwise "start - end"
+    return `${startYear} - ${endYear}`;
+}
 // --- Load CSV ---
 Papa.parse("csv/people.csv", {
     download: true,
@@ -109,7 +155,7 @@ function buildCurrent(containerId, data) {
                     <img src="images/people/${photo}" alt="${p.Name}">
                     <div>
                         <h3>${p.Prefix ? p.Prefix + " " : ""}${p.Name}</h3>
-                        <p class="dates">${monthYear(p.Start)} - ${monthYear(p.End)}</p>
+                        <p class="dates">${displayDateRange(p.Start, p.End)}</p>
                         ${p.email ? `<p><strong>Email:</strong> ${p.email}</p>` : ""}
                         ${p.Description ? `<p>${p.Description}</p>` : ""}
                     </div>
@@ -133,7 +179,7 @@ function buildFormer(containerId, data) {
             html += `
                 <li>
                     ${p.Prefix ? p.Prefix + " " : ""}${p.Name}
-                    (${monthYear(p.Start)} - ${monthYear(p.End)})
+                    (${displayDateRange(p.Start, p.End)})
                 </li>`;
         });
 
