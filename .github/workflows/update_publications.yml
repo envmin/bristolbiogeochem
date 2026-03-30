@@ -5,6 +5,11 @@ on:
     - cron: "0 5 * * 1"
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   update-publications:
     runs-on: ubuntu-latest
@@ -27,15 +32,29 @@ jobs:
           commit_message: "Auto-update PublicationList_vCSV.csv"
           file_pattern: csv/PublicationList_vCSV.csv
 
-  redeploy-pages:
+  build-pages:
     needs: update-publications
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
 
     steps:
-      - name: Request GitHub Pages rebuild
-        run: gh workflow run deploy-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+
+      - name: Build GitHub Pages content
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy-pages:
+    needs: build-pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
