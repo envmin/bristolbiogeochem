@@ -12,6 +12,8 @@ HEADERS = {"Accept": "application/json"}
 
 import requests
 
+# Added note to keep github actions working.
+
 def fetch_full_work(put_code):
     """Fetch full ORCID work record to extract authors."""
     url = f"https://pub.orcid.org/v3.0/{ORCID_ID}/work/{put_code}"
