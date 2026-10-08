@@ -578,11 +578,17 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
     gap: 1.25rem;
-    align-items: start;
 }
 
+/* Cards in a row share the same height, with the button kept at the bottom */
 .outreach-card {
+    display: flex;
+    flex-direction: column;
     padding: 1.25rem;
+}
+
+.outreach-card > :last-child {
+    margin-top: auto;
 }
 
 .outreach-thumb {
