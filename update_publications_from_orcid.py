@@ -41,24 +41,23 @@ def fetch_crossref_metadata(doi):
             if data["container-title"]:
                 journal = data["container-title"][0]
 
-        # Year (print preferred)
-        pub_year = None
-        if "published-print" in data:
-            parts = data["published-print"].get("date-parts", [[]])
+        # Date (print preferred, online as fallback)
+        date_parts = []
+        for field in ("published-print", "published-online"):
+            parts = data.get(field, {}).get("date-parts", [[]])
             if parts and parts[0]:
-                pub_year = parts[0][0]
+                date_parts = parts[0]
+                break
 
-        # Online publication year fallback
-        if pub_year is None and "published-online" in data:
-            parts = data["published-online"].get("date-parts", [[]])
-            if parts and parts[0]:
-                pub_year = parts[0][0]
-
-        year = str(pub_year) if pub_year is not None else ""
+        year = str(date_parts[0]) if len(date_parts) > 0 else ""
+        month = date_parts[1] if len(date_parts) > 1 else 0
+        day = date_parts[2] if len(date_parts) > 2 else 0
 
         return {
             "journal": journal,
             "year": year,
+            "month": month,
+            "day": day,
         }
 
     except Exception:
@@ -85,6 +84,8 @@ def get_orcid_works():
         pub_date = summary.get("publication-date") or {}
         year_field = pub_date.get("year") or {}
         year = year_field.get("value", "")
+        month = to_int((pub_date.get("month") or {}).get("value"))
+        day = to_int((pub_date.get("day") or {}).get("value"))
 
         # ---- ORCID Journal ----
         journal_field = summary.get("journal-title")
@@ -146,6 +147,10 @@ def get_orcid_works():
             if not year:
                 year = cr.get("year", year)
 
+            # Month and day are only used to order papers within a year
+            if not month:
+                month, day = to_int(cr.get("month")), to_int(cr.get("day"))
+
             # Always prefer CrossRef authors unless ORCID explicitly listed some
             crossref_authors = cr.get("authors", [])
             if crossref_authors:
@@ -158,11 +163,21 @@ def get_orcid_works():
             #"Authors": authors,
             "Journal": journal,
             "Journal data": "",
-            "DOI": f"https://doi.org/{doi}" if doi else ""
+            "DOI": f"https://doi.org/{doi}" if doi else "",
+            # Sort-only fields, not written to the CSV
+            "_month": month,
+            "_day": day,
         })
 
         print(works)
     return works
+
+def to_int(value):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return 0
+
 
 def read_existing_csv():
     if not CSV_FILE.exists():
@@ -198,6 +213,9 @@ def merge_publications(existing, new):
             for field, value in w.items():
                 if existing_by_key[key].get(field) in ("", None):
                     existing_by_key[key][field] = value
+            # Always take the latest month and day for sorting
+            existing_by_key[key]["_month"] = w["_month"]
+            existing_by_key[key]["_day"] = w["_day"]
         else:
             existing_by_key[key] = w
 
@@ -206,15 +224,20 @@ def merge_publications(existing, new):
 def write_csv(rows):
     fieldnames = ["#", "Year", "Title", "Authors", "Journal", "Journal data", "DOI"]
 
-    # sort newest → oldest
-    rows_sorted = sorted(rows, key=lambda r: r["Year"], reverse=True)
+    # sort newest → oldest, using month and day within a year where ORCID or
+    # CrossRef provide them (papers without a month go last in their year)
+    rows_sorted = sorted(
+        rows,
+        key=lambda r: (r["Year"], to_int(r.get("_month")), to_int(r.get("_day"))),
+        reverse=True,
+    )
 
     # reassign numbering from top
     for i, row in enumerate(rows_sorted, start=1):
         row["#"] = i
 
     with CSV_FILE.open("w", encoding="utf-8", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
         for r in rows_sorted:
             writer.writerow(r)
