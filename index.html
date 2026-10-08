@@ -1,61 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Environmental Mineralogy Group, University of Bristol</title>
+    <meta name="description" content="The Environmental Mineralogy Group at the University of Bristol studies how bacteria make iron minerals, and how those minerals can recover metals, clean water and store energy.">
 
-    <!-- Mobile scaling -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Apply the saved theme before the page draws -->
+    <script>
+        document.documentElement.classList.add("js");
+        try {
+            var savedTheme = localStorage.getItem("theme");
+            if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+        } catch (e) {}
+    </script>
 
-    <title>Environmental Mineralogy - University of Bristol</title>
-
-    <!-- Global Styles -->
     <link rel="stylesheet" href="css/theme.css">
-    <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"
+            integrity="sha384-D/t0ZMqQW31H3az8ktEiNb39wyKnS82iFY52QPACM+IjKW3jDUhyIgh2PApRqJZs"
+            crossorigin="anonymous"></script>
+    <script defer src="js/csv.js"></script>
+    <script defer src="js/site.js"></script>
+    <script defer src="js/research.js"></script>
+    <script defer src="js/publications.js"></script>
+    <script defer src="js/people.js"></script>
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- NAVBAR -->
-    <div id="nav-placeholder"></div>
- 
-
-    <!-- HERO -->
-    <header class="hero">
-        <h1>Environmental Mineralogy</h1>
-        <h3>Led by Dr James M. Byrne · University of Bristol</h3>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main">
+            <a class="brand" href="#top">Environmental Mineralogy</a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Menu</span>
+            </button>
+            <ul class="nav-links" id="site-menu">
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Publications</a></li>
+                <li><a href="#people">People</a></li>
+                <li><a href="#outreach">Outreach</a></li>
+                <li><a href="#join">Join us</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch colour theme">🌙</button>
+        </nav>
     </header>
 
-    <!-- ABOUT -->
-    <section>
-        <h2 class="section-title">About Us</h2>
-        <div class="infobox">
-            <p>
-                The Environmental Mineralogy Group in the School of Earth Sciences at the University of Bristol
-                investigates natural processes involving iron minerals, with a strong focus on
-                microbe–mineral interactions and biomineralisation.
-            </p>
-            <p>
-                By combining laboratory experiments with advanced spectroscopic and microscopic techniques,
-                we reveal how bacteria produce minerals — and how these biogenic materials can be harnessed
-                for metal recovery, water remediation, and low‑cost energy applications.
+    <div class="hero" id="top">
+        <div class="hero-inner">
+            <h1>Environmental Mineralogy Group</h1>
+            <p class="hero-lead">We study how bacteria make iron minerals, and how those minerals can recover metals, clean water and store energy.</p>
+            <p class="hero-meta">Led by Dr James M. Byrne · School of Earth Sciences, University of Bristol</p>
+            <p class="hero-actions">
+                <a class="button" href="#research">Our research</a>
+                <a class="button button-ghost" href="#join">Join us</a>
             </p>
         </div>
-    </section>
+    </div>
 
-    <!-- FUNDING -->
-    <section>
-        <h2 class="section-title">Funding</h2>
-        <div class="infobox">
-            <p>Our research is supported by funding from:</p>
-            <div class="funding-logos">
-                <img src="images/funding/UKRIlogo.png" alt="UKRI">
+    <main id="main">
+
+        <section id="about" class="section" aria-labelledby="about-title">
+            <div class="container narrow">
+                <h2 id="about-title">About us</h2>
+                <p>
+                    The Environmental Mineralogy Group is part of the School of Earth Sciences at the University of Bristol.
+                    We study natural processes involving iron minerals. Our main focus is how microbes and minerals
+                    interact, and how living things make minerals, a process called biomineralisation.
+                </p>
+                <p>
+                    We combine laboratory experiments with advanced spectroscopy and microscopy to reveal how bacteria
+                    produce minerals. We also explore how these biogenic (microbe-made) minerals can be used for metal
+                    recovery, cleaning up water and low-cost energy applications.
+                </p>
             </div>
+        </section>
+
+        <section id="research" class="section section-alt" aria-labelledby="research-title">
+            <div class="container">
+                <h2 id="research-title">Research</h2>
+                <div id="research-list" class="research-grid">
+                    <p class="loading">Loading research themes…</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications" class="section" aria-labelledby="publications-title">
+            <div class="container">
+                <h2 id="publications-title">Publications</h2>
+
+                <div class="pub-group">
+                    <h3>Recent highlights</h3>
+                    <div id="recent-pubs" class="pub-list">
+                        <p class="loading">Loading publications…</p>
+                    </div>
+                </div>
+
+                <div class="pub-group" id="key-papers-block" hidden>
+                    <h3>Key papers</h3>
+                    <div id="key-pubs" class="pub-list"></div>
+                </div>
+
+                <p><a class="button" href="publications.html">See all publications</a></p>
+            </div>
+        </section>
+
+        <section id="people" class="section section-alt" aria-labelledby="people-title">
+            <div class="container">
+                <h2 id="people-title">People</h2>
+                <div id="current-members">
+                    <p class="loading">Loading group members…</p>
+                </div>
+
+                <details class="former" id="former-block" hidden>
+                    <summary>Former members</summary>
+                    <div id="former-members"></div>
+                </details>
+            </div>
+        </section>
+
+        <section id="outreach" class="section" aria-labelledby="outreach-title">
+            <div class="container">
+                <h2 id="outreach-title">Outreach</h2>
+
+                <div class="outreach-grid">
+                    <article class="outreach-card">
+                        <h3>Rust to the Rescue</h3>
+                        <p>
+                            An interactive page about colourful and magnetic iron minerals and the tiny bacteria
+                            that make them. Go magnet fishing and test yourself with a quiz.
+                        </p>
+                        <p><a class="button" href="rust-to-the-rescue.html">Visit Rust to the Rescue</a></p>
+                    </article>
+
+                    <article class="outreach-card">
+                        <h3>Magnetite on video</h3>
+                        <p>
+                            As a former committee member of the Environmental Mineralogy Group of the Mineralogical
+                            Society, James created a video highlighting the properties of his favourite mineral, magnetite.
+                            You can view the full entry on the
+                            <a href="https://www.minersoc.org/emg-video.html" rel="noopener">EMG Competition page</a>.
+                        </p>
+                        <div class="video-wrapper">
+                            <iframe
+                                src="https://www.youtube-nocookie.com/embed/wGVOghFVpLE"
+                                title="Magnetite video for the Mineralogical Society EMG competition"
+                                loading="lazy"
+                                allow="encrypted-media; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin"
+                                allowfullscreen></iframe>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="join" class="section section-alt" aria-labelledby="join-title">
+            <div class="container narrow">
+                <h2 id="join-title">Join us</h2>
+                <p>We do not currently have any open funded positions.</p>
+                <p>
+                    However, if you are interested in applying for fellowship schemes, exploring funding
+                    opportunities, or discussing potential collaborations, please get in touch.
+                </p>
+                <p><a class="button" href="mailto:james.byrne@bristol.ac.uk">Email james.byrne@bristol.ac.uk</a></p>
+            </div>
+        </section>
+
+        <section id="funding" class="section" aria-labelledby="funding-title">
+            <div class="container narrow center">
+                <h2 id="funding-title">Funding</h2>
+                <p>Our research is supported by funding from:</p>
+                <img class="funding-logo" src="images/funding/UKRIlogo.png" alt="UK Research and Innovation (UKRI)" loading="lazy">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Environmental Mineralogy Group, School of Earth Sciences, University of Bristol</p>
+            <p><a href="publications.html">Publications</a> · <a href="rust-to-the-rescue.html">Rust to the Rescue</a></p>
         </div>
-    </section>
+    </footer>
 
-    <script src="js/site.js"></script>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            scrollToHashWhenReady([
+                renderResearch(document.getElementById("research-list")),
+                renderHomePublications(
+                    document.getElementById("recent-pubs"),
+                    document.getElementById("key-pubs"),
+                    document.getElementById("key-papers-block"),
+                    3
+                ),
+                renderPeople(
+                    document.getElementById("current-members"),
+                    document.getElementById("former-members"),
+                    document.getElementById("former-block")
+                )
+            ]);
+        });
+    </script>
 </body>
 </html>

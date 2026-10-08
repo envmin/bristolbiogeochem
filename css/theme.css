@@ -1,15 +1,61 @@
-/* light mode */
+/* Colour tokens. Light mode by default, dark mode from the system setting
+   or from the toggle (data-theme on <html>). All text pairs meet WCAG AA. */
+
 :root {
-  --bg: #f6f6f6;
-  --text: #222;
-  --card-bg: white;
-  --accent: #0077aa;
+    --bg: #f6f5f2;
+    --surface: #ffffff;
+    --surface-alt: #eeece7;
+    --text: #1d2327;
+    --muted: #4c5660;
+    --border: #d9d6cf;
+    --link: #0a5a80;
+    --accent: #a8460f;          /* rust */
+    --accent-text: #ffffff;
+    --header-bg: #0f3346;
+    --header-text: #ffffff;
+    --hero-overlay: rgba(10, 30, 42, 0.68);
+    --initials-bg: #d6e4ea;
+    --initials-text: #0f3346;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.05);
+    color-scheme: light;
 }
 
-/* manual dark mode override */
-[data-theme="dark"] {
-  --bg: #1a1a1a;
-  --text: #f1f1f1;
-  --card-bg: #2a2a2a;
-  --accent: #f8f8f8;
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #12171b;
+        --surface: #1b2227;
+        --surface-alt: #161c20;
+        --text: #e6eaed;
+        --muted: #a9b4bc;
+        --border: #2e3940;
+        --link: #7cc7ea;
+        --accent: #e8925a;
+        --accent-text: #1a0f08;
+        --header-bg: #0b1a22;
+        --header-text: #f1f4f6;
+        --hero-overlay: rgba(5, 12, 16, 0.72);
+        --initials-bg: #24414f;
+        --initials-text: #e6eaed;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        color-scheme: dark;
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #12171b;
+    --surface: #1b2227;
+    --surface-alt: #161c20;
+    --text: #e6eaed;
+    --muted: #a9b4bc;
+    --border: #2e3940;
+    --link: #7cc7ea;
+    --accent: #e8925a;
+    --accent-text: #1a0f08;
+    --header-bg: #0b1a22;
+    --header-text: #f1f4f6;
+    --hero-overlay: rgba(5, 12, 16, 0.72);
+    --initials-bg: #24414f;
+    --initials-text: #e6eaed;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
 }

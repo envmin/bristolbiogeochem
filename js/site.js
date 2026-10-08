@@ -1,38 +1,78 @@
-fetch("navbar.html")
-    .then(r => r.text())
-    .then(html => {
-        document.getElementById("nav-placeholder").innerHTML = html;
+// Shared page behaviour: mobile menu and light/dark theme toggle.
+// The saved theme is applied by a small inline script in each page's <head>,
+// so the page does not flash the wrong colours while loading.
 
-        // attach hamburger behaviour
-        const burger = document.querySelector(".hamburger");
-        const menu = document.querySelector(".nav-links");
+(function () {
+    const root = document.documentElement;
+    const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-        if (burger && menu) {
-            burger.addEventListener("click", () => {
-                menu.classList.toggle("active");
-            });
-        }
+    // --- Mobile menu ---
+    const menuButton = document.querySelector(".menu-toggle");
+    const menu = document.getElementById("site-menu");
 
-        // theme toggle (in navbar)
-        const toggle = document.getElementById("theme-toggle");
-        if (toggle) {
-            toggle.addEventListener("click", () => {
-                const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-                if (isDark) {
-                    document.documentElement.removeAttribute("data-theme");
-                    localStorage.setItem("theme", "light");
-                    toggle.textContent = "🌙";
-                } else {
-                    document.documentElement.setAttribute("data-theme", "dark");
-                    localStorage.setItem("theme", "dark");
-                    toggle.textContent = "☀️";
-                }
-            });
-        }
+    function setMenu(open) {
+        menuButton.setAttribute("aria-expanded", String(open));
+        menu.classList.toggle("open", open);
+    }
+
+    if (menuButton && menu) {
+        menuButton.addEventListener("click", () => {
+            setMenu(menuButton.getAttribute("aria-expanded") !== "true");
+        });
+        menu.addEventListener("click", e => {
+            if (e.target.closest("a")) setMenu(false);
+        });
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape") setMenu(false);
+        });
+    }
+
+    // --- Theme toggle ---
+    const themeButton = document.getElementById("theme-toggle");
+
+    function isDark() {
+        const chosen = root.getAttribute("data-theme");
+        return chosen ? chosen === "dark" : darkQuery.matches;
+    }
+
+    function updateThemeButton() {
+        if (!themeButton) return;
+        const dark = isDark();
+        themeButton.textContent = dark ? "☀️" : "🌙";
+        themeButton.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    }
+
+    if (themeButton) {
+        themeButton.addEventListener("click", () => {
+            const next = isDark() ? "light" : "dark";
+            root.setAttribute("data-theme", next);
+            try {
+                localStorage.setItem("theme", next);
+            } catch (e) {
+                // Storage can be blocked. The theme still changes for this page.
+            }
+            updateThemeButton();
+        });
+        darkQuery.addEventListener("change", updateThemeButton);
+        updateThemeButton();
+    }
+})();
+
+// Sections filled from CSV files change height as they load, which can leave a
+// link such as /#people pointing at the wrong place. Once everything has
+// loaded, jump to the target again, unless the reader has already moved.
+function scrollToHashWhenReady(loading) {
+    if (!location.hash) return;
+
+    let readerMoved = false;
+    const moved = () => { readerMoved = true; };
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(type =>
+        window.addEventListener(type, moved, { once: true, passive: true })
+    );
+
+    Promise.allSettled(loading).then(() => {
+        if (readerMoved) return;
+        const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
     });
-
-// restore saved theme
-const saved = localStorage.getItem("theme");
-if (saved === "dark") {
-    document.documentElement.setAttribute("data-theme", "dark");
 }
