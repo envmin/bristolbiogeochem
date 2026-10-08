@@ -349,6 +349,7 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 1.25rem;
+    align-items: start;
 }
 
 .research-card {
@@ -357,12 +358,24 @@ p {
     overflow: hidden;
 }
 
+/* White in both themes, so transparent diagrams stay readable in dark mode */
+.research-figure {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;           /* stops tall images stretching the panel */
+    padding: 0.75rem;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+}
+
 .research-image {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    background: var(--surface-alt);
+    height: 100%;
+    object-fit: contain;
+}
+
+.research-link {
+    font-weight: 600;
 }
 
 .research-text {
@@ -449,7 +462,7 @@ p {
 /* PEOPLE */
 
 .role-block {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .role-title {
@@ -461,21 +474,21 @@ p {
 
 .people-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
     gap: 1.25rem;
 }
 
 .person {
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 1.25rem;
 }
 
 .person-photo {
     flex: none;
-    width: 96px;
-    height: 96px;
+    width: 112px;
+    height: 112px;
     border-radius: 50%;
     object-fit: cover;
     background: var(--surface-alt);
@@ -500,10 +513,23 @@ p {
     margin-bottom: 0.15rem;
 }
 
+.person-role {
+    color: var(--accent-strong);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.1rem;
+}
+
 .person-dates {
     color: var(--muted);
     font-size: 0.9rem;
     margin-bottom: 0.4rem;
+}
+
+@media (max-width: 480px) {
+    .person {
+        flex-direction: column;
+    }
 }
 
 .person-email {
@@ -553,6 +579,24 @@ p {
     padding: 1.25rem;
 }
 
+.outreach-thumb {
+    display: block;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.outreach-thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.outreach-thumb:hover img {
+    filter: brightness(1.05);
+}
+
 .video-wrapper {
     position: relative;
     aspect-ratio: 16 / 9;
@@ -588,6 +632,11 @@ p {
 
 .site-footer p {
     margin: 0.25rem 0;
+}
+
+.site-footer .footer-small {
+    opacity: 0.85;
+    font-size: 0.875rem;
 }
 
 .site-footer a {

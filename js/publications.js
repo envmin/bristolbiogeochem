@@ -13,10 +13,6 @@ function normaliseDOI(doi) {
         .replace(/^doi:\s*/, "");
 }
 
-function isWebLink(url) {
-    return /^https?:\/\//i.test(url || "");
-}
-
 // Newest first. The CSV is already sorted by the update script, and the sort
 // is stable, so the order within a year is kept.
 function loadPublications() {
@@ -35,6 +31,7 @@ function pubCard(pub, headingTag, showYear) {
     if (isWebLink(pub.DOI)) {
         const link = el("a", null, pub.Title);
         link.href = pub.DOI;
+        link.target = "_blank";
         link.rel = "noopener";
         heading.appendChild(link);
     } else {

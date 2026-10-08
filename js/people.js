@@ -70,7 +70,8 @@ function personCard(p) {
     card.appendChild(personPhoto(p));
 
     const text = el("div", "person-text");
-    text.appendChild(el("h4", "person-name", fullName(p)));
+    text.appendChild(el("h3", "person-name", fullName(p)));
+    text.appendChild(el("p", "person-role", p.Role));
     text.appendChild(el("p", "person-dates", displayDateRange(p.Start, p.End)));
 
     if (p.email) {
@@ -97,16 +98,13 @@ function groupByRole(people) {
     return groups;
 }
 
+// Current members share one grid, ordered by role, with the role on each card.
 function renderCurrent(container, people) {
-    container.replaceChildren();
-    groupByRole(people).forEach((members, role) => {
-        const block = el("div", "role-block");
-        block.appendChild(el("h3", "role-title", role));
-        const grid = el("div", "people-grid");
+    const grid = el("div", "people-grid");
+    groupByRole(people).forEach(members => {
         members.forEach(p => grid.appendChild(personCard(p)));
-        block.appendChild(grid);
-        container.appendChild(block);
     });
+    container.replaceChildren(grid);
 }
 
 // Former members are listed by name and years only, without photos.

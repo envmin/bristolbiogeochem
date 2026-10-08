@@ -25,6 +25,10 @@ function el(tag, className, text) {
     return node;
 }
 
+function isWebLink(url) {
+    return /^https?:\/\//i.test(url || "");
+}
+
 // Show a short message in a container when its data fails to load.
 function showLoadError(container, what, err) {
     container.replaceChildren(el("p", "load-error", `Sorry, the ${what} could not be loaded.`));
