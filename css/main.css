@@ -580,15 +580,20 @@ p {
     gap: 1.25rem;
 }
 
-/* Cards in a row share the same height, with the button kept at the bottom */
+/* Cards in a row share the same height, with any button kept at the bottom */
 .outreach-card {
     display: flex;
     flex-direction: column;
     padding: 1.25rem;
 }
 
-.outreach-card > :last-child {
+.outreach-card .card-action {
     margin-top: auto;
+    margin-bottom: 0;
+}
+
+.outreach-card .video-wrapper {
+    margin-bottom: 1rem;
 }
 
 .outreach-thumb {
