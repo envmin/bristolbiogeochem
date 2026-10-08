@@ -345,11 +345,18 @@ p {
 
 /* RESEARCH */
 
+/* Two cards per row on wider screens, one on phones */
 .research-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
     align-items: start;
+}
+
+@media (min-width: 700px) {
+    .research-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .research-card {
@@ -360,7 +367,7 @@ p {
 
 /* White in both themes, so transparent diagrams stay readable in dark mode */
 .research-figure {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     overflow: hidden;           /* stops tall images stretching the panel */
     padding: 0.75rem;
     background: #ffffff;
@@ -379,7 +386,7 @@ p {
 }
 
 .research-text {
-    padding: 1.1rem 1.25rem 0.5rem;
+    padding: 1.25rem 1.5rem 0.75rem;
 }
 
 /* PUBLICATIONS */
