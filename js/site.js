@@ -27,6 +27,11 @@
         });
     }
 
+    // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
+    document.querySelectorAll(".current-year").forEach(node => {
+        node.textContent = new Date().getFullYear();
+    });
+
     // --- Theme toggle ---
     const themeButton = document.getElementById("theme-toggle");
 
