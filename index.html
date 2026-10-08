@@ -26,6 +26,12 @@
     <script defer src="js/research.js"></script>
     <script defer src="js/publications.js"></script>
     <script defer src="js/people.js"></script>
+
+    <!-- GoatCounter: cookieless visit and click counts (https://rustymagnets.goatcounter.com) -->
+    <script data-goatcounter="https://rustymagnets.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.v4.js"
+            integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -64,7 +70,7 @@
     <main id="main">
 
         <section id="about" class="section" aria-labelledby="about-title">
-            <div class="container narrow">
+            <div class="container">
                 <h2 id="about-title">About us</h2>
                 <p>
                     The Environmental Mineralogy Group is part of the School of Earth Sciences at the University of Bristol.
@@ -128,12 +134,16 @@
 
                 <div class="outreach-grid">
                     <article class="outreach-card">
+                        <a class="outreach-thumb" href="rust-to-the-rescue.html" data-track="outreach-rust-thumbnail" tabindex="-1" aria-hidden="true">
+                            <img src="images/outreach/rust-to-the-rescue.jpg" width="800" height="500" loading="lazy"
+                                 alt="">
+                        </a>
                         <h3>Rust to the Rescue</h3>
                         <p>
                             An interactive page about colourful and magnetic iron minerals and the tiny bacteria
                             that make them. Go magnet fishing and test yourself with a quiz.
                         </p>
-                        <p><a class="button" href="rust-to-the-rescue.html">Visit Rust to the Rescue</a></p>
+                        <p><a class="button" href="rust-to-the-rescue.html" data-track="outreach-rust-button">Visit Rust to the Rescue</a></p>
                     </article>
 
                     <article class="outreach-card">
@@ -142,7 +152,7 @@
                             As a former committee member of the Environmental Mineralogy Group of the Mineralogical
                             Society, James created a video highlighting the properties of his favourite mineral, magnetite.
                             You can view the full entry on the
-                            <a href="https://www.minersoc.org/emg-video.html" rel="noopener">EMG Competition page</a>.
+                            <a href="https://www.minersoc.org/emg-video.html" target="_blank" rel="noopener">EMG Competition page</a>.
                         </p>
                         <div class="video-wrapper">
                             <iframe
@@ -159,7 +169,7 @@
         </section>
 
         <section id="join" class="section section-alt" aria-labelledby="join-title">
-            <div class="container narrow">
+            <div class="container">
                 <h2 id="join-title">Join us</h2>
                 <p>We do not currently have any open funded positions.</p>
                 <p>
@@ -171,7 +181,7 @@
         </section>
 
         <section id="funding" class="section" aria-labelledby="funding-title">
-            <div class="container narrow center">
+            <div class="container center">
                 <h2 id="funding-title">Funding</h2>
                 <p>Our research is supported by funding from:</p>
                 <img class="funding-logo" src="images/funding/UKRIlogo.png" alt="UK Research and Innovation (UKRI)" loading="lazy">
@@ -183,7 +193,9 @@
     <footer class="site-footer">
         <div class="container">
             <p>Environmental Mineralogy Group, School of Earth Sciences, University of Bristol</p>
-            <p><a href="publications.html">Publications</a> · <a href="rust-to-the-rescue.html">Rust to the Rescue</a></p>
+            <p><a href="publications.html">Publications</a> · <a href="rust-to-the-rescue.html" data-track="footer-rust">Rust to the Rescue</a></p>
+            <p class="footer-small">© 2026 James Byrne.</p>
+            <p class="footer-small">Visits are counted with GoatCounter, which does not use cookies.</p>
         </div>
     </footer>
 

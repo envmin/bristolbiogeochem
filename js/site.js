@@ -58,6 +58,25 @@
     }
 })();
 
+// GoatCounter click events. Counts links marked with data-track="name",
+// email links, and links to other sites (publication DOIs, BioXtract and so on).
+// Does nothing if GoatCounter has not loaded or is blocked.
+document.addEventListener("click", e => {
+    const link = e.target.closest("a[href]");
+    if (!link || !window.goatcounter || !window.goatcounter.count) return;
+
+    let name = link.dataset.track;
+    if (!name && link.protocol === "mailto:") name = "email";
+    if (!name && link.host && link.host !== location.host) name = `outbound: ${link.host}${link.pathname}`;
+    if (!name) return;
+
+    window.goatcounter.count({
+        path: name,
+        title: (link.textContent || "").trim().slice(0, 120),
+        event: true
+    });
+});
+
 // Sections filled from CSV files change height as they load, which can leave a
 // link such as /#people pointing at the wrong place. Once everything has
 // loaded, jump to the target again, unless the reader has already moved.
