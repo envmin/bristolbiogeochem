@@ -409,10 +409,107 @@ p {
     flex-direction: column;
     padding: 1.25rem 1.5rem;
     border-top: 4px solid var(--accent);
+    overflow: hidden;
 }
 
 .service-card h3 {
     margin-bottom: 0.25rem;
+}
+
+/* Instrument photo across the top of a card, cropped to the same shape on every card */
+.service-photo {
+    display: block;
+    width: calc(100% + 3rem);
+    max-width: none;
+    margin: -1.25rem -1.5rem 1rem;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+}
+
+.service-card > p:last-child {
+    margin-bottom: 0;
+}
+
+.services-actions {
+    margin: 1.5rem 0 0;
+}
+
+/* SERVICES PAGE */
+
+.services-overview {
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+    margin-bottom: 2.5rem;
+}
+
+@media (min-width: 800px) {
+    .services-overview {
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+.services-figure {
+    margin: 0;
+}
+
+.services-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.services-figure figcaption {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* Numbered steps, one column on phones and two on wider screens */
+.service-steps {
+    display: grid;
+    gap: 1rem 1.5rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+}
+
+@media (min-width: 700px) {
+    .service-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.service-steps li {
+    position: relative;
+    padding: 1.25rem 1.5rem 1rem 4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    counter-increment: step;
+}
+
+.service-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 1.25rem;
+    top: 1.15rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 700;
+    line-height: 1.9rem;
+    text-align: center;
+}
+
+.service-steps h3 {
+    margin-bottom: 0.35rem;
 }
 
 /* "Industry" and "Academia" pills under each instrument name */
