@@ -27,6 +27,37 @@
         });
     }
 
+    // --- Nav label: "Mineralogy" now and then turns into "Solutions" ---
+    // Each word is split into letters so they can appear one by one in a
+    // scrambled order. Screen readers get the plain word.
+    const cycle = document.querySelector(".brand-cycle");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (cycle && cycle.dataset.alt && !reduceMotion) {
+        const words = [cycle.textContent.trim(), cycle.dataset.alt];
+        const art = document.createElement("span");
+        art.className = "brand-cycle-art";
+        art.setAttribute("aria-hidden", "true");
+
+        words.forEach((word, w) => {
+            const wordEl = document.createElement("span");
+            wordEl.className = w === 0 ? "brand-word brand-word-main" : "brand-word brand-word-alt";
+            [...word].forEach((letter, i) => {
+                const span = document.createElement("span");
+                span.textContent = letter;
+                // (i * 7) % length visits every letter once, in a jumbled order
+                span.style.setProperty("--delay", `${((i * 7) % word.length) * 0.12}s`);
+                wordEl.appendChild(span);
+            });
+            art.appendChild(wordEl);
+        });
+
+        const label = document.createElement("span");
+        label.className = "visually-hidden";
+        label.textContent = words[0];
+        cycle.replaceChildren(label, art);
+    }
+
     // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
     document.querySelectorAll(".current-year").forEach(node => {
         node.textContent = new Date().getFullYear();
