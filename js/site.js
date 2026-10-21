@@ -58,6 +58,38 @@
         cycle.replaceChildren(label, art);
     }
 
+    // --- Photo carousels: previous and next buttons and a "2 / 9" count ---
+    document.querySelectorAll("[data-carousel]").forEach(carousel => {
+        const track = carousel.querySelector(".carousel-track");
+        const controls = carousel.querySelector(".carousel-controls");
+        const count = carousel.querySelector(".carousel-count");
+        const total = track.children.length;
+        let index = 0;
+        let settle;
+
+        const show = () => {
+            count.textContent = `${index + 1} / ${total}`;
+        };
+
+        carousel.querySelectorAll("[data-step]").forEach(button => {
+            button.addEventListener("click", () => {
+                // Wrap round at either end
+                index = (index + Number(button.dataset.step) + total) % total;
+                track.scrollTo({ left: index * track.clientWidth });
+                show();
+            });
+        });
+        // After a swipe, or once a button scroll finishes, read the photo from the position
+        track.addEventListener("scroll", () => {
+            clearTimeout(settle);
+            settle = setTimeout(() => {
+                index = Math.round(track.scrollLeft / track.clientWidth);
+                show();
+            }, 120);
+        }, { passive: true });
+        controls.hidden = false;
+    });
+
     // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
     document.querySelectorAll(".current-year").forEach(node => {
         node.textContent = new Date().getFullYear();
