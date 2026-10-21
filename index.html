@@ -23,7 +23,6 @@
             crossorigin="anonymous"></script>
     <script defer src="js/csv.js"></script>
     <script defer src="js/site.js"></script>
-    <script defer src="js/research.js"></script>
     <script defer src="js/publications.js"></script>
     <script defer src="js/people.js"></script>
 
@@ -89,8 +88,91 @@
         <section id="research" class="section section-alt" aria-labelledby="research-title">
             <div class="container">
                 <h2 id="research-title">Research</h2>
+                <!--
+                    Research themes. To add one, copy an <article> block and edit it.
+                    The figure and the "Visit" link are optional, so delete them if not needed.
+                    Images are shown whole on a white 4:3 panel.
+                -->
                 <div id="research-list" class="research-grid">
-                    <p class="loading">Loading research themes…</p>
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/Logo_static_v2.png" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Biogeobatteries</h3>
+                            <p>
+                                Some minerals can take up and give out electrons without their structure changing, a bit like a
+                                rechargeable battery. We call them biogeobatteries. They are mixed-valence minerals, which means
+                                they contain iron or other elements in more than one charge state. Examples include iron oxides,
+                                clays, sulphides and green rust. These minerals are widespread underground and may drive significant
+                                transfers of energy. Our work aims to understand how microbes access these minerals. This could
+                                unlock their potential for low-cost, low-power energy storage in remote places.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/project2.jpg" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Metal recovery and remediation</h3>
+                            <p>
+                                Iron minerals such as magnetite and ferrihydrite can bind metals to their surfaces and lock them in
+                                place. We test iron minerals made by microbes (biogenic) and those formed without them (abiogenic).
+                                We measure how well they capture critical metals, which are metals vital to modern technology, such
+                                as cobalt, zinc and vanadium. We also test how well they capture toxic contaminants such as arsenic,
+                                uranium, chromium and cadmium. The aim is to develop new ways to recover resources from waste and to
+                                improve how polluted water is cleaned up.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/moessbauer.png" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Mössbauer spectroscopy and data analysis</h3>
+                            <p>
+                                Mössbauer spectroscopy uses gamma rays to probe iron atoms in terms of oxidation state and mineral
+                                composition. We are developing new methods for analysing the data from this technique through a web-based platform. It compares users' own data with a growing database, so that both simple and complex
+                                samples can be analysed and interpreted quickly.
+                            </p>
+                            <p class="research-link"><a href="https://www.minsight.org" target="_blank" rel="noopener">Visit minsight.org</a></p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/envmag.jpg" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Environmental magnetism and climate</h3>
+                            <p>
+                                Some bacteria gain energy from iron, and in doing so they produce magnetic minerals. We want to
+                                explain how this happens in the environment and how it is linked to climate change. High rainfall
+                                creates anoxic conditions, meaning there is little or no oxygen. These conditions suit iron-reducing
+                                bacteria, which form magnetite. When rainfall is low, oxygen is present, the bacteria slow down or
+                                stop, and little magnetite forms. As a result, changes in the magnetic properties of soils and
+                                sediments can be used as a record of past rainfall in different environments.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-text">
+                            <h3 class="research-title">E-waste bioleaching using acidophilic bacteria</h3>
+                            <p>
+                                Electronic waste, such as old circuit boards, contains high concentrations of valuable metals
+                                including gold, copper and rare earth elements. Bioleaching uses microbes to dissolve metals out of
+                                waste so they can be recovered. We use acidophilic bacteria, which thrive in very acidic conditions,
+                                to leach metals from e-waste. This offers a low-carbon alternative to conventional chemical and
+                                thermal recovery. This project is part of BioXtract.
+                            </p>
+                            <p class="research-link"><a href="https://www.bioxtract.org" target="_blank" rel="noopener">Visit bioxtract.org</a></p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
@@ -248,7 +330,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             scrollToHashWhenReady([
-                renderResearch(document.getElementById("research-list")),
                 renderHomePublications(
                     document.getElementById("recent-pubs"),
                     document.getElementById("key-pubs"),
