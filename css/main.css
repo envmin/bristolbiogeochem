@@ -437,35 +437,13 @@ p {
 
 /* SERVICES PAGE */
 
-.services-overview {
-    display: grid;
-    gap: 1.5rem;
-    align-items: start;
-    margin-bottom: 2.5rem;
+/* A single row of pills straight after an intro paragraph */
+.services-intro + .service-access {
+    margin: -1rem 0 1.75rem;
 }
 
-@media (min-width: 800px) {
-    .services-overview {
-        grid-template-columns: 3fr 2fr;
-    }
-}
-
-.services-figure {
-    margin: 0;
-}
-
-.services-figure img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-}
-
-.services-figure figcaption {
-    margin-top: 0.5rem;
-    color: var(--muted);
-    font-size: 0.9rem;
+.services-subheading {
+    margin-top: 1rem;
 }
 
 /* Numbered steps, one column on phones and two on wider screens */
