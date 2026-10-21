@@ -199,7 +199,7 @@ p {
 
 .brand-word span {
     display: inline-block;
-    animation: 30s linear var(--delay, 0s) infinite both;
+    animation: 10s linear var(--delay, 0s) infinite both;
 }
 
 .brand-word-main span {
@@ -213,19 +213,19 @@ p {
 
 /* Each letter breaks into thin vertical strokes as it fades, like the Alien title */
 @keyframes brand-main {
-    0%, 72% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
-    73% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    74.5%, 96.5% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    97.5% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    98.5%, 100% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    0%, 50% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    52% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    55%, 93% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    95% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    96.5%, 100% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
 }
 
 @keyframes brand-alt {
-    0%, 78% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    79.5% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    80.5%, 91.5% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
-    92.5% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    94%, 100% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    0%, 60% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    62.5% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    64.5%, 84% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    86% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    88%, 100% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
 }
 
 .brand-word span {

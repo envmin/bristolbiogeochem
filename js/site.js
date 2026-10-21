@@ -46,7 +46,7 @@
                 const span = document.createElement("span");
                 span.textContent = letter;
                 // (i * 7) % length visits every letter once, in a jumbled order
-                span.style.setProperty("--delay", `${((i * 7) % word.length) * 0.12}s`);
+                span.style.setProperty("--delay", `${((i * 7) % word.length) * 0.06}s`);
                 wordEl.appendChild(span);
             });
             art.appendChild(wordEl);
