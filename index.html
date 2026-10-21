@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Environmental Mineralogy Group, University of Bristol</title>
-    <meta name="description" content="The Environmental Mineralogy Group at the University of Bristol studies how bacteria make iron minerals, and how those minerals can recover metals, clean water and store energy.">
+    <meta name="description" content="The Environmental Mineralogy Group at the University of Bristol studies how bacteria make iron minerals, and how those minerals can recover metals, clean water and store energy. We offer 57Fe Mössbauer, FTIR and UV-Vis spectroscopy services to industry and academia.">
 
     <!-- Apply the saved theme before the page draws -->
     <script>
@@ -15,6 +15,10 @@
         } catch (e) {}
     </script>
 
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="images/logo/favicon-48.png">
+    <link rel="apple-touch-icon" href="images/logo/apple-touch-icon.png">
+
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/main.css">
 
@@ -23,7 +27,6 @@
             crossorigin="anonymous"></script>
     <script defer src="js/csv.js"></script>
     <script defer src="js/site.js"></script>
-    <script defer src="js/research.js"></script>
     <script defer src="js/publications.js"></script>
     <script defer src="js/people.js"></script>
 
@@ -39,13 +42,14 @@
 
     <header class="site-header">
         <nav class="navbar" aria-label="Main">
-            <a class="brand" href="#top">Environmental Mineralogy</a>
+            <a class="brand" href="#top"><img class="brand-logo" src="images/logo/nav-logo.png" width="84" height="84" alt=""><span class="brand-name"><span>Environmental</span> <span class="brand-cycle" data-alt="Solutions">Mineralogy</span></span></a>
             <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
                 <span class="menu-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Menu</span>
             </button>
             <ul class="nav-links" id="site-menu">
                 <li><a href="#research">Research</a></li>
+                <li><a href="services.html">Services</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#people">People</a></li>
                 <li><a href="#outreach">Outreach</a></li>
@@ -88,13 +92,133 @@
         <section id="research" class="section section-alt" aria-labelledby="research-title">
             <div class="container">
                 <h2 id="research-title">Research</h2>
+                <!--
+                    Research themes. To add one, copy an <article> block and edit it.
+                    The figure and the "Visit" link are optional, so delete them if not needed.
+                    Images are shown whole on a white 4:3 panel.
+                -->
                 <div id="research-list" class="research-grid">
-                    <p class="loading">Loading research themes…</p>
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/Logo_static_v2.png" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Biogeobatteries</h3>
+                            <p>
+                                Some minerals can take up and give out electrons without their structure changing, a bit like a
+                                rechargeable battery. We call them biogeobatteries. They are mixed-valence minerals, which means
+                                they contain iron or other elements in more than one charge state. Examples include iron oxides,
+                                clays, sulphides and green rust. These minerals are widespread underground and may drive significant
+                                transfers of energy. Our work aims to understand how microbes access these minerals. This could
+                                unlock their potential for low-cost, low-power energy storage in remote places.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/project2.jpg" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Metal recovery and remediation</h3>
+                            <p>
+                                Iron minerals such as magnetite and ferrihydrite can bind metals to their surfaces and lock them in
+                                place. We test iron minerals made by microbes (biogenic) and those formed without them (abiogenic).
+                                We measure how well they capture critical metals, which are metals vital to modern technology, such
+                                as cobalt, zinc and vanadium. We also test how well they capture toxic contaminants such as arsenic,
+                                uranium, chromium and cadmium. The aim is to develop new ways to recover resources from waste and to
+                                improve how polluted water is cleaned up.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/moessbauer.png" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title"><sup>57</sup>Fe Mössbauer spectroscopy and data analysis</h3>
+                            <p>
+                                Mössbauer spectroscopy uses gamma rays to probe iron atoms in terms of oxidation state and mineral
+                                composition. We are developing new methods for analysing the data from this technique through a web-based platform. It compares users' own data with a growing database, so that both simple and complex
+                                samples can be analysed and interpreted quickly.
+                            </p>
+                            <p class="research-link"><a href="https://www.minsight.org" target="_blank" rel="noopener">Visit minsight.org</a></p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-figure">
+                            <img class="research-image" src="images/research/envmag.jpg" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <div class="research-text">
+                            <h3 class="research-title">Environmental magnetism and climate</h3>
+                            <p>
+                                Some bacteria gain energy from iron, and in doing so they produce magnetic minerals. We want to
+                                explain how this happens in the environment and how it is linked to climate change. High rainfall
+                                creates anoxic conditions, meaning there is little or no oxygen. These conditions suit iron-reducing
+                                bacteria, which form magnetite. When rainfall is low, oxygen is present, the bacteria slow down or
+                                stop, and little magnetite forms. As a result, changes in the magnetic properties of soils and
+                                sediments can be used as a record of past rainfall in different environments.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="research-card">
+                        <div class="research-text">
+                            <h3 class="research-title">E-waste bioleaching using acidophilic bacteria</h3>
+                            <p>
+                                Electronic waste, such as old circuit boards, contains high concentrations of valuable metals
+                                including gold, copper and rare earth elements. Bioleaching uses microbes to dissolve metals out of
+                                waste so they can be recovered. We use acidophilic bacteria, which thrive in very acidic conditions,
+                                to leach metals from e-waste. This offers a low-carbon alternative to conventional chemical and
+                                thermal recovery. This project is part of BioXtract.
+                            </p>
+                            <p class="research-link"><a href="https://www.bioxtract.org" target="_blank" rel="noopener">Visit bioxtract.org</a></p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="publications" class="section" aria-labelledby="publications-title">
+        <section id="services" class="section" aria-labelledby="services-title">
+            <div class="container">
+                <h2 id="services-title">Analytical services and capabilities</h2>
+                <p class="services-intro">
+                    We provide <sup>57</sup>Fe Mössbauer, UV-Vis and FTIR spectroscopy for industrial and academic partners
+                    as well as for our own research. Our instruments in the School of Earth Sciences are set up
+                    for iron-bearing samples. They are used to determine iron oxidation state, identify mineral
+                    phases and follow reactions as they happen.
+                </p>
+                <ul class="service-access" aria-label="Available to">
+                    <li>Industry</li>
+                    <li>Academia</li>
+                </ul>
+
+                <div class="services-grid">
+                    <article class="service-card">
+                        <h3><sup>57</sup>Fe Mössbauer spectroscopy</h3>
+                        <p>Fe(II) and Fe(III) proportions, iron mineral phases and their relative abundances, measured from 4.2 to 295&nbsp;K.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <h3>UV-Vis spectrophotometry</h3>
+                        <p>Fe(II), total iron, optical density of microbial cultures and other analytes, in 96-well plates or cuvettes.</p>
+                    </article>
+
+                    <article class="service-card">
+                        <h3>FTIR spectroscopy</h3>
+                        <p>In situ ATR measurements of reactions between solid precipitates and different reagents.</p>
+                    </article>
+                </div>
+
+                <p class="services-actions">
+                    <a class="button" href="services.html" data-track="home-services">See our analytical services and capabilities</a>
+                </p>
+            </div>
+        </section>
+
+        <section id="publications" class="section section-alt" aria-labelledby="publications-title">
             <div class="container">
                 <h2 id="publications-title">Publications</h2>
 
@@ -114,7 +238,7 @@
             </div>
         </section>
 
-        <section id="people" class="section section-alt" aria-labelledby="people-title">
+        <section id="people" class="section" aria-labelledby="people-title">
             <div class="container">
                 <h2 id="people-title">People</h2>
                 <div id="current-members">
@@ -128,7 +252,7 @@
             </div>
         </section>
 
-        <section id="outreach" class="section" aria-labelledby="outreach-title">
+        <section id="outreach" class="section section-alt" aria-labelledby="outreach-title">
             <div class="container">
                 <h2 id="outreach-title">Outreach</h2>
 
@@ -144,6 +268,86 @@
                             that make them. Go magnet fishing and test yourself with a quiz.
                         </p>
                         <p class="card-action"><a class="button" href="rust-to-the-rescue.html" target="_blank" rel="noopener" data-track="outreach-rust-button">Visit Rust to the Rescue</a></p>
+                    </article>
+
+                    <article class="outreach-card">
+                        <div class="outreach-thumb">
+                            <img src="images/outreach/uob-150-great-hall.jpg" width="1000" height="750" loading="lazy"
+                                 alt="Six group members in matching black T-shirts behind a University of Bristol stand in the Great Hall, beside the Rust to the Rescue poster, with bottles and samples laid out on the table">
+                        </div>
+                        <h3>University of Bristol 150th anniversary</h3>
+                        <p>
+                            At the 150th anniversary of the University of Bristol, James Byrne, Sara Attfield,
+                            Hannah Koepnick, Guanlin Li, Naijin Wu and Emile Brunet from the Environmental Mineralogy
+                            Group presented some of their work on rusty iron oxides and how rust might not be as bad
+                            as you think! We showed how some iron minerals are magnetic, and also how they can be used
+                            to clean up water polluted with heavy metals.
+                        </p>
+                        <p>
+                            In case you have a developing sense of FOMO, don't worry, as you can learn and play along
+                            with our interactive website,
+                            <a href="rust-to-the-rescue.html" target="_blank" rel="noopener" data-track="outreach-150-rust">Rust to the Rescue</a>!
+                            See if you can score a perfect 10/10 on the quiz at the end!
+                        </p>
+                    </article>
+
+                    <article class="outreach-card">
+                        <div class="carousel" data-carousel>
+                            <div class="carousel-track" tabindex="0" role="region" aria-label="Festival of Nature photos">
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-1-team.jpg" width="640" height="480" loading="lazy"
+                                     alt="Five group members in black T-shirts at the Festival of Nature stand, in front of a University of Bristol School of Earth Sciences banner">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-2-stand.jpg" width="1000" height="626" loading="lazy"
+                                     alt="Three group members at the stand, with trays of activities and posters about iron minerals and water pollution">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-3-magnetite.jpg" width="751" height="1000" loading="lazy"
+                                     alt="A magnet held next to a small bottle labelled Magnetite, with dark grains inside">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-4-fishing.jpg" width="640" height="480" loading="lazy"
+                                     alt="Two group members setting up a water tray activity with green magnetic fishing rods">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-5-team.jpg" width="480" height="640" loading="lazy"
+                                     alt="Three group members smiling at the stand">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-6-talk.jpg" width="498" height="363" loading="lazy"
+                                     alt="James giving a talk, with a slide of rusty orange stream beds on the screen behind him">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-7-sticker.jpg" width="480" height="640" loading="lazy"
+                                     alt="A round Environmental Minerals sticker with a smiling rock cartoon and the words Defending our natural world">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-8-tshirt.jpg" width="480" height="640" loading="lazy"
+                                     alt="The Environmental Solutions logo printed on the back of a group T-shirt">
+                            </figure>
+                            <figure class="carousel-slide">
+                                <img src="images/outreach/festival-of-nature/fon-9-banner.jpg" width="480" height="640" loading="lazy"
+                                     alt="A Festival of Nature banner with a robin">
+                            </figure>
+                            </div>
+                            <div class="carousel-controls" hidden>
+                                <button class="carousel-button" type="button" data-step="-1" aria-label="Previous photo">‹</button>
+                                <span class="carousel-count" aria-live="polite">1 / 9</span>
+                                <button class="carousel-button" type="button" data-step="1" aria-label="Next photo">›</button>
+                            </div>
+                        </div>
+                        <h3>Festival of Nature 2025</h3>
+                        <p>
+                            The Festival of Nature is the UK's largest free celebration of the natural world. It is run
+                            by the Natural History Consortium every June across Bristol and Bath. In June 2025 we ran a
+                            stand where visitors could explore magnetic iron minerals and how they can help clean up
+                            polluted water.
+                        </p>
+                        <p>
+                            James also gave a talk on the importance of iron as part of the festival's
+                            "In a Nutshell" presentations.
+                        </p>
                     </article>
 
                     <article class="outreach-card">
@@ -168,7 +372,7 @@
             </div>
         </section>
 
-        <section id="join" class="section section-alt" aria-labelledby="join-title">
+        <section id="join" class="section" aria-labelledby="join-title">
             <div class="container">
                 <h2 id="join-title">Join us</h2>
                 <p>We do not currently have any open funded positions.</p>
@@ -180,7 +384,7 @@
             </div>
         </section>
 
-        <section id="funding" class="section" aria-labelledby="funding-title">
+        <section id="funding" class="section section-alt" aria-labelledby="funding-title">
             <div class="container center">
                 <h2 id="funding-title">Funding</h2>
                 <p>Our research is supported by funding from:</p>
@@ -193,7 +397,7 @@
     <footer class="site-footer">
         <div class="container">
             <p>Environmental Mineralogy Group, School of Earth Sciences, University of Bristol</p>
-            <p><a href="publications.html">Publications</a> · <a href="rust-to-the-rescue.html" target="_blank" rel="noopener" data-track="footer-rust">Rust to the Rescue</a></p>
+            <p><a href="services.html">Analytical services</a> · <a href="publications.html">Publications</a> · <a href="rust-to-the-rescue.html" target="_blank" rel="noopener" data-track="footer-rust">Rust to the Rescue</a></p>
             <p class="footer-small">© <span class="current-year">2026</span> James Byrne.</p>
             <p class="footer-small">Visits are counted with GoatCounter, which does not use cookies.</p>
         </div>
@@ -202,7 +406,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             scrollToHashWhenReady([
-                renderResearch(document.getElementById("research-list")),
                 renderHomePublications(
                     document.getElementById("recent-pubs"),
                     document.getElementById("key-pubs"),

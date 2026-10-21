@@ -8,7 +8,8 @@
 
 html {
     --header-height: 60px;
-    scroll-padding-top: calc(var(--header-height) + 12px);
+    --logo-overhang: 28px;      /* how far the nav logo hangs below the bar */
+    scroll-padding-top: calc(var(--header-height) + var(--logo-overhang) + 12px);
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
 }
@@ -166,10 +167,98 @@ p {
 }
 
 .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     color: var(--header-text);
-    font-weight: 700;
     text-decoration: none;
     margin-right: auto;
+}
+
+/* Thin, widely spaced capitals on two lines */
+.brand-name {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.3;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+/* site.js splits "Mineralogy" and "Solutions" into letters and stacks the two words.
+   Without JavaScript, or with reduced motion, "Mineralogy" just stays put. */
+.brand-cycle-art {
+    display: inline-grid;
+}
+
+.brand-word {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+}
+
+.brand-word span {
+    display: inline-block;
+    animation: 10s linear var(--delay, 0s) infinite both;
+}
+
+.brand-word-main span {
+    animation-name: brand-main;
+}
+
+.brand-word-alt span {
+    opacity: 0;
+    animation-name: brand-alt;
+}
+
+/* Each letter breaks into thin vertical strokes as it fades, like the Alien title */
+@keyframes brand-main {
+    0%, 50% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    52% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    55%, 93% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    95% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    96.5%, 100% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+}
+
+@keyframes brand-alt {
+    0%, 60% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    62.5% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    64.5%, 84% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    86% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    88%, 100% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+}
+
+.brand-word span {
+    --strokes: repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 3px);
+}
+
+sup {
+    line-height: 0;
+}
+
+/* Decorative: the group name next to it is the link text.
+   The image is square on top (lost against the black bar) and round below,
+   so it hangs under the bar as a notch. Negative margins keep the bar 60px tall. */
+.brand-logo {
+    flex: none;
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin: -12px 0;
+    top: 16px;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --logo-overhang: 12px;
+    }
+
+    .brand-logo {
+        width: 68px;
+        height: 68px;
+        margin: -4px 0;
+        top: 8px;
+    }
 }
 
 .nav-links {
@@ -233,8 +322,9 @@ p {
 .menu-icon::before { top: -6px; }
 .menu-icon::after { top: 6px; }
 
-/* Collapse the menu on small screens, only when JavaScript can open it */
-@media (max-width: 760px) {
+/* Collapse the menu on small screens, only when JavaScript can open it.
+   The breakpoint is where the six links stop fitting on one line. */
+@media (max-width: 920px) {
     .js .menu-toggle {
         display: block;
     }
@@ -336,7 +426,8 @@ p {
 .research-card,
 .pub-card,
 .person,
-.outreach-card {
+.outreach-card,
+.service-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -386,6 +477,167 @@ p {
 
 .research-text {
     padding: 1.25rem 1.5rem 0.75rem;
+}
+
+/* SERVICES */
+
+.services-intro {
+    font-size: 1.1rem;
+    margin-bottom: 1.75rem;
+}
+
+/* Three cards across on wide screens, one on phones */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1.25rem;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.5rem;
+    border-top: 4px solid var(--accent);
+    overflow: hidden;
+}
+
+.service-card h3 {
+    margin-bottom: 0.25rem;
+}
+
+/* Instrument photo across the top of a card, cropped to the same shape on every card */
+.service-photo {
+    display: block;
+    width: calc(100% + 3rem);
+    max-width: none;
+    margin: -1.25rem -1.5rem 1rem;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+}
+
+.service-card > p:last-child {
+    margin-bottom: 0;
+}
+
+.services-actions {
+    margin: 1.5rem 0 0;
+}
+
+/* SERVICES PAGE */
+
+/* A single row of pills straight after an intro paragraph */
+.services-intro + .service-access {
+    margin: -1rem 0 1.75rem;
+}
+
+.services-subheading {
+    margin-top: 1rem;
+}
+
+/* Numbered steps, one column on phones and two on wider screens */
+.service-steps {
+    display: grid;
+    gap: 1rem 1.5rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+}
+
+@media (min-width: 700px) {
+    .service-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.service-steps li {
+    position: relative;
+    padding: 1.25rem 1.5rem 1rem 4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    counter-increment: step;
+}
+
+.service-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 1.25rem;
+    top: 1.15rem;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 700;
+    line-height: 1.9rem;
+    text-align: center;
+}
+
+.service-steps h3 {
+    margin-bottom: 0.35rem;
+}
+
+/* "Industry" and "Academia" pills under each instrument name */
+.service-access {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.35rem 0 0.6rem;
+    padding: 0;
+}
+
+.service-access li {
+    padding: 0.15rem 0.65rem;
+    border-radius: 999px;
+    background: var(--initials-bg);
+    color: var(--initials-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.service-instrument {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* Key specifications, kept at the bottom so they line up across a row */
+.service-specs {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 1rem;
+    margin: auto 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+}
+
+.service-specs dt {
+    font-weight: 600;
+}
+
+.service-specs dd {
+    margin: 0;
+}
+
+.services-cta {
+    margin-top: 1.75rem;
+    padding: 1.5rem;
+    background: var(--surface-alt);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+}
+
+.services-cta > :last-child {
+    margin-bottom: 0;
+}
+
+.services-more {
+    color: var(--muted);
+    font-size: 0.95rem;
 }
 
 /* PUBLICATIONS */
@@ -612,6 +864,77 @@ p {
 
 .outreach-thumb:hover img {
     filter: brightness(1.05);
+}
+
+/* Photo carousel. Swipe or scroll sideways without JavaScript;
+   site.js adds the buttons and the photo count. */
+.carousel {
+    margin-bottom: 1rem;
+}
+
+.carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #000000;        /* letterbox behind portrait photos */
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    scroll-snap-align: start;
+}
+
+.carousel-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.carousel-controls[hidden] {
+    display: none;
+}
+
+.carousel-button {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.carousel-button:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+}
+
+.carousel-count {
+    min-width: 4em;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
 }
 
 .video-wrapper {
