@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./csv/people.csv)",
+      "Edit(./csv/people.csv)",
+      "Write(./csv/people.csv)",
+      
+      "Read(./images/people/**)",
+      "Edit(./images/people/**)",
+      "Write(./images/people/**)",
+
+      "Edit(rust-to-the-rescue.html)",
+      "Write(rust-to-the-rescue.html)",
+
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  }
+}
