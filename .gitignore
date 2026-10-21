@@ -1,0 +1,22 @@
+# Claude Code: personal settings and local scripts
+.claude/settings.local.json
+.claude/python/
+
+# Jekyll build output, if you ever build locally
+_site/
+.jekyll-cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# OS and editor files (OneDrive and Windows create desktop.ini)
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Claude Code project instructions, kept local
+CLAUDE.md
