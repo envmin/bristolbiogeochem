@@ -8,7 +8,8 @@
 
 html {
     --header-height: 60px;
-    scroll-padding-top: calc(var(--header-height) + 12px);
+    --logo-overhang: 28px;      /* how far the nav logo hangs below the bar */
+    scroll-padding-top: calc(var(--header-height) + var(--logo-overhang) + 12px);
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
 }
@@ -175,12 +176,29 @@ p {
     margin-right: auto;
 }
 
-/* Decorative: the group name next to it is the link text */
+/* Decorative: the group name next to it is the link text.
+   The image is square on top (lost against the black bar) and round below,
+   so it hangs under the bar as a notch. Negative margins keep the bar 60px tall. */
 .brand-logo {
     flex: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    position: relative;
+    width: 84px;
+    height: 84px;
+    margin: -12px 0;
+    top: 16px;
+}
+
+@media (max-width: 600px) {
+    :root {
+        --logo-overhang: 12px;
+    }
+
+    .brand-logo {
+        width: 68px;
+        height: 68px;
+        margin: -4px 0;
+        top: 8px;
+    }
 }
 
 .nav-links {
@@ -447,35 +465,6 @@ p {
 }
 
 /* SERVICES PAGE */
-
-/* Page heading with the logo beside it, or above it on phones */
-.page-title-with-logo {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.page-title-with-logo > div {
-    flex: 1;
-}
-
-.page-logo {
-    flex: none;
-    width: 140px;
-    height: auto;
-    border-radius: 16px;  /* square corners only, so the hammer is not clipped */
-}
-
-@media (max-width: 600px) {
-    .page-title-with-logo {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
-
-    .page-logo {
-        width: 88px;
-    }
-}
 
 /* A single row of pills straight after an intro paragraph */
 .services-intro + .service-access {

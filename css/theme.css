@@ -12,7 +12,7 @@
     --accent: #a8460f;          /* rust */
     --accent-text: #ffffff;
     --accent-strong: #9a3f0c;   /* rust as text on light surfaces */
-    --header-bg: #0f3346;
+    --header-bg: #000000;          /* matches the logo background */
     --header-text: #ffffff;
     --hero-overlay: rgba(10, 30, 42, 0.68);
     --initials-bg: #d6e4ea;
@@ -33,7 +33,7 @@
         --accent: #e8925a;
         --accent-text: #1a0f08;
         --accent-strong: #eb9a66;
-        --header-bg: #0b1a22;
+        --header-bg: #000000;
         --header-text: #f1f4f6;
         --hero-overlay: rgba(5, 12, 16, 0.72);
         --initials-bg: #24414f;
@@ -54,7 +54,7 @@
     --accent: #e8925a;
     --accent-text: #1a0f08;
     --accent-strong: #eb9a66;
-    --header-bg: #0b1a22;
+    --header-bg: #000000;
     --header-text: #f1f4f6;
     --hero-overlay: rgba(5, 12, 16, 0.72);
     --initials-bg: #24414f;
