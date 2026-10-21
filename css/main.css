@@ -437,6 +437,35 @@ p {
 
 /* SERVICES PAGE */
 
+/* Page heading with the logo beside it, or above it on phones */
+.page-title-with-logo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.page-title-with-logo > div {
+    flex: 1;
+}
+
+.page-logo {
+    flex: none;
+    width: 140px;
+    height: auto;
+    border-radius: 16px;  /* square corners only, so the hammer is not clipped */
+}
+
+@media (max-width: 600px) {
+    .page-title-with-logo {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    .page-logo {
+        width: 88px;
+    }
+}
+
 /* A single row of pills straight after an intro paragraph */
 .services-intro + .service-access {
     margin: -1rem 0 1.75rem;
