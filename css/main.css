@@ -166,10 +166,21 @@ p {
 }
 
 .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     color: var(--header-text);
     font-weight: 700;
     text-decoration: none;
     margin-right: auto;
+}
+
+/* Decorative: the group name next to it is the link text */
+.brand-logo {
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
 }
 
 .nav-links {
