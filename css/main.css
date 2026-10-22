@@ -1052,8 +1052,18 @@ sup {
 .people-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    grid-auto-flow: row dense;   /* later cards move up to fill the gap an open card leaves */
     gap: 1.25rem;
     align-items: start;
+}
+
+/* An open bio takes the whole row, so the text reads across rather than down */
+.person-open {
+    grid-column: 1 / -1;
+}
+
+.person-open .person-description {
+    max-width: 75ch;
 }
 
 .person {

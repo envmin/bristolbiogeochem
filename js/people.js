@@ -91,6 +91,11 @@ function personCard(p) {
         summary.appendChild(el("span", "visually-hidden", ` about ${p.Name}`));
         bio.appendChild(summary);
         bio.appendChild(el("p", "person-description", p.Description));
+        // An open bio makes the card span the whole row (see .person-open)
+        bio.addEventListener("toggle", () => {
+            card.classList.toggle("person-open", bio.open);
+            if (bio.open) card.scrollIntoView({ block: "nearest" });
+        });
         text.appendChild(bio);
     }
 
