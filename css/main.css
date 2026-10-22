@@ -998,6 +998,15 @@ sup {
     font-size: 0.95rem;
 }
 
+.pub-why {
+    margin: 0.5rem 0 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
 .pub-journal {
     font-style: italic;
     margin: 0;
