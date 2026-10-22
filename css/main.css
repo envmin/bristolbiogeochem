@@ -23,8 +23,8 @@ body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 1.0625rem;
+    font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 1.125rem;   /* Source Sans runs small, so 18px reads like 17px did before */
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -51,6 +51,17 @@ a:hover {
 h1, h2, h3, h4 {
     line-height: 1.25;
     margin: 0 0 0.6em;
+}
+
+/* Page and section headings in the serif; smaller headings stay in the sans */
+h1, h2 {
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+h3, h4 {
+    font-weight: 600;
 }
 
 h2 {
