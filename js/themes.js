@@ -24,7 +24,8 @@ const THEME_CODES = [
 // Other spellings that mean the same theme
 const THEME_ALIASES = {
     "early earth": "early earth & astrobiology",
-    "astrobiology": "early earth & astrobiology"
+    "astrobiology": "early earth & astrobiology",
+    "astrobiology & early earth": "early earth & astrobiology"
 };
 
 function normaliseTheme(code) {
