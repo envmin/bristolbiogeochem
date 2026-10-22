@@ -493,6 +493,11 @@ sup {
     gap: 1.25rem;
 }
 
+/* Two cards per row on wide screens, for a section with an even number of cards */
+.services-grid-pairs {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+}
+
 .service-card {
     display: flex;
     flex-direction: column;
