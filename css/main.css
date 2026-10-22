@@ -1241,12 +1241,61 @@ sup {
 
 /* FUNDING AND FOOTER */
 
+/* UKRI is the main funder, so its logo is larger and sits above the others */
+.funding-main {
+    margin: 1.25rem auto 2rem;
+}
+
+.funding-main figcaption {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
 .funding-logo {
-    width: 260px;
-    max-width: 75%;
-    padding: 0.75rem;
+    width: 300px;
+    max-width: 80%;
+    padding: 0.9rem;
     background: #ffffff;
     border-radius: 8px;
+}
+
+/* Other funders: equal white tiles, so logos of different shapes line up.
+   White in both themes because the logos are dark. */
+.funding-others {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.funding-others li {
+    width: 160px;
+    height: 80px;
+    box-sizing: border-box;
+    padding: 0.75rem 0.9rem;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.funding-others img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Evens out how big each logo looks: bold wordmarks get more space around them */
+.funding-others .logo-bold {
+    padding: 1.35rem 1.6rem;
+}
+
+.funding-others .logo-fine {
+    padding: 0.5rem 0.6rem;
 }
 
 .site-footer {
