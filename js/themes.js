@@ -113,20 +113,25 @@ function renderThemeFunding(code, fundingEl, fundingBlock) {
 }
 
 // Papers chosen for the theme by DOI, looked up in the publications data.
+// One row per paper, or several DOIs in one row separated by semicolons.
 function renderThemePapers(code, papersEl, papersBlock) {
     return Promise.all([loadPublications(), loadCSV(THEME_PAPERS_CSV)]).then(([pubs, rows]) => {
         const byDOI = new Map(pubs.map(p => [normaliseDOI(p.DOI), p]));
+        const seen = new Set();
         const cards = [];
         rows.forEach(row => {
             if (normaliseTheme(row.Theme) !== code) return;
-            const doi = normaliseDOI(row.DOI);
-            if (!doi) return;
-            const pub = byDOI.get(doi);
-            if (pub) {
-                cards.push(pubCard(pub, "h3", true));
-            } else {
-                console.warn(`TODO: theme paper ${row.DOI} is not in ${PUBLICATIONS_CSV}`);
-            }
+            (row.DOI || "").split(";").forEach(raw => {
+                const doi = normaliseDOI(raw);
+                if (!doi || seen.has(doi)) return;
+                seen.add(doi);
+                const pub = byDOI.get(doi);
+                if (pub) {
+                    cards.push(pubCard(pub, "h3", true));
+                } else {
+                    console.warn(`TODO: theme paper ${raw.trim()} is not in ${PUBLICATIONS_CSV}`);
+                }
+            });
         });
         papersEl.replaceChildren(...cards);
         papersBlock.hidden = cards.length === 0;
