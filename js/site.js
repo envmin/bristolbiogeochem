@@ -153,10 +153,44 @@
         return chosen ? chosen === "dark" : darkQuery.matches;
     }
 
+    // Line icons drawn in the header text colour, so they match on every device (emoji do not)
+    const ICONS = {
+        sun: ["M12 4V2", "M12 22v-2", "M4 12H2", "M22 12h-2", "M5.6 5.6 4.2 4.2", "M19.8 19.8l-1.4-1.4",
+              "M5.6 18.4l-1.4 1.4", "M19.8 4.2l-1.4 1.4"],
+        moon: ["M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"]
+    };
+
+    function themeIcon(name) {
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("width", "20");
+        svg.setAttribute("height", "20");
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("stroke", "currentColor");
+        svg.setAttribute("stroke-width", "2");
+        svg.setAttribute("stroke-linecap", "round");
+        svg.setAttribute("stroke-linejoin", "round");
+        svg.setAttribute("aria-hidden", "true");
+        if (name === "sun") {
+            const circle = document.createElementNS(ns, "circle");
+            circle.setAttribute("cx", "12");
+            circle.setAttribute("cy", "12");
+            circle.setAttribute("r", "4");
+            svg.appendChild(circle);
+        }
+        ICONS[name].forEach(d => {
+            const path = document.createElementNS(ns, "path");
+            path.setAttribute("d", d);
+            svg.appendChild(path);
+        });
+        return svg;
+    }
+
     function updateThemeButton() {
         if (!themeButton) return;
         const dark = isDark();
-        themeButton.textContent = dark ? "☀️" : "🌙";
+        themeButton.replaceChildren(themeIcon(dark ? "sun" : "moon"));
         themeButton.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
     }
 
