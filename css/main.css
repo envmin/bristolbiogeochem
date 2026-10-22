@@ -439,6 +439,7 @@ sup {
 .research-card,
 .pub-card,
 .person,
+.outreach-card,
 .service-card {
     transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -446,6 +447,7 @@ sup {
 .research-card:focus-within,
 .pub-card:focus-within,
 .person:focus-within,
+.outreach-card:focus-within,
 .service-card:focus-within {
     background: var(--surface-hover);
 }
@@ -454,6 +456,7 @@ sup {
     .research-card:hover,
     .pub-card:hover,
     .person:hover,
+    .outreach-card:hover,
     .service-card:hover {
         background: var(--surface-hover);
         box-shadow: var(--shadow), 0 6px 18px rgba(0, 0, 0, 0.08);
@@ -730,6 +733,13 @@ sup {
     background: var(--surface);
     text-decoration: none;
     font-size: 0.95rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.year-nav a:hover,
+.year-nav a:focus-visible {
+    background: var(--surface-hover);
+    border-color: var(--accent);
 }
 
 .year-block {
