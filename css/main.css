@@ -16,6 +16,7 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
+    * { transition: none !important; }
 }
 
 body {
@@ -363,6 +364,27 @@ sup {
     background: var(--header-bg) url("../images/home/01.jpg") center / cover no-repeat;
 }
 
+/* Publications page header: a strip of paper title pages, darkened a little more
+   than the photos because the image is full of text */
+.hero-publications {
+    background-image: url("../images/publications/papers-header.jpg");
+    background-position: center;
+}
+
+.hero-publications::before {
+    background: var(--hero-overlay-strong);
+}
+
+.hero-publications .year-nav {
+    margin-top: 1.5rem;
+}
+
+/* Services page header, using the lab photo */
+.hero-services {
+    background-image: url("../images/services/lab-header.jpg");
+    background-position: center 55%;
+}
+
 .hero::before {
     content: "";
     position: absolute;
@@ -434,6 +456,34 @@ sup {
     box-shadow: var(--shadow);
 }
 
+/* Highlight the card under the pointer, or holding keyboard focus */
+.research-card,
+.pub-card,
+.person,
+.outreach-card,
+.service-card {
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.research-card:focus-within,
+.pub-card:focus-within,
+.person:focus-within,
+.outreach-card:focus-within,
+.service-card:focus-within {
+    background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+    .research-card:hover,
+    .pub-card:hover,
+    .person:hover,
+    .outreach-card:hover,
+    .service-card:hover {
+        background: var(--surface-hover);
+        box-shadow: var(--shadow), 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+}
+
 /* RESEARCH */
 
 /* Two cards per row on wider screens, one on phones */
@@ -491,6 +541,11 @@ sup {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 1.25rem;
+}
+
+/* Two cards per row on wide screens, for a section with an even number of cards */
+.services-grid-pairs {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
 }
 
 .service-card {
@@ -699,6 +754,13 @@ sup {
     background: var(--surface);
     text-decoration: none;
     font-size: 0.95rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.year-nav a:hover,
+.year-nav a:focus-visible {
+    background: var(--surface-hover);
+    border-color: var(--accent);
 }
 
 .year-block {
