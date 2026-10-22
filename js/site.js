@@ -90,6 +90,17 @@
         controls.hidden = false;
     });
 
+    // --- Pause buttons for moving content, such as the funder logos ---
+    // The label stays "Pause …"; aria-pressed says whether it is paused.
+    document.querySelectorAll("[data-pause-target]").forEach(button => {
+        const target = document.getElementById(button.dataset.pauseTarget);
+        if (!target) return;
+        button.addEventListener("click", () => {
+            const paused = target.classList.toggle("is-paused");
+            button.setAttribute("aria-pressed", String(paused));
+        });
+    });
+
     // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
     document.querySelectorAll(".current-year").forEach(node => {
         node.textContent = new Date().getFullYear();

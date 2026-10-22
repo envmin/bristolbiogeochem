@@ -1241,9 +1241,46 @@ sup {
 
 /* FUNDING AND FOOTER */
 
-/* UKRI is the main funder, so its logo is larger and sits above the others */
+/* Funders: UKRI, the main funder, stays large in the middle while the other
+   logos scroll past behind it in one line, fading out at the edges. */
+.funding-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 210px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* Four copies of the logo list; moving by half of them loops without a jump */
+.funding-track {
+    display: flex;
+    width: max-content;
+    animation: funding-scroll 45s linear infinite;
+}
+
+.funding-carousel:hover .funding-track,
+.funding-carousel.is-paused .funding-track {
+    animation-play-state: paused;
+}
+
+@keyframes funding-scroll {
+    to { transform: translateX(-50%); }
+}
+
 .funding-main {
-    margin: 1.25rem auto 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    transform: translate(-50%, -50%);
+    background: var(--surface-alt);
+    border-radius: 16px;
+    box-shadow: 0 0 28px 20px var(--surface-alt);   /* logos fade as they pass behind */
 }
 
 .funding-main figcaption {
@@ -1253,26 +1290,27 @@ sup {
 }
 
 .funding-logo {
+    display: block;
     width: 300px;
-    max-width: 80%;
+    max-width: 100%;
     padding: 0.9rem;
+    box-sizing: border-box;
     background: #ffffff;
     border-radius: 8px;
 }
 
-/* Other funders: equal white tiles, so logos of different shapes line up.
+/* Logo tiles: equal white tiles, so logos of different shapes line up.
    White in both themes because the logos are dark. */
 .funding-others {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 1rem;
-    margin: 1rem 0 0;
-    padding: 0;
+    margin: 0;
+    padding: 0 1rem 0 0;   /* same as the gap, so the copies join seamlessly */
     list-style: none;
 }
 
 .funding-others li {
+    flex: none;
     width: 160px;
     height: 80px;
     box-sizing: border-box;
@@ -1296,6 +1334,71 @@ sup {
 
 .funding-others .logo-fine {
     padding: 0.5rem 0.6rem;
+}
+
+.funding-pause {
+    margin: 0.75rem 0 0;
+}
+
+.funding-pause [aria-pressed="true"] .icon-pause,
+.funding-pause [aria-pressed="false"] .icon-play {
+    display: none;
+}
+
+/* On phones UKRI sits above the moving line instead of on top of it */
+@media (max-width: 700px) {
+    .funding-carousel {
+        flex-direction: column;
+        min-height: 0;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .funding-main {
+        position: static;
+        order: -1;
+        transform: none;
+        box-shadow: none;
+        margin-bottom: 1.25rem;
+    }
+
+    .funding-track {
+        align-self: flex-start;
+    }
+}
+
+/* Without motion: no scrolling, the logos wrap under UKRI and the pause button goes */
+@media (prefers-reduced-motion: reduce) {
+    .funding-carousel {
+        flex-direction: column;
+        min-height: 0;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .funding-main {
+        position: static;
+        order: -1;
+        transform: none;
+        box-shadow: none;
+        margin-bottom: 1.25rem;
+    }
+
+    .funding-track {
+        width: auto;
+        animation: none;
+    }
+
+    .funding-others {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .funding-others[aria-hidden="true"],
+    .funding-pause {
+        display: none;
+    }
 }
 
 .site-footer {
