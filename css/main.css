@@ -305,7 +305,7 @@ sup {
 }
 
 .nav-links a:hover,
-.nav-links a[aria-current="page"] {
+.nav-links a[aria-current] {
     background: rgba(255, 255, 255, 0.12);
 }
 
