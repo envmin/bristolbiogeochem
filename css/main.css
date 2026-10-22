@@ -486,23 +486,50 @@ sup {
 
 /* RESEARCH */
 
-/* Two cards per row on wider screens, one on phones */
+/* Short summary cards: three across on wide screens, one on phones */
 .research-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: 1.5rem;
 }
 
-@media (min-width: 700px) {
-    .research-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
 .research-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+/* The title link covers the whole card, so anywhere on it opens the theme page */
+.research-card-link {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.research-card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+}
+
+.research-card-link:focus-visible {
+    outline: none;
+}
+
+.research-card-link:focus-visible::after {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+}
+
+.read-more {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin: auto 0 0;
+    padding-top: 0.25rem;
+    color: var(--accent-strong);
+    font-weight: 600;
 }
 
 /* White in both themes, so transparent diagrams stay readable in dark mode */
@@ -521,12 +548,15 @@ sup {
     object-fit: contain;
 }
 
-.research-link {
-    font-weight: 600;
+.research-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1.25rem 1.5rem 1.25rem;
 }
 
-.research-text {
-    padding: 1.25rem 1.5rem 0.75rem;
+.research-text p {
+    color: var(--muted);
 }
 
 /* SERVICES */
@@ -693,6 +723,200 @@ sup {
 .services-more {
     color: var(--muted);
     font-size: 0.95rem;
+}
+
+/* RESEARCH THEME PAGES (research-*.html) */
+
+.theme-hero {
+    background: var(--surface-alt);
+}
+
+.theme-hero-inner {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+    padding-top: clamp(2.5rem, 6vw, 3.5rem);
+    padding-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+@media (min-width: 800px) {
+    .theme-hero-inner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .theme-hero-text-only {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.theme-hero h1 {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+    line-height: 1.15;
+}
+
+.theme-hero h1::after {
+    display: none;
+}
+
+.theme-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.theme-lead {
+    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+    max-width: 36em;
+}
+
+/* Images are shown whole on a white panel, like the summary cards */
+.theme-figure {
+    aspect-ratio: 16 / 10;
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.theme-figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Main text and a sidebar, which drops below the text on narrow screens */
+.theme-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    align-items: flex-start;
+}
+
+.theme-main {
+    flex: 999 1 560px;
+    min-width: 0;
+}
+
+.theme-main section + section {
+    margin-top: 2.25rem;
+}
+
+.theme-main h2,
+.theme-aside h2 {
+    font-size: 1.5rem;
+}
+
+.theme-aside {
+    flex: 1 1 280px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.aside-card {
+    padding: 1.25rem 1.4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.aside-card[hidden] {
+    display: none;
+}
+
+.aside-card h2 {
+    font-size: 1.15rem;
+}
+
+.aside-card h2::after {
+    display: none;
+}
+
+.aside-card > :last-child {
+    margin-bottom: 0;
+}
+
+.aside-cta {
+    background: var(--header-bg);
+    color: var(--header-text);
+    border-color: var(--header-bg);
+}
+
+.theme-people {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.theme-person {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.theme-person .person-photo {
+    width: 56px;
+    height: 56px;
+}
+
+.theme-person .person-initials {
+    font-size: 1.05rem;
+}
+
+.theme-person p {
+    margin: 0;
+}
+
+.theme-person-name {
+    font-weight: 600;
+}
+
+.theme-person-role {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.theme-list {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.theme-others {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.theme-other {
+    display: block;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 1rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-other:hover,
+.theme-other:focus-visible {
+    background: var(--surface-hover);
+    border-color: var(--accent);
 }
 
 /* PUBLICATIONS */
