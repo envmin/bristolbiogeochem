@@ -223,15 +223,22 @@
             <div class="container">
                 <h2 id="publications-title">Publications</h2>
 
-                <div class="pub-group">
-                    <h3>Recent highlights</h3>
+                <!-- publications.js turns these two lists into tabs once the key papers have loaded.
+                     Without JavaScript, or with no key papers, they show one after the other. -->
+                <div class="tab-list" role="tablist" aria-label="Publications to show" hidden>
+                    <button type="button" class="tab" role="tab" id="tab-recent" aria-controls="recent-block" aria-selected="true">Recent highlights</button>
+                    <button type="button" class="tab" role="tab" id="tab-key" aria-controls="key-papers-block" aria-selected="false" tabindex="-1">Key papers</button>
+                </div>
+
+                <div class="pub-group" id="recent-block">
+                    <h3 class="pub-group-title">Recent highlights</h3>
                     <div id="recent-pubs" class="pub-list">
                         <p class="loading">Loading publications…</p>
                     </div>
                 </div>
 
                 <div class="pub-group" id="key-papers-block" hidden>
-                    <h3>Key papers</h3>
+                    <h3 class="pub-group-title">Key papers</h3>
                     <div id="key-pubs" class="pub-list"></div>
                 </div>
 
