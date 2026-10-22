@@ -1039,23 +1039,25 @@ sup {
     letter-spacing: 0.06em;
 }
 
+/* Compact cards, three across on wide screens. A card grows only when its bio is opened. */
 .people-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
     gap: 1.25rem;
+    align-items: start;
 }
 
 .person {
     display: flex;
-    gap: 1.25rem;
+    gap: 1rem;
     align-items: flex-start;
-    padding: 1.25rem;
+    padding: 1.1rem 1.25rem;
 }
 
 .person-photo {
     flex: none;
-    width: 112px;
-    height: 112px;
+    width: 88px;
+    height: 88px;
     border-radius: 50%;
     object-fit: cover;
     background: var(--surface-alt);
@@ -1107,7 +1109,48 @@ sup {
 
 .person-description {
     font-size: 0.95rem;
-    margin: 0;
+    margin: 0.5rem 0 0;
+}
+
+.person-bio summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 32px;
+    color: var(--link);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+}
+
+.person-bio summary::-webkit-details-marker {
+    display: none;
+}
+
+/* A small chevron that turns when the bio is open */
+.person-bio summary::after {
+    content: "";
+    width: 0.45em;
+    height: 0.45em;
+    margin-left: 0.15rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-0.15em) rotate(45deg);
+    transition: transform 0.15s ease;
+}
+
+.person-bio[open] summary::after {
+    transform: translateY(0.1em) rotate(-135deg);
+}
+
+.person-bio .bio-less,
+.person-bio[open] .bio-more {
+    display: none;
+}
+
+.person-bio[open] .bio-less {
+    display: inline;
 }
 
 .former {

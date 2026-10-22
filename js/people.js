@@ -82,7 +82,17 @@ function personCard(p) {
         text.appendChild(email);
     }
 
-    if (p.Description) text.appendChild(el("p", "person-description", p.Description));
+    // The bio is folded away behind "Read more" so the cards stay short
+    if (p.Description) {
+        const bio = el("details", "person-bio");
+        const summary = el("summary");
+        summary.appendChild(el("span", "bio-more", "Read more"));
+        summary.appendChild(el("span", "bio-less", "Show less"));
+        summary.appendChild(el("span", "visually-hidden", ` about ${p.Name}`));
+        bio.appendChild(summary);
+        bio.appendChild(el("p", "person-description", p.Description));
+        text.appendChild(bio);
+    }
 
     card.appendChild(text);
     return card;
