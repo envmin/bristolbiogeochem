@@ -115,6 +115,15 @@ p {
     max-width: 760px;
 }
 
+/* Running text stops at about 70 characters a line, which is easier to read */
+.section .container > p:not(.services-intro):not(.services-intro + p),
+.theme-main p,
+.theme-main li,
+.theme-lead,
+.page-title p {
+    max-width: 70ch;
+}
+
 .center {
     text-align: center;
 }
