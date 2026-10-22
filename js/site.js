@@ -27,9 +27,10 @@
         });
     }
 
-    // --- Nav label: "Mineralogy" now and then turns into "Solutions" ---
+    // --- Nav label: "Mineralogy" turns into "Solutions" ---
     // Each word is split into letters so they can appear one by one in a
-    // scrambled order. Screen readers get the plain word.
+    // scrambled order. Screen readers get the plain word. The change plays once
+    // per visit, within five seconds, and otherwise on hover or keyboard focus.
     const cycle = document.querySelector(".brand-cycle");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -56,6 +57,18 @@
         label.className = "visually-hidden";
         label.textContent = words[0];
         cycle.replaceChildren(label, art);
+
+        let introSeen = false;
+        try {
+            introSeen = sessionStorage.getItem("brandIntro") === "seen";
+            sessionStorage.setItem("brandIntro", "seen");
+        } catch (e) {
+            // Storage can be blocked. The intro then plays on each page.
+        }
+        if (!introSeen) {
+            art.classList.add("brand-intro");
+            setTimeout(() => art.classList.remove("brand-intro"), 5000);
+        }
     }
 
     // --- Photo carousels: previous and next buttons and a "2 / 9" count ---
@@ -90,6 +103,43 @@
         controls.hidden = false;
     });
 
+    // --- Pause buttons for moving content, such as the funder logos ---
+    // The label stays "Pause …"; aria-pressed says whether it is paused.
+    document.querySelectorAll("[data-pause-target]").forEach(button => {
+        const target = document.getElementById(button.dataset.pauseTarget);
+        if (!target) return;
+        button.addEventListener("click", () => {
+            const paused = target.classList.toggle("is-paused");
+            button.setAttribute("aria-pressed", String(paused));
+        });
+    });
+
+    // --- "Read more" for long text, such as the outreach cards ---
+    // Text marked data-clamp is cut to a few lines. A button is added only when
+    // something is actually hidden, and moving keyboard focus inside opens it.
+    document.querySelectorAll("[data-clamp]").forEach(box => {
+        box.classList.add("is-clamped");
+        if (box.scrollHeight <= box.clientHeight + 2) {
+            box.classList.remove("is-clamped");
+            return;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "more-toggle";
+        button.setAttribute("aria-controls", box.id);
+
+        const setOpen = open => {
+            box.classList.toggle("is-clamped", !open);
+            button.setAttribute("aria-expanded", String(open));
+            button.textContent = open ? "Show less" : "Read more";
+        };
+        setOpen(false);
+        button.addEventListener("click", () => setOpen(box.classList.contains("is-clamped")));
+        box.addEventListener("focusin", () => setOpen(true));
+        box.after(button);
+    });
+
     // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
     document.querySelectorAll(".current-year").forEach(node => {
         node.textContent = new Date().getFullYear();
@@ -103,10 +153,44 @@
         return chosen ? chosen === "dark" : darkQuery.matches;
     }
 
+    // Line icons drawn in the header text colour, so they match on every device (emoji do not)
+    const ICONS = {
+        sun: ["M12 4V2", "M12 22v-2", "M4 12H2", "M22 12h-2", "M5.6 5.6 4.2 4.2", "M19.8 19.8l-1.4-1.4",
+              "M5.6 18.4l-1.4 1.4", "M19.8 4.2l-1.4 1.4"],
+        moon: ["M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"]
+    };
+
+    function themeIcon(name) {
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("width", "20");
+        svg.setAttribute("height", "20");
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("stroke", "currentColor");
+        svg.setAttribute("stroke-width", "2");
+        svg.setAttribute("stroke-linecap", "round");
+        svg.setAttribute("stroke-linejoin", "round");
+        svg.setAttribute("aria-hidden", "true");
+        if (name === "sun") {
+            const circle = document.createElementNS(ns, "circle");
+            circle.setAttribute("cx", "12");
+            circle.setAttribute("cy", "12");
+            circle.setAttribute("r", "4");
+            svg.appendChild(circle);
+        }
+        ICONS[name].forEach(d => {
+            const path = document.createElementNS(ns, "path");
+            path.setAttribute("d", d);
+            svg.appendChild(path);
+        });
+        return svg;
+    }
+
     function updateThemeButton() {
         if (!themeButton) return;
         const dark = isDark();
-        themeButton.textContent = dark ? "☀️" : "🌙";
+        themeButton.replaceChildren(themeIcon(dark ? "sun" : "moon"));
         themeButton.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
     }
 

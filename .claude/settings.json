@@ -1,7 +1,6 @@
 {
   "permissions": {
     "deny": [
-      "Read(./csv/people.csv)",
       "Edit(./csv/people.csv)",
       "Write(./csv/people.csv)",
       

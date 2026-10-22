@@ -87,7 +87,8 @@ function renderPublicationList(container, yearNav) {
         .catch(err => showLoadError(container, "publications", err));
 }
 
-// Home page: the newest few papers, and the key papers James lists by DOI.
+// Home page: the newest few papers, and the key papers James lists by DOI
+// (csv/key_papers.csv: DOI, plus an optional Why sentence shown under the paper).
 function renderHomePublications(highlightsEl, keyPapersEl, keyPapersBlock, count) {
     const pubsLoaded = loadPublications();
 
@@ -104,7 +105,10 @@ function renderHomePublications(highlightsEl, keyPapersEl, keyPapersBlock, count
             if (!doi) return;
             const pub = byDOI.get(doi);
             if (pub) {
-                cards.push(pubCard(pub, "h4", true));
+                const card = pubCard(pub, "h4", true);
+                // Optional Why column: a sentence on why James counts it as a key paper
+                if (row.Why) card.appendChild(el("p", "pub-why", row.Why));
+                cards.push(card);
             } else {
                 console.warn(`TODO: key paper ${row.DOI} is not in ${PUBLICATIONS_CSV}`);
             }

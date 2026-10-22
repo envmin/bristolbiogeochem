@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-waste bioleaching · Environmental Mineralogy, Bristol</title>
+    <meta name="description" content="Acid-loving bacteria that recover valuable metals from old electronics. Part of BioXtract. Research by Environmental Mineralogy, University of Bristol.">
+    <link rel="canonical" href="https://www.rustymagnets.com/research-e-waste.html">
+
+    <!-- Link previews when the page is shared -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Environmental Mineralogy, University of Bristol">
+    <meta property="og:title" content="E-waste bioleaching using acidophilic bacteria">
+    <meta property="og:description" content="Acid-loving bacteria that recover valuable metals from old electronics. Part of BioXtract. Research by Environmental Mineralogy, University of Bristol.">
+    <meta property="og:url" content="https://www.rustymagnets.com/research-e-waste.html">
+    <meta property="og:image" content="https://www.rustymagnets.com/images/research/theme-e-waste.jpg">
+    <meta property="og:image:alt" content="Flasks of bacterial cultures with cotton wool stoppers inside an incubator">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="images/logo/favicon-48.png">
+    <link rel="apple-touch-icon" href="images/logo/apple-touch-icon.png">
+
+    <!-- Apply the saved theme before the page draws -->
+    <script>
+        document.documentElement.classList.add("js");
+        try {
+            var savedTheme = localStorage.getItem("theme");
+            if (savedTheme) document.documentElement.setAttribute("data-theme", savedTheme);
+        } catch (e) {}
+    </script>
+
+    <link rel="preload" href="fonts/source-sans-3-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/source-serif-4-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"
+            integrity="sha384-D/t0ZMqQW31H3az8ktEiNb39wyKnS82iFY52QPACM+IjKW3jDUhyIgh2PApRqJZs"
+            crossorigin="anonymous"></script>
+    <script defer src="js/csv.js"></script>
+    <script defer src="js/site.js"></script>
+    <script defer src="js/people.js"></script>
+    <script defer src="js/publications.js"></script>
+    <script defer src="js/themes.js"></script>
+
+    <!-- GoatCounter: cookieless visit and click counts (https://rustymagnets.goatcounter.com) -->
+    <script data-goatcounter="https://rustymagnets.goatcounter.com/count"
+            async src="https://gc.zgo.at/count.v4.js"
+            integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+"
+            crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main">
+            <a class="brand" href="./"><img class="brand-logo" src="images/logo/nav-logo.png" width="84" height="84" alt=""><span class="brand-name"><span>Environmental</span> <span class="brand-cycle" data-alt="Solutions">Mineralogy</span></span></a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+                <span class="menu-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Menu</span>
+            </button>
+            <ul class="nav-links" id="site-menu">
+                <li><a href="./#research" aria-current="true">Research</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="publications.html">Publications</a></li>
+                <li><a href="./#people">People</a></li>
+                <li><a href="./#outreach">Outreach</a></li>
+                <li><a href="./#join">Join us</a></li>
+            </ul>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch colour theme">🌙</button>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="theme-hero">
+            <div class="container theme-hero-inner">
+                <div class="theme-hero-text">
+                    <a class="theme-back" href="./#research"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>All research themes</a>
+                    <h1>E-waste bioleaching using acidophilic bacteria</h1>
+                    <p class="theme-lead">Acid-loving bacteria that recover valuable metals from old electronics. Part of BioXtract.</p>
+                </div>
+                <div>
+                    <div class="theme-figure">
+                        <img src="images/research/theme-e-waste.jpg" alt="Flasks of bacterial cultures with cotton wool stoppers inside an incubator" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container theme-layout">
+                <article class="theme-main">
+                    <section aria-labelledby="what-title">
+                        <h2 id="what-title">What we are doing</h2>
+                        <p>
+                            Bioleaching uses microbes to dissolve metals out of waste so they can be
+                            recovered. We use acidophilic bacteria, which thrive in very acidic
+                            conditions, to leach metals from e-waste. This project is part of
+                            BioXtract.
+                        </p>
+                    </section>
+
+                    <section aria-labelledby="why-title">
+                        <h2 id="why-title">Why it matters</h2>
+                        <p>
+                            Electronic waste, such as old circuit boards, contains high
+                            concentrations of valuable metals including gold, copper and rare earth
+                            elements. Bioleaching offers a low-carbon alternative to conventional
+                            chemical and thermal recovery.
+                        </p>
+                        <p>Find out more about <a href="https://www.bioxtract.org" target="_blank" rel="noopener">BioXtract</a>.</p>
+                    </section>
+
+                    <!-- DRAFT for James and the group to review: the two sections below. -->
+                    <section aria-labelledby="how-title">
+                        <h2 id="how-title">How we approach it</h2>
+                        <p>
+                            We grow acidophilic bacteria in the lab and expose them to electronic
+                            waste. We measure which metals are released into solution, how quickly,
+                            and under which conditions, so the process can be compared with
+                            conventional recovery methods.
+                        </p>
+                    </section>
+
+                    <section aria-labelledby="questions-title">
+                        <h2 id="questions-title">Questions we are asking</h2>
+                        <ul>
+                            <li>Which metals can bacteria release from e-waste, and how selectively?</li>
+                            <li>How can bioleaching be made fast enough to compete with chemical recovery?</li>
+                            <li>Once metals are in solution, what is the best way to recover them in a usable form?</li>
+                        </ul>
+                    </section>
+
+                    <!-- Papers come from csv/theme_papers.csv (theme code and DOI). Hidden while there are none. -->
+                    <section id="theme-papers-block" aria-labelledby="papers-title" hidden>
+                        <h2 id="papers-title">Related publications</h2>
+                        <div id="theme-papers" class="pub-list"></div>
+                        <p><a href="publications.html">See all publications</a></p>
+                    </section>
+                </article>
+
+                <!-- People come from the Themes column of csv/people.csv, funding from csv/theme_funding.csv.
+                     Each box stays hidden while it has nothing to show. -->
+                <aside class="theme-aside" aria-label="About this theme">
+                    <section class="aside-card" id="theme-current-block" aria-labelledby="current-title" hidden>
+                        <h2 id="current-title">Working on this now</h2>
+                        <ul id="theme-current" class="theme-people"></ul>
+                    </section>
+
+                    <section class="aside-card" id="theme-former-block" aria-labelledby="former-title" hidden>
+                        <h2 id="former-title">Previously worked on this</h2>
+                        <ul id="theme-former" class="theme-list"></ul>
+                    </section>
+
+                    <section class="aside-card" id="theme-funding-block" aria-labelledby="funding-title" hidden>
+                        <h2 id="funding-title">Funding and partners</h2>
+                        <ul id="theme-funding" class="theme-list"></ul>
+                    </section>
+
+                    <section class="aside-card aside-cta" aria-labelledby="contact-title">
+                        <h2 id="contact-title">Interested in this work?</h2>
+                        <p>Get in touch to discuss this work or a possible collaboration.</p>
+                        <p><a class="button" href="mailto:james.byrne@bristol.ac.uk">Email James</a></p>
+                    </section>
+                </aside>
+            </div>
+        </div>
+
+        <section class="section section-alt" aria-labelledby="other-title">
+            <div class="container">
+                <h2 id="other-title">Other research themes</h2>
+                <ul class="theme-others">
+                    <li><a class="theme-other" href="research-biogeobatteries.html">Biogeobatteries</a></li>
+                    <li><a class="theme-other" href="research-metal-recovery.html">Metal recovery and remediation</a></li>
+                    <li><a class="theme-other" href="research-mossbauer.html"><sup>57</sup>Fe Mössbauer spectroscopy and data analysis</a></li>
+                    <li><a class="theme-other" href="research-environmental-magnetism.html">Environmental magnetism and climate</a></li>
+                    <li><a class="theme-other" href="research-early-earth.html">Early Earth and astrobiology</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div>
+                <p class="footer-title">Environmental Mineralogy</p>
+                <address>
+                    School of Earth Sciences, University of Bristol<br>
+                    Wills Memorial Building, Queens Road<br>
+                    Bristol BS8 1RJ, United Kingdom
+                </address>
+                <p><a href="mailto:james.byrne@bristol.ac.uk">james.byrne@bristol.ac.uk</a></p>
+            </div>
+            <nav aria-label="Footer">
+                <p class="footer-title">On this site</p>
+                <ul class="footer-links">
+                    <li><a href="./">Home</a></li>
+                    <li><a href="./#research">Research</a></li>
+                    <li><a href="services.html">Analytical services</a></li>
+                    <li><a href="publications.html">Publications</a></li>
+                    <li><a href="./#people">People</a></li>
+                    <li><a href="./#join">Join us</a></li>
+                    <li><a href="rust-to-the-rescue.html" target="_blank" rel="noopener" data-track="footer-rust">Rust to the Rescue</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p class="footer-title">Elsewhere</p>
+                <ul class="footer-links">
+                    <li><a href="https://orcid.org/0000-0002-4399-7336" target="_blank" rel="noopener">James Byrne on ORCID</a></li>
+                    <li><a href="https://www.minsight.org" target="_blank" rel="noopener">MinSight</a></li>
+                    <li><a href="https://www.bristol.ac.uk/earthsciences/" target="_blank" rel="noopener">School of Earth Sciences</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p class="footer-small">© <span class="current-year">2026</span> James Byrne.</p>
+            <p class="footer-small">Visits are counted with GoatCounter, which does not use cookies.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => renderThemePage("e-waste"));
+    </script>
+</body>
+</html>

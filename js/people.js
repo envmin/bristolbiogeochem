@@ -65,8 +65,25 @@ function personPhoto(p) {
     return img;
 }
 
+// Open one bio and close any other. The open card spans the whole row (see
+// .person-open). Where the browser supports view transitions, the cards glide
+// to their new places instead of jumping.
+let personCount = 0;
+
+function setBioOpen(bio, open) {
+    document.querySelectorAll(".person-bio[open]").forEach(other => {
+        if (other !== bio) {
+            other.open = false;
+            other.closest(".person").classList.remove("person-open");
+        }
+    });
+    bio.open = open;
+    bio.closest(".person").classList.toggle("person-open", open);
+}
+
 function personCard(p) {
     const card = el("article", "person");
+    card.style.viewTransitionName = `person-${++personCount}`;
     card.appendChild(personPhoto(p));
 
     const text = el("div", "person-text");
@@ -74,15 +91,61 @@ function personCard(p) {
     text.appendChild(el("p", "person-role", p.Role));
     text.appendChild(el("p", "person-dates", displayDateRange(p.Start, p.End)));
 
-    if (p.email) {
-        const email = el("p", "person-email");
-        const link = el("a", null, p.email);
-        link.href = `mailto:${p.email}`;
-        email.appendChild(link);
-        text.appendChild(email);
+    // Email and profile links on one short line: "Email · LinkedIn · Scholar".
+    // Screen readers hear the person's name with each link.
+    const contacts = [
+        ["Email", p.email ? `mailto:${p.email}` : ""],
+        ["LinkedIn", p.LinkedIn],
+        ["Scholar", p["Google Scholar"]]
+    ].filter(([, url]) => url && (url.startsWith("mailto:") || isWebLink(url)));
+
+    if (contacts.length) {
+        const line = el("p", "person-links");
+        contacts.forEach(([label, url], i) => {
+            if (i) line.appendChild(document.createTextNode(" · "));
+            const link = el("a", null, label);
+            link.href = url;
+            if (!url.startsWith("mailto:")) {
+                link.target = "_blank";
+                link.rel = "noopener";
+            }
+            link.appendChild(el("span", "visually-hidden", `, ${p.Name}`));
+            line.appendChild(link);
+        });
+        text.appendChild(line);
     }
 
-    if (p.Description) text.appendChild(el("p", "person-description", p.Description));
+    // The bio is folded away behind "Read more" so the cards stay short
+    if (p.Description) {
+        const bio = el("details", "person-bio");
+        const summary = el("summary");
+        summary.appendChild(el("span", "bio-more", "Read more"));
+        summary.appendChild(el("span", "bio-less", "Show less"));
+        summary.appendChild(el("span", "visually-hidden", ` about ${p.Name}`));
+        bio.appendChild(summary);
+        bio.appendChild(el("p", "person-description", p.Description));
+
+        summary.addEventListener("click", event => {
+            event.preventDefault();
+            const open = !bio.open;
+            const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (document.startViewTransition && !calm) {
+                const transition = document.startViewTransition(() => setBioOpen(bio, open));
+                // A quick second click skips the first animation; that is fine, so ignore it
+                transition.ready.catch(() => {});
+                transition.finished.then(() => { if (open) card.scrollIntoView({ block: "nearest" }); });
+            } else {
+                setBioOpen(bio, open);
+                if (open) card.scrollIntoView({ block: "nearest" });
+            }
+        });
+        // Keeps the card in step if the bio is opened another way, such as find in page
+        bio.addEventListener("toggle", () => {
+            if (bio.open) setBioOpen(bio, true);
+            else card.classList.remove("person-open");
+        });
+        text.appendChild(bio);
+    }
 
     card.appendChild(text);
     return card;
