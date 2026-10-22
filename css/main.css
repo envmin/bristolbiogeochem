@@ -1241,13 +1241,8 @@ sup {
 
 /* FUNDING AND FOOTER */
 
-/* Funders: UKRI, the main funder, stays large in the middle while the other
-   logos scroll past behind it in one line, fading out at the edges. */
+/* Funders: the logos scroll past slowly in one line, fading out at the edges */
 .funding-carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 210px;
     margin-top: 1.5rem;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
@@ -1268,36 +1263,6 @@ sup {
 
 @keyframes funding-scroll {
     to { transform: translateX(-50%); }
-}
-
-.funding-main {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    margin: 0;
-    padding: 0.75rem 1.25rem;
-    transform: translate(-50%, -50%);
-    background: var(--surface-alt);
-    border-radius: 16px;
-    box-shadow: 0 0 28px 20px var(--surface-alt);   /* logos fade as they pass behind */
-}
-
-.funding-main figcaption {
-    margin-top: 0.5rem;
-    text-align: center;
-    color: var(--muted);
-    font-weight: 600;
-}
-
-.funding-logo {
-    display: block;
-    width: 300px;
-    max-width: 100%;
-    padding: 0.9rem;
-    box-sizing: border-box;
-    background: #ffffff;
-    border-radius: 8px;
 }
 
 /* Logo tiles: equal white tiles, so logos of different shapes line up.
@@ -1347,43 +1312,11 @@ sup {
     display: none;
 }
 
-/* On phones UKRI sits above the moving line instead of on top of it */
-@media (max-width: 700px) {
-    .funding-carousel {
-        flex-direction: column;
-        min-height: 0;
-        -webkit-mask-image: none;
-        mask-image: none;
-    }
-
-    .funding-main {
-        position: static;
-        order: -1;
-        transform: none;
-        box-shadow: none;
-        margin-bottom: 1.25rem;
-    }
-
-    .funding-track {
-        align-self: flex-start;
-    }
-}
-
-/* Without motion: no scrolling, the logos wrap under UKRI and the pause button goes */
+/* Without motion: no scrolling, the logos wrap into rows and the pause button goes */
 @media (prefers-reduced-motion: reduce) {
     .funding-carousel {
-        flex-direction: column;
-        min-height: 0;
         -webkit-mask-image: none;
         mask-image: none;
-    }
-
-    .funding-main {
-        position: static;
-        order: -1;
-        transform: none;
-        box-shadow: none;
-        margin-bottom: 1.25rem;
     }
 
     .funding-track {
