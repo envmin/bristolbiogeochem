@@ -65,8 +65,25 @@ function personPhoto(p) {
     return img;
 }
 
+// Open one bio and close any other. The open card spans the whole row (see
+// .person-open). Where the browser supports view transitions, the cards glide
+// to their new places instead of jumping.
+let personCount = 0;
+
+function setBioOpen(bio, open) {
+    document.querySelectorAll(".person-bio[open]").forEach(other => {
+        if (other !== bio) {
+            other.open = false;
+            other.closest(".person").classList.remove("person-open");
+        }
+    });
+    bio.open = open;
+    bio.closest(".person").classList.toggle("person-open", open);
+}
+
 function personCard(p) {
     const card = el("article", "person");
+    card.style.viewTransitionName = `person-${++personCount}`;
     card.appendChild(personPhoto(p));
 
     const text = el("div", "person-text");
@@ -91,10 +108,25 @@ function personCard(p) {
         summary.appendChild(el("span", "visually-hidden", ` about ${p.Name}`));
         bio.appendChild(summary);
         bio.appendChild(el("p", "person-description", p.Description));
-        // An open bio makes the card span the whole row (see .person-open)
+
+        summary.addEventListener("click", event => {
+            event.preventDefault();
+            const open = !bio.open;
+            const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (document.startViewTransition && !calm) {
+                const transition = document.startViewTransition(() => setBioOpen(bio, open));
+                // A quick second click skips the first animation; that is fine, so ignore it
+                transition.ready.catch(() => {});
+                transition.finished.then(() => { if (open) card.scrollIntoView({ block: "nearest" }); });
+            } else {
+                setBioOpen(bio, open);
+                if (open) card.scrollIntoView({ block: "nearest" });
+            }
+        });
+        // Keeps the card in step if the bio is opened another way, such as find in page
         bio.addEventListener("toggle", () => {
-            card.classList.toggle("person-open", bio.open);
-            if (bio.open) card.scrollIntoView({ block: "nearest" });
+            if (bio.open) setBioOpen(bio, true);
+            else card.classList.remove("person-open");
         });
         text.appendChild(bio);
     }
