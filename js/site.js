@@ -138,6 +138,18 @@
         button.addEventListener("click", () => setOpen(box.classList.contains("is-clamped")));
         box.addEventListener("focusin", () => setOpen(true));
         box.after(button);
+
+        // A click elsewhere on the card opens or closes it too, except on its links,
+        // buttons, photo carousel or video, or when someone has just selected text
+        const card = box.closest(".outreach-card");
+        if (card) {
+            card.classList.add("card-clickable");
+            card.addEventListener("click", event => {
+                if (event.target.closest("a, button, .carousel, .video-wrapper")) return;
+                if (String(window.getSelection())) return;
+                setOpen(box.classList.contains("is-clamped"));
+            });
+        }
     });
 
     // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
