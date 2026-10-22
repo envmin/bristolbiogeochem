@@ -1166,10 +1166,9 @@ sup {
     }
 }
 
-.person-email {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-    overflow-wrap: anywhere;
+.person-links {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
 }
 
 .person-description {

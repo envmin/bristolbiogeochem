@@ -91,12 +91,28 @@ function personCard(p) {
     text.appendChild(el("p", "person-role", p.Role));
     text.appendChild(el("p", "person-dates", displayDateRange(p.Start, p.End)));
 
-    if (p.email) {
-        const email = el("p", "person-email");
-        const link = el("a", null, p.email);
-        link.href = `mailto:${p.email}`;
-        email.appendChild(link);
-        text.appendChild(email);
+    // Email and profile links on one short line: "Email · LinkedIn · Scholar".
+    // Screen readers hear the person's name with each link.
+    const contacts = [
+        ["Email", p.email ? `mailto:${p.email}` : ""],
+        ["LinkedIn", p.LinkedIn],
+        ["Scholar", p["Google Scholar"]]
+    ].filter(([, url]) => url && (url.startsWith("mailto:") || isWebLink(url)));
+
+    if (contacts.length) {
+        const line = el("p", "person-links");
+        contacts.forEach(([label, url], i) => {
+            if (i) line.appendChild(document.createTextNode(" · "));
+            const link = el("a", null, label);
+            link.href = url;
+            if (!url.startsWith("mailto:")) {
+                link.target = "_blank";
+                link.rel = "noopener";
+            }
+            link.appendChild(el("span", "visually-hidden", `, ${p.Name}`));
+            line.appendChild(link);
+        });
+        text.appendChild(line);
     }
 
     // The bio is folded away behind "Read more" so the cards stay short
