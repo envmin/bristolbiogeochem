@@ -781,6 +781,13 @@ sup {
     border-radius: 12px;
 }
 
+.theme-credit {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: right;
+}
+
 .theme-figure img {
     display: block;
     width: 100%;
