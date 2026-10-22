@@ -27,9 +27,10 @@
         });
     }
 
-    // --- Nav label: "Mineralogy" now and then turns into "Solutions" ---
+    // --- Nav label: "Mineralogy" turns into "Solutions" ---
     // Each word is split into letters so they can appear one by one in a
-    // scrambled order. Screen readers get the plain word.
+    // scrambled order. Screen readers get the plain word. The change plays once
+    // per visit, within five seconds, and otherwise on hover or keyboard focus.
     const cycle = document.querySelector(".brand-cycle");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -56,6 +57,18 @@
         label.className = "visually-hidden";
         label.textContent = words[0];
         cycle.replaceChildren(label, art);
+
+        let introSeen = false;
+        try {
+            introSeen = sessionStorage.getItem("brandIntro") === "seen";
+            sessionStorage.setItem("brandIntro", "seen");
+        } catch (e) {
+            // Storage can be blocked. The intro then plays on each page.
+        }
+        if (!introSeen) {
+            art.classList.add("brand-intro");
+            setTimeout(() => art.classList.remove("brand-intro"), 5000);
+        }
     }
 
     // --- Photo carousels: previous and next buttons and a "2 / 9" count ---

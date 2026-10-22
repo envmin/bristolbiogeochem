@@ -199,38 +199,54 @@ p {
 }
 
 .brand-word span {
+    --strokes: repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 3px);
     display: inline-block;
-    animation: 10s linear var(--delay, 0s) infinite both;
-}
-
-.brand-word-main span {
-    animation-name: brand-main;
+    transition: opacity 0.3s ease var(--delay, 0s);
 }
 
 .brand-word-alt span {
     opacity: 0;
+}
+
+/* Pointing at or tabbing to the group name shows "Solutions", letter by letter */
+.brand:hover .brand-word-main span,
+.brand:focus-visible .brand-word-main span {
+    opacity: 0;
+}
+
+.brand:hover .brand-word-alt span,
+.brand:focus-visible .brand-word-alt span {
+    opacity: 1;
+}
+
+/* A short intro the first time someone arrives, finished within five seconds.
+   Each letter breaks into thin vertical strokes as it fades, like the Alien title. */
+.brand-intro .brand-word span {
+    animation: 4.4s linear var(--delay, 0s) 1 both;
+}
+
+.brand-intro .brand-word-main span {
+    animation-name: brand-main;
+}
+
+.brand-intro .brand-word-alt span {
     animation-name: brand-alt;
 }
 
-/* Each letter breaks into thin vertical strokes as it fades, like the Alien title */
 @keyframes brand-main {
-    0%, 50% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
-    52% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    55%, 93% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    95% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    96.5%, 100% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    0%, 18% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    22% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    27%, 73% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    77% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    82%, 100% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
 }
 
 @keyframes brand-alt {
-    0%, 60% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    62.5% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    64.5%, 84% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
-    86% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-    88%, 100% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
-}
-
-.brand-word span {
-    --strokes: repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 3px);
+    0%, 29% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    33% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    37%, 64% { opacity: 1; -webkit-mask-image: none; mask-image: none; }
+    68% { opacity: 1; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
+    72%, 100% { opacity: 0; -webkit-mask-image: var(--strokes); mask-image: var(--strokes); }
 }
 
 sup {
