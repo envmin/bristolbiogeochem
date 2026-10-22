@@ -5,6 +5,7 @@
     --bg: #f6f5f2;
     --surface: #ffffff;
     --surface-alt: #eeece7;
+    --surface-hover: #fcf3ec;   /* faint rust tint for a card under the pointer */
     --text: #1d2327;
     --muted: #4c5660;
     --border: #d9d6cf;
@@ -26,6 +27,7 @@
         --bg: #12171b;
         --surface: #1b2227;
         --surface-alt: #161c20;
+        --surface-hover: #232c32;
         --text: #e6eaed;
         --muted: #a9b4bc;
         --border: #2e3940;
@@ -47,6 +49,7 @@
     --bg: #12171b;
     --surface: #1b2227;
     --surface-alt: #161c20;
+    --surface-hover: #232c32;
     --text: #e6eaed;
     --muted: #a9b4bc;
     --border: #2e3940;

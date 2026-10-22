@@ -16,6 +16,7 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
+    * { transition: none !important; }
 }
 
 body {
@@ -432,6 +433,31 @@ sup {
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: var(--shadow);
+}
+
+/* Highlight the card under the pointer, or holding keyboard focus */
+.research-card,
+.pub-card,
+.person,
+.service-card {
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.research-card:focus-within,
+.pub-card:focus-within,
+.person:focus-within,
+.service-card:focus-within {
+    background: var(--surface-hover);
+}
+
+@media (hover: hover) {
+    .research-card:hover,
+    .pub-card:hover,
+    .person:hover,
+    .service-card:hover {
+        background: var(--surface-hover);
+        box-shadow: var(--shadow), 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
 }
 
 /* RESEARCH */
