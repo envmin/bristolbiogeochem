@@ -451,6 +451,9 @@ footer .foot2{font-weight:400;font-size:.85rem!important;opacity:.9}
 // Count clicks on links to other sites as GoatCounter events
 document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href]");if(!a||!window.goatcounter||!window.goatcounter.count)return;if(a.host&&a.host!==location.host)window.goatcounter.count({path:"outbound: "+a.host+a.pathname,title:(a.textContent||"").trim().slice(0,120),event:true});});
 </script>
+<link rel="icon" type="image/png" sizes="32x32" href="images/logo/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/logo/favicon-48.png">
+<link rel="apple-touch-icon" href="images/logo/apple-touch-icon.png">
 </head>
 <body>
 <script>document.documentElement.classList.add('js')</script>
