@@ -364,6 +364,12 @@ sup {
     background: var(--header-bg) url("../images/home/01.jpg") center / cover no-repeat;
 }
 
+/* Services page header, using the lab photo */
+.hero-services {
+    background-image: url("../images/services/lab-header.jpg");
+    background-position: center 55%;
+}
+
 .hero::before {
     content: "";
     position: absolute;
