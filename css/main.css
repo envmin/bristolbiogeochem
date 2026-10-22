@@ -1197,6 +1197,35 @@ sup {
 
 /* OUTREACH */
 
+/* Long card text is cut to about four lines, with a Read more button (site.js) */
+.card-text > :last-child {
+    margin-bottom: 0;
+}
+
+.card-text.is-clamped {
+    max-height: 6.4em;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+.more-toggle {
+    align-self: flex-start;
+    margin: 0.5rem 0 1rem;
+    padding: 0.25rem 0;
+    border: 0;
+    background: none;
+    color: var(--link);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.more-toggle:hover {
+    text-decoration: underline;
+}
+
 .outreach-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));

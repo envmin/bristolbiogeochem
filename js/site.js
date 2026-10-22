@@ -114,6 +114,32 @@
         });
     });
 
+    // --- "Read more" for long text, such as the outreach cards ---
+    // Text marked data-clamp is cut to a few lines. A button is added only when
+    // something is actually hidden, and moving keyboard focus inside opens it.
+    document.querySelectorAll("[data-clamp]").forEach(box => {
+        box.classList.add("is-clamped");
+        if (box.scrollHeight <= box.clientHeight + 2) {
+            box.classList.remove("is-clamped");
+            return;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "more-toggle";
+        button.setAttribute("aria-controls", box.id);
+
+        const setOpen = open => {
+            box.classList.toggle("is-clamped", !open);
+            button.setAttribute("aria-expanded", String(open));
+            button.textContent = open ? "Show less" : "Read more";
+        };
+        setOpen(false);
+        button.addEventListener("click", () => setOpen(box.classList.contains("is-clamped")));
+        box.addEventListener("focusin", () => setOpen(true));
+        box.after(button);
+    });
+
     // --- Copyright year (the 2026 in the HTML is the fallback without JavaScript) ---
     document.querySelectorAll(".current-year").forEach(node => {
         node.textContent = new Date().getFullYear();
