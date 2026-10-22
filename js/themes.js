@@ -17,15 +17,15 @@ const THEME_CODES = [
     "spectroscopy",
     "biomagnetism",
     "e-waste",
-    "early earth & astrobiology",
-    "water treatment"
+    "early earth & astrobiology"
 ];
 
 // Other spellings that mean the same theme
 const THEME_ALIASES = {
     "early earth": "early earth & astrobiology",
     "astrobiology": "early earth & astrobiology",
-    "astrobiology & early earth": "early earth & astrobiology"
+    "astrobiology & early earth": "early earth & astrobiology",
+    "water treatment": "metals"
 };
 
 function normaliseTheme(code) {
