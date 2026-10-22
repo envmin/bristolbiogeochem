@@ -87,6 +87,44 @@ function renderPublicationList(container, yearNav) {
         .catch(err => showLoadError(container, "publications", err));
 }
 
+// Home page tabs: "Recent highlights" and "Key papers" share one space instead of
+// stacking. Follows the usual tabs pattern, so arrow keys move between the tabs.
+function setUpPublicationTabs() {
+    const list = document.querySelector(".tab-list");
+    if (!list) return;
+    const tabs = [...list.querySelectorAll('[role="tab"]')];
+    const panels = tabs.map(tab => document.getElementById(tab.getAttribute("aria-controls")));
+
+    panels.forEach((panel, i) => {
+        panel.setAttribute("role", "tabpanel");
+        panel.setAttribute("aria-labelledby", tabs[i].id);
+        panel.classList.add("in-tabs");
+    });
+
+    function select(index, focus) {
+        tabs.forEach((tab, i) => {
+            const on = i === index;
+            tab.setAttribute("aria-selected", String(on));
+            tab.tabIndex = on ? 0 : -1;
+            panels[i].hidden = !on;
+        });
+        if (focus) tabs[index].focus();
+    }
+
+    tabs.forEach((tab, i) => {
+        tab.addEventListener("click", () => select(i, false));
+        tab.addEventListener("keydown", e => {
+            const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+            if (step) select((i + step + tabs.length) % tabs.length, true);
+            if (e.key === "Home") select(0, true);
+            if (e.key === "End") select(tabs.length - 1, true);
+        });
+    });
+
+    list.hidden = false;
+    select(0, false);
+}
+
 // Home page: the newest few papers, and the key papers James lists by DOI
 // (csv/key_papers.csv: DOI, plus an optional Why sentence shown under the paper).
 function renderHomePublications(highlightsEl, keyPapersEl, keyPapersBlock, count) {
@@ -116,6 +154,7 @@ function renderHomePublications(highlightsEl, keyPapersEl, keyPapersBlock, count
 
         keyPapersEl.replaceChildren(...cards);
         keyPapersBlock.hidden = cards.length === 0;
+        if (cards.length) setUpPublicationTabs();
     });
 
     highlights.catch(err => showLoadError(highlightsEl, "publications", err));

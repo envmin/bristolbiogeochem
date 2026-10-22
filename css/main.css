@@ -979,6 +979,51 @@ sup {
     margin-bottom: 2rem;
 }
 
+/* Tabs for Recent highlights and Key papers on the home page */
+.tab-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab-list[hidden] {
+    display: none;
+}
+
+.tab {
+    min-height: 44px;
+    margin-bottom: -1px;
+    padding: 0.6rem 1.1rem;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: var(--muted);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tab:hover {
+    color: var(--text);
+}
+
+.tab[aria-selected="true"] {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+}
+
+/* The tab already names the list, so its heading is kept for screen readers only */
+.in-tabs .pub-group-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
 .pub-list {
     display: grid;
     gap: 1rem;
@@ -1101,6 +1146,11 @@ sup {
 
 .person-bio {
     margin-top: auto;
+}
+
+/* The whole card opens and closes the bio, so it shows a pointer like a link */
+.person-clickable {
+    cursor: pointer;
 }
 
 /* Cards glide to their new places when a bio opens (browsers with view transitions) */
@@ -1289,6 +1339,16 @@ sup {
 
 .more-toggle:hover {
     text-decoration: underline;
+}
+
+/* Cards with shortened text open and close when clicked, so they show a pointer */
+.card-clickable {
+    cursor: pointer;
+}
+
+.card-clickable .carousel,
+.card-clickable .video-wrapper {
+    cursor: auto;
 }
 
 .outreach-grid {

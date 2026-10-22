@@ -125,8 +125,7 @@ function personCard(p) {
         bio.appendChild(summary);
         bio.appendChild(el("p", "person-description", p.Description));
 
-        summary.addEventListener("click", event => {
-            event.preventDefault();
+        function toggleBio() {
             const open = !bio.open;
             const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             if (document.startViewTransition && !calm) {
@@ -138,6 +137,21 @@ function personCard(p) {
                 setBioOpen(bio, open);
                 if (open) card.scrollIntoView({ block: "nearest" });
             }
+        }
+
+        // "Read more" stays the keyboard and screen reader control
+        summary.addEventListener("click", event => {
+            event.preventDefault();
+            toggleBio();
+        });
+
+        // A click anywhere else on the card opens or closes it too, except on its
+        // links, or when someone has just selected text (to copy an email, say)
+        card.classList.add("person-clickable");
+        card.addEventListener("click", event => {
+            if (event.target.closest("a, summary")) return;
+            if (String(window.getSelection())) return;
+            toggleBio();
         });
         // Keeps the card in step if the bio is opened another way, such as find in page
         bio.addEventListener("toggle", () => {
