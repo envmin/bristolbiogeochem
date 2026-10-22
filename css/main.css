@@ -1515,3 +1515,36 @@ sup {
 .site-footer a {
     color: var(--header-text);
 }
+
+/* Three columns on wide screens (contact, site links, links elsewhere), stacked on phones */
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 1.5rem 2.5rem;
+}
+
+.footer-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem !important;
+}
+
+.site-footer address {
+    font-style: normal;
+    line-height: 1.6;
+}
+
+.footer-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-links li + li {
+    margin-top: 0.3rem;
+}
+
+.footer-bottom {
+    margin-top: 1.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
