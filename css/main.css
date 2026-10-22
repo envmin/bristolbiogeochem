@@ -364,6 +364,21 @@ sup {
     background: var(--header-bg) url("../images/home/01.jpg") center / cover no-repeat;
 }
 
+/* Publications page header: a strip of paper title pages, darkened a little more
+   than the photos because the image is full of text */
+.hero-publications {
+    background-image: url("../images/publications/papers-header.jpg");
+    background-position: center;
+}
+
+.hero-publications::before {
+    background: var(--hero-overlay-strong);
+}
+
+.hero-publications .year-nav {
+    margin-top: 1.5rem;
+}
+
 /* Services page header, using the lab photo */
 .hero-services {
     background-image: url("../images/services/lab-header.jpg");
@@ -426,26 +441,6 @@ sup {
 
 .page-title p {
     color: var(--muted);
-}
-
-/* Heading with an image beside it on wide screens, and under it on phones */
-.page-banner {
-    display: grid;
-    gap: 1rem 2rem;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-@media (min-width: 760px) {
-    .page-banner {
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-    }
-}
-
-.page-banner-image {
-    display: block;
-    width: 100%;
-    height: auto;
 }
 
 /* CARDS (shared look) */

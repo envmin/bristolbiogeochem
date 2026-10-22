@@ -16,6 +16,7 @@
     --header-bg: #000000;          /* matches the logo background */
     --header-text: #ffffff;
     --hero-overlay: rgba(10, 30, 42, 0.68);
+    --hero-overlay-strong: rgba(10, 30, 42, 0.8);   /* for header images full of text */
     --initials-bg: #d6e4ea;
     --initials-text: #0f3346;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.05);
@@ -38,6 +39,7 @@
         --header-bg: #000000;
         --header-text: #f1f4f6;
         --hero-overlay: rgba(5, 12, 16, 0.72);
+        --hero-overlay-strong: rgba(5, 12, 16, 0.82);
         --initials-bg: #24414f;
         --initials-text: #e6eaed;
         --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
@@ -60,6 +62,7 @@
     --header-bg: #000000;
     --header-text: #f1f4f6;
     --hero-overlay: rgba(5, 12, 16, 0.72);
+    --hero-overlay-strong: rgba(5, 12, 16, 0.82);
     --initials-bg: #24414f;
     --initials-text: #e6eaed;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
