@@ -428,6 +428,26 @@ sup {
     color: var(--muted);
 }
 
+/* Heading with an image beside it on wide screens, and under it on phones */
+.page-banner {
+    display: grid;
+    gap: 1rem 2rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 760px) {
+    .page-banner {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    }
+}
+
+.page-banner-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 /* CARDS (shared look) */
 
 .research-card,
