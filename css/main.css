@@ -584,7 +584,8 @@ sup {
 .pub-card,
 .person,
 .outreach-card,
-.service-card {
+.service-card,
+.opportunity-card {
     transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -592,7 +593,8 @@ sup {
 .pub-card:focus-within,
 .person:focus-within,
 .outreach-card:focus-within,
-.service-card:focus-within {
+.service-card:focus-within,
+.opportunity-card:focus-within {
     background: var(--surface-hover);
 }
 
@@ -601,7 +603,8 @@ sup {
     .pub-card:hover,
     .person:hover,
     .outreach-card:hover,
-    .service-card:hover {
+    .service-card:hover,
+    .opportunity-card:hover {
         background: var(--surface-hover);
         box-shadow: var(--shadow), 0 6px 18px rgba(0, 0, 0, 0.08);
     }
