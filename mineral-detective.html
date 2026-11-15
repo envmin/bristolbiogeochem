@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--
+  Mineral Detective landing page. The investigation itself is mineral-detective-app.html.
+  Copyright (c) 2026 James Byrne, School of Earth Sciences, University of Bristol. CC BY-NC 4.0.
+  Not public yet: kept out of search engines, out of sitemap.xml and not linked from the rest of the site.
+-->
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mineral Detective · Every sample has a secret</title>
+<meta name="description" content="A virtual mineral characterisation laboratory. Prepare samples, run XRF, X-ray diffraction, Mössbauer and FTIR spectroscopy, and build your case from the evidence.">
+<meta name="robots" content="noindex">
+
+<!-- GoatCounter for the separate rustymagnets-detective site (cookieless) -->
+<script data-goatcounter="https://rustymagnets-detective.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<!-- The same typefaces as the app (SIL Open Font License) -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Poiret+One&display=swap" rel="stylesheet">
+
+<style>
+/* Art deco noir, matching the app. Gold text uses a deeper shade in light mode for contrast. */
+:root {
+    --bg: #E9E1CF; --card: #F4EEDF; --ink: #1A1814; --muted: #6B6253;
+    --gold: #76591A; --line: #9A7524; --track: #CFC4AC;
+    --btn: #1A1814; --btn-text: #E8CF8A; --dots: rgba(26, 24, 20, .06);
+    color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #121214; --card: #1C1B19; --ink: #F3E9D2; --muted: #A39A86;
+        --gold: #C9A24A; --line: #C9A24A; --track: #3A362E;
+        --btn: #C9A24A; --btn-text: #121214; --dots: rgba(243, 233, 210, .05);
+        color-scheme: dark;
+    }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+body {
+    margin: 0;
+    background: radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--bg) 86%, var(--line)) 0%, var(--bg) 55%) fixed, var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+}
+body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none;
+    background-image: radial-gradient(var(--dots) 1px, transparent 1.6px); background-size: 7px 7px;
+}
+a { color: var(--gold); }
+a:focus-visible, .launch:focus-visible { outline: 3px solid var(--line); outline-offset: 3px; }
+.wrap { position: relative; max-width: 980px; margin: 0 auto; padding: 0 20px; }
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 16px; top: 16px; z-index: 10; background: var(--card); padding: 8px 12px; }
+
+/* Title block */
+.hero { text-align: center; padding: clamp(3.5rem, 10vw, 7rem) 0 clamp(2.5rem, 6vw, 4rem); }
+.logo { width: clamp(120px, 22vw, 160px); height: auto; animation: rise .9s ease both; }
+h1, h2, h3 { font-family: "Poiret One", "IBM Plex Sans", serif; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; }
+h1 { font-size: clamp(2.6rem, 1.6rem + 5vw, 4.6rem); margin: 1.2rem 0 .4rem; letter-spacing: .16em; animation: rise .9s .15s ease both; }
+.tagline { font-family: "Poiret One", serif; font-size: clamp(1.3rem, 1rem + 1.5vw, 1.9rem); color: var(--gold); margin: 0 0 1.75rem; animation: rise .9s .3s ease both; }
+.rule { width: 120px; height: 2px; margin: 0 auto 1.75rem; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+.samples { font-size: 1.15rem; margin: 0 auto 0.4rem; max-width: 34em; }
+.question { font-size: 1.15rem; font-weight: 600; margin: 0 0 2rem; }
+.techs { font-size: .85rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin: 1.5rem 0 0; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+.launch {
+    display: inline-block; padding: .95rem 2.1rem;
+    background: var(--btn); color: var(--btn-text);
+    font-family: "Poiret One", serif; font-size: 1.15rem; letter-spacing: .18em; text-transform: uppercase; text-decoration: none;
+    box-shadow: inset 0 0 0 1px var(--line), 0 0 0 4px var(--bg), 0 0 0 5px var(--line);
+    transition: transform .15s ease, filter .15s ease;
+}
+.launch:hover { transform: translateY(-1px); filter: brightness(1.08); }
+
+/* Sections */
+section { padding: clamp(2.5rem, 6vw, 4rem) 0; border-top: 1px solid var(--track); }
+h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); margin: 0 0 1rem; }
+h2::after { content: ""; display: block; width: 56px; height: 2px; margin-top: .7rem; background: var(--line); }
+.lead { max-width: 64ch; }
+.lead p { margin: 0 0 1rem; }
+.lead strong { color: var(--gold); font-weight: 600; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.card { position: relative; padding: 1.25rem 1.25rem 1.1rem; background: var(--card); box-shadow: inset 0 0 0 1px var(--track); }
+.card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--line); }
+.card h3 { font-size: 1.05rem; margin: 0 0 .15rem; }
+.card .abbr { font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 .6rem; }
+.card p { margin: 0; font-size: .97rem; }
+
+.audience { columns: 2 260px; column-gap: 2.5rem; margin: 1.25rem 0 1rem; padding: 0; list-style: none; }
+.audience li { break-inside: avoid; padding: .4rem 0 .4rem 1.6rem; position: relative; }
+.audience li::before { content: "◆"; position: absolute; left: 0; color: var(--line); font-size: .8rem; top: .55rem; }
+.note { color: var(--muted); max-width: 64ch; }
+
+.final { text-align: center; }
+.final h2::after { margin-left: auto; margin-right: auto; }
+.final p { margin: 0 0 1.75rem; }
+
+footer { border-top: 1px solid var(--track); padding: 2rem 0 2.5rem; color: var(--muted); font-size: .9rem; }
+footer p { margin: .3rem 0; }
+</style>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<main id="main">
+    <div class="wrap">
+        <header class="hero">
+            <svg class="logo" viewBox="0 0 160 160" role="img" aria-label="Mineral Detective logo, a crystal under a magnifying glass">
+                <circle cx="70" cy="70" r="56" fill="#141416" stroke="#C9A24A" stroke-width="8"/>
+                <circle cx="70" cy="70" r="47" fill="none" stroke="#C9A24A" stroke-width="1" opacity=".6"/>
+                <polygon points="70,24 45,66 64,74" fill="#7E8B96"/><polygon points="70,24 64,74 97,66" fill="#C9D2D8"/>
+                <polygon points="45,66 70,114 64,74" fill="#3A434B"/><polygon points="64,74 70,114 97,66" fill="#5B666F"/>
+                <polygon points="70,24 83,46 77,48" fill="#9E2B25"/>
+                <path d="M36 50 Q44 32 62 27" stroke="rgba(255,255,255,.4)" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <rect x="108" y="100" width="17" height="54" rx="3" transform="rotate(-45 117 127)" fill="#1A1A1C" stroke="#C9A24A" stroke-width="3"/>
+            </svg>
+            <h1>Mineral Detective</h1>
+            <p class="tagline">Every sample has a secret.</p>
+            <div class="rule" aria-hidden="true"></div>
+            <p class="samples">A rusty soil crust. An iron-rich concretion. A fragment of banded iron formation.</p>
+            <p class="question">What is it really made of?</p>
+            <a class="launch" href="mineral-detective-app.html" data-goatcounter-click="landing-launch-top">Open your first case</a>
+            <p class="techs" aria-label="Techniques: XRF, X-ray diffraction, Mössbauer spectroscopy and FTIR spectroscopy">XRF &nbsp;·&nbsp; XRD &nbsp;·&nbsp; Mössbauer &nbsp;·&nbsp; FTIR</p>
+        </header>
+
+        <section aria-labelledby="about-title">
+            <h2 id="about-title">A virtual mineral laboratory</h2>
+            <div class="lead">
+                <p>
+                    In Mineral Detective you take the role of an analytical scientist, working out what unknown samples
+                    are made of with the same techniques used in research laboratories around the world. Collect clues,
+                    prepare specimens, operate instruments, interpret spectra and build your case from the evidence.
+                </p>
+            </div>
+        </section>
+
+        <section aria-labelledby="process-title">
+            <h2 id="process-title">Investigate like a real scientist</h2>
+            <div class="lead">
+                <p>Most science simulations skip straight to the answer. <strong>Mineral Detective focuses on the process.</strong></p>
+                <p>
+                    You will see why sample preparation matters, how analytical instruments work, and how small mistakes
+                    change the data you collect. Over-grind a sample, mount it carelessly, choose the wrong measurement
+                    settings or misread a spectrum, and the evidence may lead you astray.
+                </p>
+            </div>
+        </section>
+
+        <section aria-labelledby="techniques-title">
+            <h2 id="techniques-title">Four real analytical techniques</h2>
+            <div class="grid">
+                <article class="card">
+                    <h3>X-ray fluorescence</h3>
+                    <p class="abbr">XRF</p>
+                    <p>Find out which elements are present and gather your first clues about the sample.</p>
+                </article>
+                <article class="card">
+                    <h3>X-ray diffraction</h3>
+                    <p class="abbr">XRD</p>
+                    <p>Prepare powders, mount them correctly, collect diffraction patterns and identify crystalline minerals from their atomic structure.</p>
+                </article>
+                <article class="card">
+                    <h3>Mössbauer spectroscopy</h3>
+                    <p class="abbr">⁵⁷Fe</p>
+                    <p>Probe the iron atoms directly, revealing their oxidation state and the minerals they sit in. It is one of the most powerful techniques for iron-bearing materials.</p>
+                </article>
+                <article class="card">
+                    <h3>Infrared spectroscopy</h3>
+                    <p class="abbr">FTIR</p>
+                    <p>Identify carbonates, hydroxides, silicates and other mineral groups from the characteristic vibrations of their chemical bonds.</p>
+                </article>
+            </div>
+        </section>
+
+        <section aria-labelledby="case-title">
+            <h2 id="case-title">Crack the case</h2>
+            <div class="lead">
+                <p>
+                    Begin with pure reference minerals to learn how each technique behaves. Then take on mystery samples
+                    that contain several minerals, incomplete clues and competing interpretations. Only by combining the
+                    evidence from several techniques can you reveal the full story.
+                </p>
+            </div>
+        </section>
+
+        <section aria-labelledby="who-title">
+            <h2 id="who-title">Who is it for?</h2>
+            <ul class="audience">
+                <li>Earth sciences students</li>
+                <li>Geochemistry and environmental science students</li>
+                <li>Researchers learning mineral characterisation</li>
+                <li>Teachers looking for interactive teaching resources</li>
+                <li>Anyone curious about how scientists identify unknown materials</li>
+            </ul>
+            <p class="note">
+                No experience is needed, but every step is grounded in the analytical workflows used in real research
+                laboratories.
+            </p>
+        </section>
+
+        <section aria-labelledby="built-title">
+            <h2 id="built-title">Built by scientists</h2>
+            <div class="lead">
+                <p>
+                    Mineral Detective was developed by <a href="./" data-goatcounter-click="landing-group-link">Environmental Mineralogy</a>,
+                    James Byrne's research group in the School of Earth Sciences at the University of Bristol. It helps
+                    students and researchers explore mineral characterisation through hands-on investigation. Its models
+                    include realistic sample preparation, instrument operation and interpretation challenges inspired by
+                    real laboratory practice.
+                </p>
+            </div>
+        </section>
+
+        <section class="final" aria-labelledby="final-title">
+            <h2 id="final-title">Ready to open your first case?</h2>
+            <p>Turn your sound on for the full atmosphere.</p>
+            <a class="launch" href="mineral-detective-app.html" data-goatcounter-click="landing-launch-bottom">Launch Mineral Detective</a>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div class="wrap">
+        <p>© 2026 James Byrne, School of Earth Sciences, University of Bristol. Licensed under
+            <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial 4.0</a>.</p>
+        <p>Visits are counted anonymously with GoatCounter, without cookies.</p>
+    </div>
+</footer>
+</body>
+</html>
