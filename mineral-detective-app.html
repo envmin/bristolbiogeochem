@@ -1213,7 +1213,17 @@ function PackTask(ctx){
     const x=-1+(k%NG)*SP,z=-1+Math.floor(k/NG)*SP,r=Math.hypot(x,z)||1,f=(RC-SP*0.9)/r;
     proj[k]=Math.round((z*f+1)/SP)*NG+Math.round((x*f+1)/SP)}
   const NC=cells.length,hgt=k=>m[k]/rho[k];
-  function addLoose(k,dm){const h0=hgt(k);m[k]+=dm;rho[k]=m[k]/(h0+dm/0.6)}
+  // lz holds the loose powder lying on top of each cell, so that striking off or slumping removes loose powder
+  // before it touches anything the slide has already compacted.
+  const lz=new Float32Array(N2);
+  function addLoose(k,dm){if(!(dm>0))return;const h0=hgt(k);m[k]+=dm;rho[k]=m[k]/(h0+dm/0.6);lz[k]+=dm}
+  function baseRho(k){const hb=hgt(k)-lz[k]/0.6;return hb>1e-4?Math.min(0.97,Math.max(0.6,(m[k]-lz[k])/hb)):0.6}
+  function massAbove(k,dh){const lh=lz[k]/0.6;return lh>=dh?dh*0.6:lz[k]+(dh-lh)*baseRho(k)} // mass in the top dh of a cell
+  function takeTop(k,dm){
+    const h=hgt(k),a=Math.min(dm,lz[k]),rest=dm-a,nh=h-a/0.6-rest/baseRho(k);
+    lz[k]-=a;m[k]-=dm;
+    if(m[k]<=1e-6||nh<=1e-6){m[k]=0;rho[k]=0.6;lz[k]=0}else rho[k]=m[k]/nh;
+  }
 
   // Powder surface. Only the round well is meshed; edge vertices are pulled onto the wall.
   const geo=new THREE.PlaneGeometry(2,2,NG-1,NG-1);geo.rotateX(-Math.PI/2);
@@ -1240,7 +1250,7 @@ function PackTask(ctx){
   root.add(slide);
 
   const SUP=1.4*NC*Math.min(1.6,sample.massRatio);
-  let tool='spatula',down=false,supply=SUP,px=0,pz=0,zs=0.9,lastZ=0.9,vz=0,still=0,O=0,used=false;
+  let tool='spatula',down=false,supply=SUP,px=0,pz=0,zs=0.9,lastZ=0.9,vz=0,still=0,O=0,used=false,ps=null; // ps: height of the sinking slide
   const target=new THREE.Vector3(),ray=new THREE.Raycaster(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
   function aim(e){const b=canvas.getBoundingClientRect();
     ray.setFromCamera({x:(e.clientX-b.left)/b.width*2-1,y:-(e.clientY-b.top)/b.height*2+1},camera);
@@ -1270,23 +1280,31 @@ function PackTask(ctx){
   function relax(){
     for(let pass=0;pass<2;pass++)for(const k of cells)for(const n of [k+1,k+NG]){
       if(n>=N2||!inside[n])continue;const dh=hgt(k)-hgt(n),d=Math.abs(dh);if(d<=THR)continue;
-      const a=dh>0?k:n,b=dh>0?n:k,mob=Math.min(1,Math.max(0,(0.85-rho[a])/0.25));if(!mob)continue;
-      const mm=Math.min(m[a],0.2*(d-THR)*mob*rho[a]);m[a]-=mm;addLoose(b,mm)}
+      const a=dh>0?k:n,b=dh>0?n:k,mob=lz[a]>0.02?1:Math.min(1,Math.max(0,(0.85-rho[a])/0.25));if(!mob)continue;
+      const mm=Math.min(m[a],0.2*(d-THR)*mob*rho[a]);takeTop(a,mm);addLoose(b,mm)}
   }
   const under=k=>Math.abs(cz[k]-zs)<0.45;
   function slideLevel(){let mx=1;for(const k of cells)if(under(k))mx=Math.max(mx,hgt(k));return mx}
   function strike(dir,dz){
     let load=0,touched=false;
-    for(const k of cells)if(under(k)){const h=hgt(k);if(h>1){const ex=(h-1)*rho[k];m[k]-=ex;load+=ex;touched=true}}
+    ps=null;
+    for(const k of cells)if(under(k)){const h=hgt(k);if(h>1){const ex=massAbove(k,h-1);takeTop(k,ex);load+=ex;touched=true}}
     for(const k of cells)if(under(k)&&load>0){const h=hgt(k);if(h<1){const dm=Math.min(load,(1-h)*0.6);addLoose(k,dm);load-=dm}}
     if(load>0){const lead=zs+dir*0.45,ahead=cells.filter(k=>(cz[k]-lead)*dir>=0&&(cz[k]-lead)*dir<SP*1.5);
       if(ahead.length)ahead.forEach(k=>addLoose(k,load/ahead.length))} // else it falls off the edge
     if(touched){O+=0.04*Math.abs(dz);used=true}
   }
+  // Held still, the slide sinks towards the rim and compacts every cell above it. Powder that cannot compact any
+  // further squeezes out past the slide's edges, or over the rim. The slide stops when it rests on the rim.
   function press(dt){
-    const lv=slideLevel();let touched=false;
-    for(const k of cells)if(under(k)&&m[k]>0&&hgt(k)>lv-0.04){rho[k]=Math.min(0.97,rho[k]+0.9*dt*(1-rho[k]));touched=true}
-    if(touched){O+=0.3*dt;used=true}
+    const lv=slideLevel();if(ps===null||ps>lv)ps=lv;
+    ps=Math.max(1,ps-Math.max(0.5,2.5*(ps-1))*dt);let touched=false;
+    for(const k of cells)if(under(k)&&hgt(k)>ps+1e-4){touched=true;lz[k]=0;
+      if(m[k]<=0.97*ps){rho[k]=m[k]/ps;continue}
+      const ex=m[k]-0.97*ps;m[k]-=ex;rho[k]=0.97;const ns=[];
+      for(const st of [NG,-NG]){let n=k;while(n>=0&&n<N2&&under(n))n+=st;if(n>=0&&n<N2&&inside[n])ns.push(n)}
+      ns.forEach(n=>addLoose(n,ex/ns.length))}
+    if(touched){O+=0.15*dt;used=true}
   }
   function metrics(){
     let sh=0,cov=0,sm=0,shh=0;
@@ -1331,13 +1349,13 @@ function PackTask(ctx){
       <text x="150" y="110" font-size="12" fill="var(--muted)" text-anchor="middle">Powder flat and flush with the rim</text>
     </svg>
     <p>This plate is a cavity sample holder. The X-rays reflect off the powder surface, so it must be flat and exactly level with the rim. Too high or too low and every peak shifts.</p>
-    <p>Fill the round well with the spatula, press with the glass slide, then strike off the excess.</p>
+    <p>Overfill the round well with the spatula. Hold the glass slide still on the powder to press it down, then drag the slide across to strike off the excess.</p>
     <div class="btns"><button id="bPack">Start packing</button></div>`);
   $('bPack').onclick=hideCard;
 
   return{
     layout:layoutNow,
-    down(e){down=true;aim(e);if(tool==='slide'){zs=pz;lastZ=zs;still=0}},
+    down(e){down=true;aim(e);ps=null;if(tool==='slide'){zs=pz;lastZ=zs;still=0}},
     move(e){if(down)aim(e)},
     up(){down=false},
     update(dt){
@@ -1371,8 +1389,8 @@ function PackTask(ctx){
       const left=Math.round(100*supply/SUP);
       const sp=tool==='spatula',sl=!sp;let g;
       if(q.cov<0.95||q.fill<0.97)g=sp?'Hold over the round well to pour. Move around until it is slightly overfilled.':'Switch to the spatula and fill the well first.';
-      else if(q.D<0.7)g=q.s>0.03?(sl?'Hold the slide still on the powder to press it down.':'Now switch to the glass slide and press the powder down.')
-        :(sp?'Too loose to press. Pile on a little more powder first.':'Too loose. Overfill with the spatula, then press.');
+      else if(q.D<0.7)g=q.s>0.1?(sl?'Hold the slide still on the powder to press it down. Press the top, middle and bottom of the well.':'Now switch to the glass slide and press the powder down.')
+        :(sp?'Too loose to press. Pile on more powder so the well is clearly overfilled.':'Too loose. Overfill with the spatula, then press.');
       else if(q.s>0.05)g=sl?'Drag the slide across the well to strike off level with the rim.':'Switch to the glass slide and strike off the excess.';
       else if(q.s<-0.05)g=sp?'The surface is below the rim. Top it up, then strike off again.':'The surface is below the rim. Top up with the spatula first.';
       else g='Level, packed and flush with the rim. Tap Done.';
