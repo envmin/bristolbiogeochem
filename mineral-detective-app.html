@@ -145,6 +145,8 @@ button.tick.on{background:var(--accent);box-shadow:none}
 i.dot{position:static;display:inline-block;margin-right:6px;vertical-align:1px}
 .card .seg.picker{margin:6px 0 4px}
 .card table.ref{margin:4px 0}
+.nb{margin:10px 0 14px}.nb h3{margin-top:0}.nb .ref tr:nth-child(2){font-weight:400}.nb .ref td{text-align:center}.nb .ref th{text-align:center}
+.nb .ref td:first-child,.nb .ref th:first-child{text-align:left}.nb td.nb-off{color:var(--muted);font-size:11.5px}
 .card ul{margin:0 0 4px;padding-left:18px;font-size:14px;line-height:1.55}
 .card ul li::marker{color:var(--accent)}
 
@@ -2475,6 +2477,24 @@ function techHint(t,s){
   if(t==='moss')return !sawFe?'XRF found no iron, so Mössbauer would see nothing.':fe<0.15?'Only a little iron. Expect a weak spectrum and days of counting.':'Plenty of iron. Shows how each iron atom is bonded, even in amorphous phases.';
   return 'Probes chemical bonds. Strong for carbonates, hydroxides, water and silicates, weaker for iron oxides.';
 }
+// Notebook. Collects what the player found with each technique so they can compare them before submitting.
+// It records only the player's own choices, never the true answer. "n/a" marks minerals a technique cannot see
+// in principle (no iron for Mössbauer, amorphous for XRD), which is general knowledge rather than a hint.
+const NB_COLS=[['xrd','XRD'],['moss','Möss'],['ftir','FTIR']];
+const nbBlind=(t,k)=>(t==='moss'&&!MINERALS[k].fe)||(t==='xrd'&&MINERALS[k].amorphous);
+function notebookHTML(s,showXrf=true){
+  const sel=t=>{const r=s.results[TECH[t].final];return r?new Set(r.sel||[]):null},S=Object.fromEntries(NB_COLS.map(([t])=>[t,sel(t)]));
+  const found=Object.keys(MINERALS).filter(k=>NB_COLS.some(([t])=>S[t]&&S[t].has(k)));
+  const els=s.xrf?(s.xrf.els.length?s.xrf.els.join(', '):'none heavier than silicon'):'not run';
+  const cell=(t,k)=>!S[t]?'<td class="nb-off">–</td>':S[t].has(k)?'<td>✓</td>':nbBlind(t,k)?'<td class="nb-off">n/a</td>':'<td></td>';
+  const ran=NB_COLS.filter(([t])=>S[t]);
+  return `<div class="nb"><h3>Your notebook</h3>${showXrf?`<p class="next">XRF elements: <b>${els}</b></p>`:''}
+    ${!ran.length?'<p class="next">Nothing recorded yet. The minerals you choose with each technique will be listed here.</p>'
+    :`<table class="ref"><tr><th>Mineral</th>${NB_COLS.map(([,l])=>`<th>${l}</th>`).join('')}</tr>
+      ${found.length?found.map(k=>`<tr><td><i class="dot" style="background:${PCOL[k]}"></i>${MINERALS[k].name}</td>${NB_COLS.map(([t])=>cell(t,k)).join('')}</tr>`).join('')
+        :`<tr><td colspan="4">No minerals chosen yet</td></tr>`}</table>
+    <p class="next">✓ you chose it. – technique not run yet. n/a the technique cannot see this kind of mineral.</p>`}</div>`;
+}
 function showBench(){
   flushRating();
   const s=Lab.sample;Lab.route=[];idle('Lab bench');
@@ -2482,6 +2502,7 @@ function showBench(){
   showCard(`<div class="tag">${s.name}, ${s.id}</div><h2>Lab bench</h2>
     <p>Elements you found by XRF are <b>${els.length?els.join(', '):'none heavier than silicon'}</b>${s.xrf&&s.xrf.fe>0.005?`, with roughly ${Math.round(s.xrf.fe*100)} wt% iron`:''}. Choose a technique.</p>
     <div class="opts one">${Object.entries(TECH).map(([k,t])=>`<button class="opt" data-tech="${k}"><b>${t.name}${s.results[t.final]?' <span class="done">'+starStr(s.results[t.final].stars)+'</span>':''}</b><small>${techHint(k,s)}</small></button>`).join('')}</div>
+    ${done.length?notebookHTML(s,false):''}
     <div class="btns"><button id="bSubmit" ${done.length?'':'disabled'}>Submit identification</button><button id="bOther" class="ghost">Other samples</button></div>
     ${DEV?`<h3>Dev shortcuts</h3><div class="btns" style="margin-top:6px">${Object.keys(TECH).map(k=>`<button class="ghost" data-dev="${k}">Jump to ${TECH[k].name} data</button>`).join('')}</div>`:''}`);
   $('card').querySelectorAll('[data-tech]').forEach(b=>b.onclick=()=>chooseTech(b.dataset.tech));
@@ -2502,13 +2523,15 @@ function chooseTech(t){
 }
 function showSubmit(){
   const s=Lab.sample,pick=new Set(),keys=Object.keys(MINERALS);
-  const render=()=>{showCard(`<div class="tag">${s.name}, ${s.id}</div><h2>Your identification</h2>
+  showCard(`<div class="tag">${s.name}, ${s.id}</div><h2>Your identification</h2>
+    ${notebookHTML(s)}
     <p>Choose every mineral you believe is in the sample.</p>
-    <div class="seg picker">${keys.map(k=>`<button data-sub="${k}" class="${pick.has(k)?'sel':''}"><i style="background:${PCOL[k]}"></i>${MINERALS[k].name}<small>${MINERALS[k].formula}</small></button>`).join('')}</div>
-    <div class="btns"><button id="bDone" ${pick.size?'':'disabled'}>Submit</button><button id="bBk" class="ghost">Back to the bench</button></div>`);
-    $('card').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const k=b.dataset.sub;pick.has(k)?pick.delete(k):pick.add(k);render()});
-    $('bDone').onclick=()=>showReport(pick);$('bBk').onclick=showBench};
-  render();
+    <div class="seg picker">${keys.map(k=>`<button data-sub="${k}" aria-pressed="false"><i style="background:${PCOL[k]}"></i>${MINERALS[k].name}<small>${MINERALS[k].formula}</small></button>`).join('')}</div>
+    <div class="btns"><button id="bDone" disabled>Submit</button><button id="bBk" class="ghost">Back to the bench</button></div>`);
+  // Toggle in place rather than redrawing the card, so the list does not jump back to the top on every tap.
+  $('card').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const k=b.dataset.sub,on=!pick.has(k);on?pick.add(k):pick.delete(k);
+    b.classList.toggle('sel',on);b.setAttribute('aria-pressed',on);$('bDone').disabled=!pick.size});
+  $('bDone').onclick=()=>showReport(pick);$('bBk').onclick=showBench;
 }
 
 function showReport(pick){
